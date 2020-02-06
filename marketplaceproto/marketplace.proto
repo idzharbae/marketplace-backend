@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+import "product.proto";
+
+package marketplaceproto;
+
+service Marketplace {
+    rpc ListProducts (ListProductsReq) returns (ListProductsResp) {}
+}
