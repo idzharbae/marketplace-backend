@@ -1,9 +1,14 @@
 package app
 
-type Repo struct {
-
+type Repos struct {
 }
 
-func NewRepo() *Repo {
+func NewRepos() *Repos {
+	return &Repos{}
+}
 
+func (r *Repos) Close() []error {
+	var errs []error
+
+	return errs
 }

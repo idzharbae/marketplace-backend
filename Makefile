@@ -4,11 +4,11 @@ grpc:
 # go build command
 build:
 	@echo " >> building binaries"
-	@go build -v -o umrahcatalog cmd/umrahcatalog/*.go
+	@go build -v -o marketplace main.go
 
 # go run command
 run: build
-	@./umrahcatalog
+	@./marketplace
 
 docker-run:
 	@docker-compose up -d
