@@ -1,0 +1,23 @@
+version: "3"
+services:
+  marketplace_postgres:
+    image: postgres
+    volumes:
+      - marketplace_db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: cabai_marketplace
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: secret
+
+  marketplace_redis:
+    image: redis:5-alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  # This volume is located at /var/lib/docker/umrahcatalog_db_data
+  # If you want to reset the DB's data, you might want to remove that file
+  marketplace_db_data:
+    driver: local

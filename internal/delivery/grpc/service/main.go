@@ -9,6 +9,6 @@ type Services struct {
 
 func GetServices(a *app.Marketplace) *Services {
 	return &Services{
-		ProductService: NewProductService(a),
+		ProductService: NewProductService(a.UseCases.ProductUC),
 	}
 }

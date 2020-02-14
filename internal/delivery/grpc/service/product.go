@@ -1,11 +1,28 @@
 package service
 
-import "github.com/idzharbae/marketplace-backend/internal/app"
+import (
+	"context"
+	"github.com/idzharbae/marketplace-backend/internal"
+	"github.com/idzharbae/marketplace-backend/internal/converter"
+	"github.com/idzharbae/marketplace-backend/internal/requests"
+	"github.com/idzharbae/marketplace-backend/marketplaceproto"
+)
 
 type ProductService struct {
-
+	ProductUC internal.ProductUC
 }
 
-func NewProductService(a *app.Marketplace) *ProductService {
-	return &ProductService{}
+func NewProductService(productUC internal.ProductUC) *ProductService {
+	return &ProductService{
+		ProductUC: productUC,
+	}
+}
+
+func (p *ProductService) ListProducts(ctx context.Context, req *marketplaceproto.ListProductsReq) (*marketplaceproto.ListProductsResp, error) {
+	products, err := p.ProductUC.ListProducts(requests.ListProduct{})
+	productProtos := converter.ProductEntitiesToProtos(products)
+
+	return &marketplaceproto.ListProductsResp{
+		Products: productProtos,
+	}, err
 }

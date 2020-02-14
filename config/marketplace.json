@@ -1,3 +1,25 @@
 {
-
+  "Grpc": {
+    "Port": ":1445"
+  },
+  "db": {
+    "debug": true,
+    "db_engine": "postgres",
+    "master": {
+      "address": "127.0.0.1",
+      "port": 5432,
+      "db_name": "cabai_marketplace",
+      "user": "user",
+      "password": "secret",
+      "ssl_mode": "disable"
+    },
+    "slave": {
+      "address": "127.0.0.1",
+      "port": 5432,
+      "db_name": "cabai_marketplace",
+      "user": "user",
+      "password": "secret",
+      "ssl_mode": "disable"
+    }
+  }
 }
