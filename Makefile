@@ -15,3 +15,6 @@ docker-run:
 
 docker-stop:
 	@docker-compose down
+
+dep:
+	@dep ensure -v

@@ -3,19 +3,14 @@ package app
 import (
 	"encoding/json"
 	"errors"
+	"github.com/idzharbae/marketplace-backend/internal/config"
 	"io/ioutil"
 	"log"
 	"os"
 )
 
-type Config struct {
-	Grpc struct {
-		Port string
-	}
-}
-
 type Marketplace struct {
-	Config   Config
+	Config   config.Config
 	UseCases *UseCases
 	Repos    *Repos
 }
@@ -25,8 +20,8 @@ func NewMarketplace(cfgPath string) (*Marketplace, error) {
 	if err != nil {
 		return nil, err
 	}
-	UCS := NewUsecase()
-	Repos := NewRepos()
+	Repos := NewRepos(cfg)
+	UCS := NewUsecase(Repos)
 
 	return &Marketplace{
 		Config:   cfg,
@@ -35,27 +30,27 @@ func NewMarketplace(cfgPath string) (*Marketplace, error) {
 	}, nil
 }
 
-func readConfig(filepath string) (Config, error) {
+func readConfig(filepath string) (config.Config, error) {
 	jsonFile, err := os.Open(filepath)
 	if err != nil {
-		return Config{}, err
+		return config.Config{}, err
 	}
 	if jsonFile == nil {
-		return Config{}, errors.New("couldnt read path: " + filepath)
+		return config.Config{}, errors.New("couldnt read path: " + filepath)
 	}
 	defer jsonFile.Close()
 	bytes, err := ioutil.ReadAll(jsonFile)
 	if err != nil {
-		return Config{}, err
+		return config.Config{}, err
 	}
 	if bytes == nil {
 		log.Fatal(bytes)
 	}
-	var cfg Config
+	var cfg config.Config
 	err = json.Unmarshal([]byte(bytes), &cfg)
 	if err != nil {
 		log.Printf("%v", bytes)
-		return Config{}, err
+		return config.Config{}, err
 	}
 	return cfg, nil
 }
