@@ -28,6 +28,10 @@ message GetProductByIDReq {
     int32 ID = 1;
 }
 
-message GetProductBySlugReq{
+message GetProductBySlugReq {
     string slug = 1;
+}
+
+message ProductPKReq {
+    int32 ID = 1;
 }

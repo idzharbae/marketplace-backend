@@ -50,3 +50,12 @@ func (p *ProductService) GetProductBySlug(ctx context.Context, req *marketplacep
 	}
 	return converter.ProductEntityToProto(got), nil
 }
+
+func (p *ProductService) CreateProduct(ctx context.Context, req *marketplaceproto.Product) (*marketplaceproto.Product, error) {
+	product := converter.ProductProtoToEntity(req)
+	got, err := p.ProductUC.Create(product)
+	if err != nil {
+		return nil, err
+	}
+	return converter.ProductEntityToProto(got), nil
+}

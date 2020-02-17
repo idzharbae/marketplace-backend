@@ -38,6 +38,9 @@ type MarketplaceClient interface {
 	ListProducts(ctx context.Context, in *ListProductsReq, opts ...grpc.CallOption) (*ListProductsResp, error)
 	GetProductByID(ctx context.Context, in *GetProductByIDReq, opts ...grpc.CallOption) (*Product, error)
 	GetProductBySlug(ctx context.Context, in *GetProductBySlugReq, opts ...grpc.CallOption) (*Product, error)
+	CreateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
+	UpdateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
+	DeleteProduct(ctx context.Context, in *ProductPKReq, opts ...grpc.CallOption) (*Product, error)
 }
 
 type marketplaceClient struct {
@@ -75,11 +78,41 @@ func (c *marketplaceClient) GetProductBySlug(ctx context.Context, in *GetProduct
 	return out, nil
 }
 
+func (c *marketplaceClient) CreateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error) {
+	out := new(Product)
+	err := c.cc.Invoke(ctx, "/marketplaceproto.Marketplace/CreateProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketplaceClient) UpdateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error) {
+	out := new(Product)
+	err := c.cc.Invoke(ctx, "/marketplaceproto.Marketplace/UpdateProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketplaceClient) DeleteProduct(ctx context.Context, in *ProductPKReq, opts ...grpc.CallOption) (*Product, error) {
+	out := new(Product)
+	err := c.cc.Invoke(ctx, "/marketplaceproto.Marketplace/DeleteProduct", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MarketplaceServer is the server API for Marketplace service.
 type MarketplaceServer interface {
 	ListProducts(context.Context, *ListProductsReq) (*ListProductsResp, error)
 	GetProductByID(context.Context, *GetProductByIDReq) (*Product, error)
 	GetProductBySlug(context.Context, *GetProductBySlugReq) (*Product, error)
+	CreateProduct(context.Context, *Product) (*Product, error)
+	UpdateProduct(context.Context, *Product) (*Product, error)
+	DeleteProduct(context.Context, *ProductPKReq) (*Product, error)
 }
 
 func RegisterMarketplaceServer(s *grpc.Server, srv MarketplaceServer) {
@@ -140,6 +173,60 @@ func _Marketplace_GetProductBySlug_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Marketplace_CreateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Product)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceServer).CreateProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/marketplaceproto.Marketplace/CreateProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceServer).CreateProduct(ctx, req.(*Product))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Marketplace_UpdateProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Product)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceServer).UpdateProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/marketplaceproto.Marketplace/UpdateProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceServer).UpdateProduct(ctx, req.(*Product))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Marketplace_DeleteProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ProductPKReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceServer).DeleteProduct(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/marketplaceproto.Marketplace/DeleteProduct",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceServer).DeleteProduct(ctx, req.(*ProductPKReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Marketplace_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "marketplaceproto.Marketplace",
 	HandlerType: (*MarketplaceServer)(nil),
@@ -156,23 +243,37 @@ var _Marketplace_serviceDesc = grpc.ServiceDesc{
 			MethodName: "GetProductBySlug",
 			Handler:    _Marketplace_GetProductBySlug_Handler,
 		},
+		{
+			MethodName: "CreateProduct",
+			Handler:    _Marketplace_CreateProduct_Handler,
+		},
+		{
+			MethodName: "UpdateProduct",
+			Handler:    _Marketplace_UpdateProduct_Handler,
+		},
+		{
+			MethodName: "DeleteProduct",
+			Handler:    _Marketplace_DeleteProduct_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "marketplace.proto",
 }
 
-func init() { proto.RegisterFile("marketplace.proto", fileDescriptor_marketplace_62027b09852307cb) }
+func init() { proto.RegisterFile("marketplace.proto", fileDescriptor_marketplace_706236d108317628) }
 
-var fileDescriptor_marketplace_62027b09852307cb = []byte{
-	// 151 bytes of a gzipped FileDescriptorProto
+var fileDescriptor_marketplace_706236d108317628 = []byte{
+	// 190 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0xcc, 0x4d, 0x2c, 0xca,
 	0x4e, 0x2d, 0x29, 0xc8, 0x49, 0x4c, 0x4e, 0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x12, 0x40,
-	0x12, 0x02, 0x8b, 0x48, 0xf1, 0x16, 0x14, 0xe5, 0xa7, 0x94, 0x26, 0x97, 0x40, 0x14, 0x18, 0x4d,
-	0x62, 0xe2, 0xe2, 0xf6, 0x45, 0xa8, 0x11, 0x0a, 0xe7, 0xe2, 0xf1, 0xc9, 0x2c, 0x2e, 0x09, 0x80,
+	0x12, 0x02, 0x8b, 0x48, 0xf1, 0x16, 0x14, 0xe5, 0xa7, 0x94, 0x26, 0x97, 0x40, 0x14, 0x18, 0x7d,
+	0x62, 0xe6, 0xe2, 0xf6, 0x45, 0xa8, 0x11, 0x0a, 0xe7, 0xe2, 0xf1, 0xc9, 0x2c, 0x2e, 0x09, 0x80,
 	0x28, 0x2a, 0x16, 0x52, 0xd4, 0x43, 0x37, 0x41, 0x0f, 0x59, 0x3e, 0x28, 0xb5, 0x50, 0x4a, 0x89,
 	0x90, 0x92, 0xe2, 0x02, 0x25, 0x06, 0xa1, 0x20, 0x2e, 0x3e, 0xf7, 0x54, 0x98, 0xa0, 0x53, 0xa5,
 	0xa7, 0x8b, 0x90, 0x32, 0xa6, 0x3e, 0x54, 0x15, 0x20, 0xc3, 0x25, 0x31, 0x15, 0x41, 0x55, 0x28,
 	0x31, 0x08, 0x85, 0x71, 0x09, 0x20, 0xeb, 0x08, 0xce, 0x29, 0x4d, 0x17, 0x52, 0xc5, 0x6f, 0x2a,
-	0x48, 0x0d, 0x21, 0x73, 0x93, 0xd8, 0xc0, 0x02, 0xc6, 0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0xda,
-	0xcb, 0x8c, 0xb8, 0x51, 0x01, 0x00, 0x00,
+	0x48, 0x0d, 0x41, 0x73, 0xdd, 0xb9, 0x78, 0x9d, 0x8b, 0x52, 0x13, 0x4b, 0x52, 0xa1, 0x42, 0x42,
+	0xb8, 0x55, 0x13, 0x34, 0x28, 0xb4, 0x20, 0x85, 0x0a, 0x06, 0xf9, 0x70, 0xf1, 0xba, 0xa4, 0xe6,
+	0xa4, 0x22, 0x0c, 0x92, 0xc3, 0xa9, 0x3a, 0xc0, 0x9b, 0x90, 0xff, 0x92, 0xd8, 0xc0, 0x02, 0xc6,
+	0x80, 0x00, 0x00, 0x00, 0xff, 0xff, 0xa1, 0x85, 0x21, 0x36, 0x31, 0x02, 0x00, 0x00,
 }

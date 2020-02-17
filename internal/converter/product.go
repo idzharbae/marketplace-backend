@@ -4,6 +4,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/internal/entity"
 	"github.com/idzharbae/marketplace-backend/internal/repo/model"
 	"github.com/idzharbae/marketplace-backend/marketplaceproto"
+	"time"
 )
 
 func ProductModelToEntity(p model.Product) entity.Product {
@@ -48,4 +49,18 @@ func ProductEntitiesToProtos(ps []entity.Product) []*marketplaceproto.Product {
 		products[i] = ProductEntityToProto(p)
 	}
 	return products
+}
+
+func ProductProtoToEntity(p *marketplaceproto.Product) entity.Product {
+	return entity.Product{
+		ID:         p.GetID(),
+		ShopID:     p.GetShopID(),
+		Name:       p.GetName(),
+		Slug:       p.GetSlug(),
+		Quantity:   p.GetQuantity(),
+		PricePerKG: p.GetPricePerKG(),
+		StockKG:    p.GetStockKG(),
+		CreatedAt:  time.Unix(p.GetCreatedAt(), 0),
+		UpdatedAt:  time.Unix(p.GetUpdatedAt(), 0),
+	}
 }
