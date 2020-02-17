@@ -13,6 +13,7 @@ message Product {
     float StockKG =6;
     int64 CreatedAt = 7;
     int64 UpdatedAt =8;
+    string Slug = 9;
 }
 
 message ListProductsReq {
