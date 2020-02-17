@@ -2,6 +2,7 @@ CREATE TABLE product(
     id serial NOT NULL,
 	shop_id INTEGER,
 	name VARCHAR(400),
+	slug VARCHAR(400),
 	quantity INTEGER,
 	price_per_kg INTEGER,
 	stock_kg numeric(10,2),
