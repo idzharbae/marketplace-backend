@@ -34,3 +34,19 @@ func (p *ProductService) ListProducts(ctx context.Context, req *marketplaceproto
 		Products: productProtos,
 	}, nil
 }
+
+func (p *ProductService) GetProductByID(ctx context.Context, req *marketplaceproto.GetProductByIDReq) (*marketplaceproto.Product, error) {
+	got, err := p.ProductUC.GetByID(req.ID)
+	if err != nil {
+		return nil, err
+	}
+	return converter.ProductEntityToProto(got), nil
+}
+
+func (p *ProductService) GetProductBySlug(ctx context.Context, req *marketplaceproto.GetProductBySlugReq) (*marketplaceproto.Product, error) {
+	got, err := p.ProductUC.GetBySlug(req.Slug)
+	if err != nil {
+		return nil, err
+	}
+	return converter.ProductEntityToProto(got), nil
+}
