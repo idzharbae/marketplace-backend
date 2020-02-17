@@ -14,6 +14,6 @@ func NewProductUC(productReader internal.ProductReader) *ProductUC {
 	return &ProductUC{ProductReader: productReader}
 }
 
-func (p *ProductUC) ListProducts(req requests.ListProduct) ([]entity.Product, error) {
-	return p.ProductReader.ListProducts(req)
+func (p *ProductUC) List(req requests.ListProduct) ([]entity.Product, error) {
+	return p.ProductReader.List(req)
 }

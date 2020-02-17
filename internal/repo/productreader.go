@@ -16,8 +16,16 @@ func NewProductReader(db connection.Gormw) *ProductReader {
 	return &ProductReader{db: db}
 }
 
-func (p *ProductReader) ListProducts(req requests.ListProduct) ([]entity.Product, error) {
+func (p *ProductReader) List(req requests.ListProduct) ([]entity.Product, error) {
 	var products []model.Product
 	p.db.Order("id desc").Find(&products)
 	return converter.ProductModelsToEntities(products), nil
+}
+
+func (p *ProductReader) GetByID(productID int32) (entity.Product, error) {
+	return entity.Product{}, nil
+}
+
+func (p *ProductReader) GetBySlug(slug string) (entity.Product, error) {
+	return entity.Product{}, nil
 }
