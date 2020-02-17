@@ -19,10 +19,10 @@ func (p *ProductUC) List(req requests.ListProduct) ([]entity.Product, error) {
 }
 
 func (p *ProductUC) GetByID(productID int32) (entity.Product, error) {
-	return entity.Product{}, nil
+	return p.ProductReader.GetByID(productID)
 }
 func (p *ProductUC) GetBySlug(slug string) (entity.Product, error) {
-	return entity.Product{}, nil
+	return p.ProductReader.GetBySlug(slug)
 }
 
 func (p *ProductUC) Create(product entity.Product) (entity.Product, error) {
