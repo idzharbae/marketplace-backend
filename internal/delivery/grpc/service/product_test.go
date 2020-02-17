@@ -159,7 +159,7 @@ func TestProductService_GetProductBySlug(t *testing.T) {
 	})
 }
 
-func TestProductService_CreateProduct(t *testing.T) {
+func TestProductService_CreateUpdateProduct(t *testing.T) {
 	var (
 		productUC *ucmock.MockProductUC
 		ctrl      *gomock.Controller
@@ -182,7 +182,7 @@ func TestProductService_CreateProduct(t *testing.T) {
 	finish := func() {
 		ctrl.Finish()
 	}
-	t.Run("uc returns error, should return error", func(t *testing.T) {
+	t.Run("[create] uc returns error, should return error", func(t *testing.T) {
 		begin(t)
 		defer finish()
 		productUC.EXPECT().Create(converter.ProductProtoToEntity(req)).Return(entity.Product{}, errors.New("error"))
@@ -191,7 +191,7 @@ func TestProductService_CreateProduct(t *testing.T) {
 		assert.NotNil(t, err)
 		assert.Nil(t, got)
 	})
-	t.Run("uc returns no error, should return saved product entity", func(t *testing.T) {
+	t.Run("[create] uc returns no error, should return saved product entity", func(t *testing.T) {
 		begin(t)
 		defer finish()
 		productUC.EXPECT().Create(converter.ProductProtoToEntity(req)).Return(converter.ProductProtoToEntity(req), nil)
@@ -200,5 +200,56 @@ func TestProductService_CreateProduct(t *testing.T) {
 		assert.Nil(t, err)
 		assert.NotNil(t, got)
 		assert.Equal(t, req.Name, got.Name)
+	})
+	t.Run("[update] uc returns error, should return error", func(t *testing.T) {
+		begin(t)
+		defer finish()
+		productUC.EXPECT().Update(converter.ProductProtoToEntity(req)).Return(entity.Product{}, errors.New("error"))
+
+		got, err := unit.UpdateProduct(context.Background(), req)
+		assert.NotNil(t, err)
+		assert.Nil(t, got)
+	})
+	t.Run("[update] uc returns no error, should return saved product entity", func(t *testing.T) {
+		begin(t)
+		defer finish()
+		productUC.EXPECT().Update(converter.ProductProtoToEntity(req)).Return(converter.ProductProtoToEntity(req), nil)
+
+		got, err := unit.UpdateProduct(context.Background(), req)
+		assert.Nil(t, err)
+		assert.NotNil(t, got)
+		assert.Equal(t, req.Name, got.Name)
+	})
+}
+
+func TestProductService_DeleteProduct(t *testing.T) {
+	var (
+		productUC *ucmock.MockProductUC
+		ctrl      *gomock.Controller
+		unit      *ProductService
+		req       *marketplaceproto.ProductPKReq
+	)
+	begin := func(t *testing.T) {
+		req = &marketplaceproto.ProductPKReq{ID: rand.Int31()}
+		ctrl = gomock.NewController(t)
+		productUC = ucmock.NewMockProductUC(ctrl)
+		unit = NewProductService(productUC)
+	}
+	finish := func() {
+		ctrl.Finish()
+	}
+	t.Run("uc returns error should return error", func(t *testing.T) {
+		begin(t)
+		defer finish()
+		productUC.EXPECT().Delete(req.ID).Return(errors.New("error"))
+		err := unit.DeleteProduct(context.Background(), req)
+		assert.NotNil(t, err)
+	})
+	t.Run("uc returns no error should return no error", func(t *testing.T) {
+		begin(t)
+		defer finish()
+		productUC.EXPECT().Delete(req.ID).Return(nil)
+		err := unit.DeleteProduct(context.Background(), req)
+		assert.Nil(t, err)
 	})
 }

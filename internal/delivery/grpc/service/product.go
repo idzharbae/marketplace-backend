@@ -59,3 +59,16 @@ func (p *ProductService) CreateProduct(ctx context.Context, req *marketplaceprot
 	}
 	return converter.ProductEntityToProto(got), nil
 }
+
+func (p *ProductService) UpdateProduct(ctx context.Context, req *marketplaceproto.Product) (*marketplaceproto.Product, error) {
+	product := converter.ProductProtoToEntity(req)
+	got, err := p.ProductUC.Update(product)
+	if err != nil {
+		return nil, err
+	}
+	return converter.ProductEntityToProto(got), nil
+}
+
+func (p *ProductService) DeleteProduct(ctx context.Context, req *marketplaceproto.ProductPKReq) error {
+	return p.ProductUC.Delete(req.ID)
+}
