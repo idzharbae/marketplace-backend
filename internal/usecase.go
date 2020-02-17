@@ -5,6 +5,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/internal/requests"
 )
 
+//go:generate mockgen -destination=usecase/ucmock/productuc_mock.go -package=ucmock github.com/idzharbae/marketplace-backend/internal ProductUC
 type ProductUC interface {
 	List(req requests.ListProduct) ([]entity.Product, error)
 	GetByID(productID int32) (entity.Product, error)

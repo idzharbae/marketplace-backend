@@ -19,7 +19,7 @@ func NewProductService(productUC internal.ProductUC) *ProductService {
 }
 
 func (p *ProductService) ListProducts(ctx context.Context, req *marketplaceproto.ListProductsReq) (*marketplaceproto.ListProductsResp, error) {
-	products, err := p.ProductUC.ListProducts(requests.ListProduct{})
+	products, err := p.ProductUC.List(requests.ListProduct{})
 	productProtos := converter.ProductEntitiesToProtos(products)
 
 	return &marketplaceproto.ListProductsResp{
