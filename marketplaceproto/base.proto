@@ -3,7 +3,7 @@ syntax = "proto3";
 package marketplaceproto;
 
 message Pagination {
-    int64 page = 1;
+    int32 page = 1;
     int32 limit = 2;
 }
 

@@ -29,6 +29,20 @@ func ProductModelsToEntities(ps []model.Product) []entity.Product {
 	return products
 }
 
+func ProductEntityToModel(p entity.Product) model.Product {
+	return model.Product{
+		ID:         p.ID,
+		ShopID:     p.ShopID,
+		Name:       p.Name,
+		Slug:       p.Slug,
+		Quantity:   p.Quantity,
+		PricePerKG: p.PricePerKG,
+		StockKG:    p.StockKG,
+		CreatedAt:  p.CreatedAt,
+		UpdatedAt:  p.UpdatedAt,
+	}
+}
+
 func ProductEntityToProto(p entity.Product) *marketplaceproto.Product {
 	return &marketplaceproto.Product{
 		ID:         p.ID,

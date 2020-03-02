@@ -242,14 +242,14 @@ func TestProductService_DeleteProduct(t *testing.T) {
 		begin(t)
 		defer finish()
 		productUC.EXPECT().Delete(req.ID).Return(errors.New("error"))
-		err := unit.DeleteProduct(context.Background(), req)
+		_, err := unit.DeleteProduct(context.Background(), req)
 		assert.NotNil(t, err)
 	})
 	t.Run("uc returns no error should return no error", func(t *testing.T) {
 		begin(t)
 		defer finish()
 		productUC.EXPECT().Delete(req.ID).Return(nil)
-		err := unit.DeleteProduct(context.Background(), req)
+		_, err := unit.DeleteProduct(context.Background(), req)
 		assert.Nil(t, err)
 	})
 }

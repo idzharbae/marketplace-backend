@@ -13,3 +13,7 @@ type Product struct {
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }
+
+func (p *Product) Validate() bool {
+	return p.Quantity >= 0 && p.PricePerKG >= 0 && p.StockKG >= 0
+}

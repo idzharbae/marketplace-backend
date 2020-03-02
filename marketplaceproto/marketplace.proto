@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 import "product.proto";
+import "base.proto";
 
 package marketplaceproto;
 
@@ -10,5 +11,5 @@ service Marketplace {
     rpc GetProductBySlug (GetProductBySlugReq) returns (Product) {}
     rpc CreateProduct (Product) returns (Product) {}
     rpc UpdateProduct (Product) returns (Product) {}
-    rpc DeleteProduct (ProductPKReq) returns (Product) {}
+    rpc DeleteProduct (ProductPKReq) returns (Empty) {}
 }
