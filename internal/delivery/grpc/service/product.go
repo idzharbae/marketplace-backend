@@ -19,10 +19,56 @@ func NewProductService(productUC internal.ProductUC) *ProductService {
 }
 
 func (p *ProductService) ListProducts(ctx context.Context, req *marketplaceproto.ListProductsReq) (*marketplaceproto.ListProductsResp, error) {
-	products, err := p.ProductUC.ListProducts(requests.ListProduct{})
+	ucReq := requests.ListProduct{Pagination: requests.Pagination{
+		Page:  int(req.Pagination.Page),
+		Limit: int(req.Pagination.Limit),
+	}}
+	products, err := p.ProductUC.List(ucReq)
 	productProtos := converter.ProductEntitiesToProtos(products)
+
+	if err != nil {
+		return nil, err
+	}
 
 	return &marketplaceproto.ListProductsResp{
 		Products: productProtos,
-	}, err
+	}, nil
+}
+
+func (p *ProductService) GetProductByID(ctx context.Context, req *marketplaceproto.GetProductByIDReq) (*marketplaceproto.Product, error) {
+	got, err := p.ProductUC.GetByID(req.ID)
+	if err != nil {
+		return nil, err
+	}
+	return converter.ProductEntityToProto(got), nil
+}
+
+func (p *ProductService) GetProductBySlug(ctx context.Context, req *marketplaceproto.GetProductBySlugReq) (*marketplaceproto.Product, error) {
+	got, err := p.ProductUC.GetBySlug(req.Slug)
+	if err != nil {
+		return nil, err
+	}
+	return converter.ProductEntityToProto(got), nil
+}
+
+func (p *ProductService) CreateProduct(ctx context.Context, req *marketplaceproto.Product) (*marketplaceproto.Product, error) {
+	product := converter.ProductProtoToEntity(req)
+	got, err := p.ProductUC.Create(product)
+	if err != nil {
+		return nil, err
+	}
+	return converter.ProductEntityToProto(got), nil
+}
+
+func (p *ProductService) UpdateProduct(ctx context.Context, req *marketplaceproto.Product) (*marketplaceproto.Product, error) {
+	product := converter.ProductProtoToEntity(req)
+	got, err := p.ProductUC.Update(product)
+	if err != nil {
+		return nil, err
+	}
+	return converter.ProductEntityToProto(got), nil
+}
+
+func (p *ProductService) DeleteProduct(ctx context.Context, req *marketplaceproto.ProductPKReq) (*marketplaceproto.Empty, error) {
+	return &marketplaceproto.Empty{}, p.ProductUC.Delete(req.ID)
 }

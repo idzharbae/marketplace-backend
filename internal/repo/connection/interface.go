@@ -6,6 +6,7 @@ import (
 )
 
 // Gormw is an interface which DB implements
+//go:generate mockgen -destination=gormmock/connection.go -package=gormmock github.com/idzharbae/marketplace-backend/internal/repo/connection Gormw
 type Gormw interface {
 	Close() error
 	DB() *sql.DB

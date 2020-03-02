@@ -9,6 +9,7 @@ import (
 
 type Repos struct {
 	ProductReader internal.ProductReader
+	ProductWriter internal.ProductWriter
 }
 
 func NewRepos(cfg config.Config) *Repos {
@@ -17,8 +18,10 @@ func NewRepos(cfg config.Config) *Repos {
 		panic(err)
 	}
 	productReader := repo.NewProductReader(connMaster)
+	productWriter := repo.NewProductWriter(connMaster)
 	return &Repos{
 		ProductReader: productReader,
+		ProductWriter: productWriter,
 	}
 }
 

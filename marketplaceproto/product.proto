@@ -23,3 +23,15 @@ message ListProductsReq {
 message ListProductsResp {
     repeated Product Products = 1;
 }
+
+message GetProductByIDReq {
+    int32 ID = 1;
+}
+
+message GetProductBySlugReq {
+    string slug = 1;
+}
+
+message ProductPKReq {
+    int32 ID = 1;
+}

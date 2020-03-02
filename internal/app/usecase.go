@@ -11,7 +11,7 @@ type UseCases struct {
 
 func NewUsecase(repos *Repos) *UseCases {
 	return &UseCases{
-		usecase.NewProductUC(repos.ProductReader),
+		usecase.NewProductUC(repos.ProductReader, repos.ProductWriter),
 	}
 }
 
