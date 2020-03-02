@@ -1,5 +1,5 @@
 CREATE TABLE product(
-    id serial NOT NULL,
+    id serial NOT NULL PRIMARY KEY,
 	shop_id INTEGER,
 	name VARCHAR(400),
 	slug VARCHAR(400),

@@ -38,8 +38,6 @@ func ProductEntityToModel(p entity.Product) model.Product {
 		Quantity:   p.Quantity,
 		PricePerKG: p.PricePerKG,
 		StockKG:    p.StockKG,
-		CreatedAt:  p.CreatedAt,
-		UpdatedAt:  p.UpdatedAt,
 	}
 }
 

@@ -70,5 +70,5 @@ func (p *ProductService) UpdateProduct(ctx context.Context, req *marketplaceprot
 }
 
 func (p *ProductService) DeleteProduct(ctx context.Context, req *marketplaceproto.ProductPKReq) (*marketplaceproto.Empty, error) {
-	return nil, p.ProductUC.Delete(req.ID)
+	return &marketplaceproto.Empty{}, p.ProductUC.Delete(req.ID)
 }
