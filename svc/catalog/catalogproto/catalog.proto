@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+import "product.proto";
+import "shop.proto";
+import "base.proto";
+
+package catalogproto;
+
+service MarketplaceCatalog {
+    // Product
+    rpc ListProducts (ListProductsReq) returns (ListProductsResp) {}
+    rpc GetProductByID (GetProductByIDReq) returns (Product) {}
+    rpc GetProductBySlug (GetProductBySlugReq) returns (Product) {}
+    rpc CreateProduct (Product) returns (Product) {}
+    rpc UpdateProduct (Product) returns (Product) {}
+    rpc DeleteProduct (ProductPKReq) returns (Empty) {}
+
+    // Shop
+    rpc ListShops(ListShopsReq) returns (ListShopsResp) {}
+    rpc GetShopByID(GetShopByPKReq) returns (Shop) {}
+    rpc GetShopBySlug(GetShopBySlugReq) returns (Shop) {}
+
+    rpc CreateShop(Shop) returns (Shop) {}
+    rpc UpdateShop(Shop) returns (Shop) {}
+    rpc DeleteShop(Shop) returns(Empty) {}
+}
+
+message ListProductsReq {
+    Pagination pagination = 1;
+}
+
+message ListProductsResp {
+    repeated Product products = 1;
+}
+
+message GetProductByIDReq {
+    int32 id = 1;
+}
+
+message GetProductBySlugReq {
+    string slug = 1;
+}
+
+message ProductPKReq {
+    int32 id = 1;
+}
+
+message ListShopsReq {
+    Pagination pagination = 1;
+}
+
+message ListShopsResp {
+    repeated Shop shops = 1;
+}
+
+message GetShopByPKReq {
+    int32 id = 1;
+}
+
+message GetShopBySlugReq {
+    string slug = 1;
+}
