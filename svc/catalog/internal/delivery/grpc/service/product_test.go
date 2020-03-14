@@ -32,8 +32,8 @@ func TestProductService_ListProducts(t *testing.T) {
 		begin(t)
 		defer finish()
 
-		req := &marketplaceproto.ListProductsReq{
-			Pagination: &marketplaceproto.Pagination{
+		req := &catalogproto.ListProductsReq{
+			Pagination: &catalogproto.Pagination{
 				Page:  1,
 				Limit: 10,
 			},
@@ -50,8 +50,8 @@ func TestProductService_ListProducts(t *testing.T) {
 		begin(t)
 		defer finish()
 
-		req := &marketplaceproto.ListProductsReq{
-			Pagination: &marketplaceproto.Pagination{
+		req := &catalogproto.ListProductsReq{
+			Pagination: &catalogproto.Pagination{
 				Page:  1,
 				Limit: 10,
 			},
@@ -91,10 +91,10 @@ func TestProductService_GetProductByID(t *testing.T) {
 		begin(t)
 		defer finish()
 
-		req := &marketplaceproto.GetProductByIDReq{
-			ID: 1,
+		req := &catalogproto.GetProductByIDReq{
+			Id: 1,
 		}
-		productUC.EXPECT().GetByID(req.ID).Return(entity.Product{}, errors.New("error"))
+		productUC.EXPECT().GetByID(req.GetId()).Return(entity.Product{}, errors.New("error"))
 
 		got, err := unit.GetProductByID(context.Background(), req)
 		assert.NotNil(t, err)
@@ -104,10 +104,10 @@ func TestProductService_GetProductByID(t *testing.T) {
 		begin(t)
 		defer finish()
 
-		req := &marketplaceproto.GetProductByIDReq{
-			ID: 2,
+		req := &catalogproto.GetProductByIDReq{
+			Id: 2,
 		}
-		productUC.EXPECT().GetByID(req.ID).Return(entity.Product{ID: req.ID}, nil)
+		productUC.EXPECT().GetByID(req.GetId()).Return(entity.Product{ID: req.GetId()}, nil)
 
 		got, err := unit.GetProductByID(context.Background(), req)
 
@@ -134,7 +134,7 @@ func TestProductService_GetProductBySlug(t *testing.T) {
 		begin(t)
 		defer finish()
 
-		req := &marketplaceproto.GetProductBySlugReq{
+		req := &catalogproto.GetProductBySlugReq{
 			Slug: "slug-1",
 		}
 		productUC.EXPECT().GetBySlug(req.Slug).Return(entity.Product{}, errors.New("error"))
@@ -147,7 +147,7 @@ func TestProductService_GetProductBySlug(t *testing.T) {
 		begin(t)
 		defer finish()
 
-		req := &marketplaceproto.GetProductBySlugReq{
+		req := &catalogproto.GetProductBySlugReq{
 			Slug: "slug-2",
 		}
 		productUC.EXPECT().GetBySlug(req.Slug).Return(entity.Product{ID: 1, Slug: req.Slug}, nil)
@@ -164,15 +164,15 @@ func TestProductService_CreateUpdateProduct(t *testing.T) {
 		productUC *ucmock.MockProductUC
 		ctrl      *gomock.Controller
 		unit      *ProductService
-		req       *marketplaceproto.Product
+		req       *catalogproto.Product
 	)
 	begin := func(t *testing.T) {
-		req = &marketplaceproto.Product{
-			ShopID:     1,
+		req = &catalogproto.Product{
+			ShopId:     1,
 			Name:       "test",
 			Quantity:   rand.Int31(),
-			PricePerKG: rand.Int31(),
-			StockKG:    rand.Float32(),
+			PricePerKg: rand.Int31(),
+			StockKg:    rand.Float32(),
 			Slug:       "slugname",
 		}
 		ctrl = gomock.NewController(t)
@@ -227,10 +227,10 @@ func TestProductService_DeleteProduct(t *testing.T) {
 		productUC *ucmock.MockProductUC
 		ctrl      *gomock.Controller
 		unit      *ProductService
-		req       *catalogproto.ProductPKReq
+		req       *catalogproto.PKReq
 	)
 	begin := func(t *testing.T) {
-		req = &catalogproto.ProductPKReq{Id: rand.Int31()}
+		req = &catalogproto.PKReq{Id: rand.Int31()}
 		ctrl = gomock.NewController(t)
 		productUC = ucmock.NewMockProductUC(ctrl)
 		unit = NewProductService(productUC)

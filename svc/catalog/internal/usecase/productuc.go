@@ -21,6 +21,9 @@ func (p *Product) Create(product entity.Product) (entity.Product, error) {
 		return entity.Product{}, errors.WithPrefix(err, op)
 	}
 	product.ID = 0
+	if product.ShopID == 0 {
+		return entity.Product{}, errors.NewWithPrefix("shop id should not be 0", op)
+	}
 	return p.ProductWriter.Create(product)
 }
 func (p *Product) Update(product entity.Product) (entity.Product, error) {
@@ -30,6 +33,9 @@ func (p *Product) Update(product entity.Product) (entity.Product, error) {
 	}
 	if product.ID == 0 {
 		return entity.Product{}, errors.NewWithPrefix("product ID can't be 0", op)
+	}
+	if product.ShopID == 0 {
+		return entity.Product{}, errors.NewWithPrefix("shop id should not be 0", op)
 	}
 	return p.ProductWriter.Update(product)
 }

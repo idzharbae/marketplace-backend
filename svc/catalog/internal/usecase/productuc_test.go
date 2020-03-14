@@ -14,7 +14,7 @@ type ProductUCTest struct {
 	Reader *repomock.MockProductReader
 	Writer *repomock.MockProductWriter
 	Ctrl   *gomock.Controller
-	Unit   *ProductUC
+	Unit   *Product
 }
 
 func NewProductUCTest() *ProductUCTest {
@@ -25,7 +25,7 @@ func (p *ProductUCTest) Begin(t *testing.T) {
 	p.Ctrl = gomock.NewController(t)
 	p.Reader = repomock.NewMockProductReader(p.Ctrl)
 	p.Writer = repomock.NewMockProductWriter(p.Ctrl)
-	p.Unit = NewProductUC(p.Reader, p.Writer)
+	p.Unit = NewProduct(p.Reader, p.Writer)
 }
 
 func (p *ProductUCTest) Finish() {
@@ -116,45 +116,5 @@ func TestProductUC_GetBySlug(t *testing.T) {
 		got, err := test.Unit.GetBySlug(slug)
 		assert.Nil(t, err)
 		assert.Equal(t, slug, got.Slug)
-	})
-}
-
-func TestProductUC_Create(t *testing.T) {
-	test := NewProductUCTest()
-	t.Run("given negative quantity, price, or stock should return error", func(t *testing.T) {
-		test.Begin(t)
-		defer test.Finish()
-		reqs := []entity.Product{
-			{ID: 1, Quantity: -1},
-			{ID: 1, PricePerKG: -1},
-			{ID: 1, StockKG: -1},
-		}
-		for _, req := range reqs {
-			got, err := test.Unit.Create(req)
-
-			assert.NotNil(t, err)
-			assert.Equal(t, entity.Product{}, got)
-		}
-	})
-	t.Run("repo returns error, should return error", func(t *testing.T) {
-		test.Begin(t)
-		defer test.Finish()
-		req := entity.Product{ID: 1}
-		test.Writer.EXPECT().Create(req).Return(entity.Product{}, errors.New("error"))
-
-		got, err := test.Unit.Create(req)
-		assert.NotNil(t, err)
-		assert.Equal(t, entity.Product{}, got)
-	})
-	t.Run("repo returns no error, shoul return corresponding entity", func(t *testing.T) {
-		test.Begin(t)
-		defer test.Finish()
-		req := entity.Product{ID: 1}
-		test.Writer.EXPECT().Create(req).Return(entity.Product{ID: 3}, nil)
-
-		got, err := test.Unit.Create(req)
-
-		assert.Nil(t, err)
-		assert.NotEqual(t, entity.Product{}, got)
 	})
 }

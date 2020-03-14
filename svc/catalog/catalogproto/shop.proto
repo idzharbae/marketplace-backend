@@ -8,14 +8,15 @@ message Shop {
     int32 id = 1;
     string name = 2;
     string address = 3;
-    GPS location = 4;
-    repeated Product products = 5;
+    string slug = 4;
+    GPS location = 5;
+    repeated Product products = 6;
     int64 created_at = 7;
     int64 updated_at =8;
 }
 
 message GPS {
-    float latitude = 1;
-    float longitude = 2;
+    double latitude = 1;
+    double longitude = 2;
 }
 

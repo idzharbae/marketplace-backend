@@ -10,6 +10,7 @@ type Shop struct {
 	Address   string
 	Longitude float64
 	Latitude  float64
+	Slug      string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	Products  []Product

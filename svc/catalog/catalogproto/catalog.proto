@@ -13,7 +13,7 @@ service MarketplaceCatalog {
     rpc GetProductBySlug (GetProductBySlugReq) returns (Product) {}
     rpc CreateProduct (Product) returns (Product) {}
     rpc UpdateProduct (Product) returns (Product) {}
-    rpc DeleteProduct (ProductPKReq) returns (Empty) {}
+    rpc DeleteProduct (PKReq) returns (Empty) {}
 
     // Shop
     rpc ListShops(ListShopsReq) returns (ListShopsResp) {}
@@ -22,7 +22,7 @@ service MarketplaceCatalog {
 
     rpc CreateShop(Shop) returns (Shop) {}
     rpc UpdateShop(Shop) returns (Shop) {}
-    rpc DeleteShop(Shop) returns(Empty) {}
+    rpc DeleteShop(PKReq) returns(Empty) {}
 }
 
 message ListProductsReq {
@@ -41,7 +41,7 @@ message GetProductBySlugReq {
     string slug = 1;
 }
 
-message ProductPKReq {
+message PKReq {
     int32 id = 1;
 }
 
