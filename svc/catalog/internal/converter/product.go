@@ -76,3 +76,11 @@ func ProductProtoToEntity(p *catalogproto.Product) entity.Product {
 		UpdatedAt:  time.Unix(p.GetUpdatedAt(), 0),
 	}
 }
+
+func ProductProtosToEntities(ps []*catalogproto.Product) []entity.Product {
+	products := make([]entity.Product, len(ps))
+	for i, p := range ps {
+		products[i] = ProductProtoToEntity(p)
+	}
+	return products
+}
