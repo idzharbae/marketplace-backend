@@ -150,3 +150,45 @@ func TestProductReader_GetBySlug(t *testing.T) {
 		assert.Equal(t, slug, got.Slug)
 	})
 }
+
+func TestProductReader_GetByShopID(t *testing.T) {
+	var (
+		db   *gormmock.MockGormw
+		ctrl *gomock.Controller
+		unit *ProductReader
+	)
+	begin := func(t *testing.T) {
+		ctrl = gomock.NewController(t)
+		db = gormmock.NewMockGormw(ctrl)
+		unit = NewProductReader(db)
+	}
+	finish := func() {
+		ctrl.Finish()
+	}
+	t.Run("db returns error, should return error", func(t *testing.T) {
+		begin(t)
+		defer finish()
+		shopID := int32(1337)
+
+		db.EXPECT().Where("shop_id=?", shopID).Return(db)
+		db.EXPECT().First(gomock.Any()).Return(db)
+		db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := unit.GetByShopID(shopID)
+		assert.NotNil(t, err)
+		assert.Nil(t, got)
+	})
+	t.Run("db returns no error, should return product entity", func(t *testing.T) {
+		begin(t)
+		defer finish()
+		shopID := int32(1337)
+
+		db.EXPECT().Where("shop_id=?", shopID).Return(db)
+		db.EXPECT().First(gomock.Any()).Return(db)
+		db.EXPECT().Error().Return(nil)
+
+		got, err := unit.GetByShopID(shopID)
+		assert.Nil(t, err)
+		assert.NotNil(t, got)
+	})
+}

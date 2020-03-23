@@ -1,1 +1,348 @@
 package usecase
+
+import (
+	"errors"
+	"github.com/golang/mock/gomock"
+	"github.com/idzharbae/marketplace-backend/svc/catalog/internal"
+	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/entity"
+	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/repo/repomock"
+	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/requests"
+	"github.com/stretchr/testify/assert"
+	"testing"
+	"time"
+)
+
+type testShop struct {
+	Ctrl   *gomock.Controller
+	Reader *repomock.MockShopReader
+	Writer *repomock.MockShopWriter
+	Unit   internal.ShopUC
+}
+
+func newTestShop() *testShop {
+	return &testShop{}
+}
+
+func (ts *testShop) Begin(t *testing.T) {
+	ts.Ctrl = gomock.NewController(t)
+	ts.Reader = repomock.NewMockShopReader(ts.Ctrl)
+	ts.Writer = repomock.NewMockShopWriter(ts.Ctrl)
+	ts.Unit = NewShop(ts.Reader, ts.Writer)
+}
+
+func (ts *testShop) Finish() {
+	ts.Ctrl.Finish()
+}
+
+func (ts *testShop) GetSampleShop() entity.Shop {
+	return entity.Shop{
+		ID:       13,
+		Name:     "test",
+		Address:  "asdf",
+		Slug:     "asdfg",
+		Location: entity.GPS{Latitude: 14.9, Longitude: 13.37},
+		Products: []entity.Product{
+			{
+				ID:   1,
+				Name: "test",
+				Slug: "test",
+			},
+		},
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+	}
+}
+
+func TestShop_GetByID(t *testing.T) {
+	test := newTestShop()
+	t.Run("given ID <= 0 should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		shopID := int32(-1)
+
+		got, err := test.Unit.GetByID(shopID)
+		assert.Equal(t, entity.Shop{}, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("repo returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		shopID := int32(1337)
+
+		test.Reader.EXPECT().GetByID(shopID).Return(entity.Shop{}, errors.New("error"))
+
+		got, err := test.Unit.GetByID(shopID)
+		assert.Equal(t, entity.Shop{}, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("repo returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		shopID := int32(1337)
+
+		test.Reader.EXPECT().GetByID(shopID).Return(entity.Shop{ID: 1337}, nil)
+
+		got, err := test.Unit.GetByID(shopID)
+		assert.Equal(t, int32(1337), got.ID)
+		assert.Nil(t, err)
+	})
+}
+
+func TestShop_GetBySlug(t *testing.T) {
+	test := newTestShop()
+	t.Run("given empty slug should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		slug := ""
+
+		got, err := test.Unit.GetBySlug(slug)
+		assert.Equal(t, entity.Shop{}, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("repo returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		slug := "slug"
+
+		test.Reader.EXPECT().GetBySlug(slug).Return(entity.Shop{}, errors.New("error"))
+
+		got, err := test.Unit.GetBySlug(slug)
+		assert.Equal(t, entity.Shop{}, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("repo returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		slug := "slug"
+
+		test.Reader.EXPECT().GetBySlug(slug).Return(entity.Shop{ID: 1337, Slug: slug}, nil)
+
+		got, err := test.Unit.GetBySlug(slug)
+		assert.Equal(t, slug, got.Slug)
+		assert.Nil(t, err)
+	})
+}
+
+func TestShop_List(t *testing.T) {
+	test := newTestShop()
+	t.Run("given negative limit should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		req := requests.ListShop{Pagination: requests.Pagination{
+			Page:  3,
+			Limit: -1,
+		}}
+		got, err := test.Unit.List(req)
+		assert.Nil(t, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("given negative page should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		req := requests.ListShop{Pagination: requests.Pagination{
+			Page:  -2,
+			Limit: 10,
+		}}
+		got, err := test.Unit.List(req)
+		assert.Nil(t, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("repo returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := requests.ListShop{Pagination: requests.Pagination{
+			Page:  2,
+			Limit: 10,
+		}}
+
+		test.Reader.EXPECT().List(req).Return(nil, errors.New("error"))
+
+		got, err := test.Unit.List(req)
+		assert.Nil(t, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("repo returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := requests.ListShop{Pagination: requests.Pagination{
+			Page:  2,
+			Limit: 10,
+		}}
+
+		test.Reader.EXPECT().List(req).Return([]entity.Shop{
+			{ID: 1337},
+			{ID: 1338},
+		}, nil)
+
+		got, err := test.Unit.List(req)
+		assert.NotNil(t, got)
+		assert.Equal(t, 2, len(got))
+		assert.Nil(t, err)
+	})
+}
+
+func TestShop_Create(t *testing.T) {
+	test := newTestShop()
+	t.Run("given invalid input should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		var shops []entity.Shop
+		validShop := test.GetSampleShop()
+
+		shop := validShop
+		shop.Name = ""
+		shops = append(shops, shop)
+
+		shop = validShop
+		shop.Slug = ""
+		shops = append(shops, shop)
+
+		shop = validShop
+		shop.Products[0].Name = ""
+		shops = append(shops, shop)
+
+		shop = validShop
+		shop.Products[0].Slug = ""
+		shops = append(shops, shop)
+
+		shop = validShop
+		shop.Products[0].PricePerKG = -1
+		shops = append(shops, shop)
+
+		shop = validShop
+		shop.Products[0].StockKG = -1
+		shops = append(shops, shop)
+
+		shop = validShop
+		shop.Products[0].Quantity = -1
+		shops = append(shops, shop)
+
+		for _, item := range shops {
+			got, err := test.Unit.Create(item)
+			assert.Equal(t, entity.Shop{}, got)
+			assert.NotNil(t, err)
+		}
+
+	})
+	t.Run("given shop or products with ID should set ID to 0", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := test.GetSampleShop()
+
+		test.Writer.EXPECT().Create(gomock.Any()).DoAndReturn(func(shop entity.Shop) (entity.Shop, error) {
+			assert.Equal(t, int32(0), shop.ID)
+			for _, item := range shop.Products {
+				assert.Equal(t, int32(0), item.ID)
+			}
+			return entity.Shop{}, nil
+		})
+
+		test.Unit.Create(req)
+	})
+	t.Run("repo returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := test.GetSampleShop()
+
+		test.Writer.EXPECT().Create(gomock.Any()).Return(entity.Shop{}, errors.New("error"))
+
+		got, err := test.Unit.Create(req)
+		assert.Equal(t, entity.Shop{}, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("repo returns no error, should return no error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := test.GetSampleShop()
+
+		test.Writer.EXPECT().Create(gomock.Any()).Return(entity.Shop{ID: 1}, nil)
+
+		got, err := test.Unit.Create(req)
+		assert.NotEqual(t, entity.Shop{}, got)
+		assert.Nil(t, err)
+	})
+}
+
+func TestShop_Update(t *testing.T) {
+	test := newTestShop()
+	t.Run("given invalid input should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		var shops []entity.Shop
+		validShop := test.GetSampleShop()
+
+		shop := validShop
+		shop.Name = ""
+		shops = append(shops, shop)
+
+		shop = validShop
+		shop.Slug = ""
+		shops = append(shops, shop)
+
+		shop = validShop
+		shop.Products[0].Name = ""
+		shops = append(shops, shop)
+
+		shop = validShop
+		shop.Products[0].Slug = ""
+		shops = append(shops, shop)
+
+		shop = validShop
+		shop.Products[0].PricePerKG = -1
+		shops = append(shops, shop)
+
+		shop = validShop
+		shop.Products[0].StockKG = -1
+		shops = append(shops, shop)
+
+		shop = validShop
+		shop.Products[0].Quantity = -1
+		shops = append(shops, shop)
+
+		for _, item := range shops {
+			got, err := test.Unit.Update(item)
+			assert.Equal(t, entity.Shop{}, got)
+			assert.NotNil(t, err)
+		}
+
+	})
+	t.Run("IDs should not be 0", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := test.GetSampleShop()
+
+		test.Writer.EXPECT().Update(gomock.Any()).DoAndReturn(func(shop entity.Shop) (entity.Shop, error) {
+			assert.NotEqual(t, int32(0), shop.ID)
+			for _, item := range shop.Products {
+				assert.NotEqual(t, int32(0), item.ID)
+			}
+			return entity.Shop{}, nil
+		})
+
+		test.Unit.Update(req)
+	})
+	t.Run("repo returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := test.GetSampleShop()
+
+		test.Writer.EXPECT().Update(gomock.Any()).Return(entity.Shop{}, errors.New("error"))
+
+		got, err := test.Unit.Update(req)
+		assert.Equal(t, entity.Shop{}, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("repo returns no error, should return no error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := test.GetSampleShop()
+
+		test.Writer.EXPECT().Update(gomock.Any()).Return(entity.Shop{ID: 1}, nil)
+
+		got, err := test.Unit.Update(req)
+		assert.NotEqual(t, entity.Shop{}, got)
+		assert.Nil(t, err)
+	})
+}

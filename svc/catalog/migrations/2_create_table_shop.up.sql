@@ -4,6 +4,7 @@ CREATE TABLE shop (
 	address VARCHAR(300),
 	longitude numeric(28,4),
 	latitude numeric(28,4),
+	slug varchar(300),
 	created_at timestamptz,
 	updated_at timestamptz
 );
