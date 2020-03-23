@@ -13,8 +13,8 @@ func ShopEntityToProto(s entity.Shop) *catalogproto.Shop {
 		Name:    s.Name,
 		Address: s.Address,
 		Location: &catalogproto.GPS{
-			Latitude:  s.Location.Latitude,
-			Longitude: s.Location.Longitude,
+			Latitude:  float32(s.Location.Latitude),
+			Longitude: float32(s.Location.Longitude),
 		},
 		Products:  ProductEntitiesToProtos(s.Products),
 		CreatedAt: s.CreatedAt.Unix(),
@@ -28,8 +28,8 @@ func ShopProtoToEntity(s *catalogproto.Shop) entity.Shop {
 		Name:    s.GetName(),
 		Address: s.GetAddress(),
 		Location: entity.GPS{
-			Latitude:  s.GetLocation().GetLatitude(),
-			Longitude: s.GetLocation().GetLongitude(),
+			Latitude:  float64(s.GetLocation().GetLatitude()),
+			Longitude: float64(s.GetLocation().GetLongitude()),
 		},
 		Products:  ProductProtosToEntities(s.GetProducts()),
 		CreatedAt: time.Unix(s.GetCreatedAt(), 0),
