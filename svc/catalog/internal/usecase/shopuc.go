@@ -90,15 +90,9 @@ func (s *Shop) Delete(shop entity.Shop) error {
 }
 
 func (s *Shop) validateShopInput(shop entity.Shop) error {
-	if err := shop.Validate(); err != nil {
-		return err
-	}
-	return shop.ValidateProducts()
+	return shop.Validate()
 }
 
 func (s *Shop) assertIDsNotZero(shop entity.Shop) error {
-	if err := shop.AssertNotZeroID(); err != nil {
-		return err
-	}
-	return shop.AssertProductsNotZeroID()
+	return shop.AssertNotZeroID()
 }

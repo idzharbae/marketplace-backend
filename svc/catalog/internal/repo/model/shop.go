@@ -14,3 +14,7 @@ type Shop struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
+
+func (c Shop) TableName() string {
+	return "shop"
+}

@@ -208,26 +208,6 @@ func TestShop_Create(t *testing.T) {
 		shop.Slug = ""
 		shops = append(shops, shop)
 
-		shop = newShop(validShop)
-		shop.Products[0].Name = ""
-		shops = append(shops, shop)
-
-		shop = newShop(validShop)
-		shop.Products[0].Slug = ""
-		shops = append(shops, shop)
-
-		shop = newShop(validShop)
-		shop.Products[0].PricePerKG = -1
-		shops = append(shops, shop)
-
-		shop = newShop(validShop)
-		shop.Products[0].StockKG = -1
-		shops = append(shops, shop)
-
-		shop = newShop(validShop)
-		shop.Products[0].Quantity = -1
-		shops = append(shops, shop)
-
 		for _, item := range shops {
 			got, err := test.Unit.Create(item)
 			assert.Equal(t, entity.Shop{}, got)
@@ -294,25 +274,6 @@ func TestShop_Update(t *testing.T) {
 		shop.ID = 0
 		shops = append(shops, shop)
 
-		shop = newShop(validShop)
-		shop.Products[0].Name = ""
-		shops = append(shops, shop)
-
-		shop = newShop(validShop)
-		shop.Products[0].Slug = ""
-		shops = append(shops, shop)
-
-		shop = newShop(validShop)
-		shop.Products[0].PricePerKG = -1
-		shops = append(shops, shop)
-
-		shop = newShop(validShop)
-		shop.Products[0].StockKG = -1
-		shops = append(shops, shop)
-
-		shop = newShop(validShop)
-		shop.Products[0].Quantity = -1
-		shops = append(shops, shop)
 		for _, item := range shops {
 			got, err := test.Unit.Update(item)
 			assert.Equal(t, entity.Shop{}, got)
@@ -419,19 +380,6 @@ func newShop(shop entity.Shop) entity.Shop {
 		Location: entity.GPS{
 			Latitude:  shop.Location.Latitude,
 			Longitude: shop.Location.Longitude,
-		},
-		Products: []entity.Product{
-			{
-				ID:         shop.Products[0].ID,
-				ShopID:     shop.ID,
-				Name:       shop.Products[0].Name,
-				Slug:       shop.Products[0].Slug,
-				Quantity:   shop.Products[0].Quantity,
-				PricePerKG: shop.Products[0].PricePerKG,
-				StockKG:    shop.Products[0].StockKG,
-				CreatedAt:  shop.Products[0].CreatedAt,
-				UpdatedAt:  shop.Products[0].UpdatedAt,
-			},
 		},
 		CreatedAt: shop.CreatedAt,
 		UpdatedAt: shop.UpdatedAt,

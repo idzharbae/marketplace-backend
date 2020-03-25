@@ -57,7 +57,7 @@ func (s *ShopService) CreateShop(ctx context.Context, in *catalogproto.Shop) (*c
 	if in == nil {
 		return nil, status.Error(codes.InvalidArgument, "parameter should not be nil")
 	}
-	res, err := s.shopUC.Create(entity.Shop{})
+	res, err := s.shopUC.Create(converter.ShopProtoToEntity(in))
 	if err != nil {
 		return nil, err
 	}

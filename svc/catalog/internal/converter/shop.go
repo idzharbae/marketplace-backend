@@ -25,6 +25,7 @@ func ShopEntityToProto(s entity.Shop) *catalogproto.Shop {
 func ShopProtoToEntity(s *catalogproto.Shop) entity.Shop {
 	return entity.Shop{
 		ID:      s.GetId(),
+		Slug:    s.GetSlug(),
 		Name:    s.GetName(),
 		Address: s.GetAddress(),
 		Location: entity.GPS{
