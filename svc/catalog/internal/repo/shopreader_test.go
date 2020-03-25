@@ -127,7 +127,7 @@ func TestShopReader_List(t *testing.T) {
 		test.DB.EXPECT().Limit(req.Pagination.Limit).Return(test.DB)
 		test.DB.EXPECT().Find(gomock.Any()).Return(test.DB)
 		test.DB.EXPECT().Error().Return(nil)
-		test.Unit.List(req)
+		test.Unit.ListAll(req.Pagination)
 	})
 	t.Run("given page > 1 should exec offset", func(t *testing.T) {
 		test.Begin(t)
@@ -140,7 +140,7 @@ func TestShopReader_List(t *testing.T) {
 		test.DB.EXPECT().Offset((req.Pagination.Page - 1) * req.Pagination.Limit).Return(test.DB)
 		test.DB.EXPECT().Find(gomock.Any()).Return(test.DB)
 		test.DB.EXPECT().Error().Return(nil)
-		test.Unit.List(req)
+		test.Unit.ListAll(req.Pagination)
 	})
 	t.Run("db returns error, should return error", func(t *testing.T) {
 		test.Begin(t)
@@ -155,7 +155,7 @@ func TestShopReader_List(t *testing.T) {
 		test.DB.EXPECT().Find(gomock.Any()).Return(test.DB)
 		test.DB.EXPECT().Error().Return(errors.New("error"))
 
-		got, err := test.Unit.List(req)
+		got, err := test.Unit.ListAll(req.Pagination)
 		assert.Nil(t, got)
 		assert.NotNil(t, err)
 	})
@@ -186,7 +186,7 @@ func TestShopReader_List(t *testing.T) {
 		})
 		test.DB.EXPECT().Error().Return(nil)
 
-		got, err := test.Unit.List(req)
+		got, err := test.Unit.ListAll(req.Pagination)
 		assert.NotNil(t, got)
 		assert.Nil(t, err)
 		assert.Equal(t, req.Pagination.Limit, len(got))

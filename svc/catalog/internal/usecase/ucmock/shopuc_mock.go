@@ -50,7 +50,7 @@ func (mr *MockShopUCMockRecorder) Create(arg0 interface{}) *gomock.Call {
 }
 
 // Delete mocks base method
-func (m *MockShopUC) Delete(arg0 int32) error {
+func (m *MockShopUC) Delete(arg0 entity.Shop) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Delete", arg0)
 	ret0, _ := ret[0].(error)
@@ -63,34 +63,19 @@ func (mr *MockShopUCMockRecorder) Delete(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockShopUC)(nil).Delete), arg0)
 }
 
-// GetByID mocks base method
-func (m *MockShopUC) GetByID(arg0 int32) (entity.Shop, error) {
+// Get mocks base method
+func (m *MockShopUC) Get(arg0 entity.Shop) (entity.Shop, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetByID", arg0)
+	ret := m.ctrl.Call(m, "Get", arg0)
 	ret0, _ := ret[0].(entity.Shop)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetByID indicates an expected call of GetByID
-func (mr *MockShopUCMockRecorder) GetByID(arg0 interface{}) *gomock.Call {
+// Get indicates an expected call of Get
+func (mr *MockShopUCMockRecorder) Get(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockShopUC)(nil).GetByID), arg0)
-}
-
-// GetBySlug mocks base method
-func (m *MockShopUC) GetBySlug(arg0 string) (entity.Shop, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetBySlug", arg0)
-	ret0, _ := ret[0].(entity.Shop)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetBySlug indicates an expected call of GetBySlug
-func (mr *MockShopUCMockRecorder) GetBySlug(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBySlug", reflect.TypeOf((*MockShopUC)(nil).GetBySlug), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockShopUC)(nil).Get), arg0)
 }
 
 // List mocks base method

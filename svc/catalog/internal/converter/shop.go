@@ -13,8 +13,8 @@ func ShopEntityToProto(s entity.Shop) *catalogproto.Shop {
 		Name:    s.Name,
 		Address: s.Address,
 		Location: &catalogproto.GPS{
-			Latitude:  float32(s.Location.Latitude),
-			Longitude: float32(s.Location.Longitude),
+			Latitude:  s.Location.Latitude,
+			Longitude: s.Location.Longitude,
 		},
 		Products:  ProductEntitiesToProtos(s.Products),
 		CreatedAt: s.CreatedAt.Unix(),
@@ -28,8 +28,8 @@ func ShopProtoToEntity(s *catalogproto.Shop) entity.Shop {
 		Name:    s.GetName(),
 		Address: s.GetAddress(),
 		Location: entity.GPS{
-			Latitude:  float64(s.GetLocation().GetLatitude()),
-			Longitude: float64(s.GetLocation().GetLongitude()),
+			Latitude:  s.GetLocation().GetLatitude(),
+			Longitude: s.GetLocation().GetLongitude(),
 		},
 		Products:  ProductProtosToEntities(s.GetProducts()),
 		CreatedAt: time.Unix(s.GetCreatedAt(), 0),
@@ -55,7 +55,6 @@ func ShopModelToEntity(s model.Shop) entity.Shop {
 			Latitude:  s.Latitude,
 			Longitude: s.Longitude,
 		},
-		Products:  ProductModelsToEntities(s.Products),
 		CreatedAt: s.CreatedAt,
 		UpdatedAt: s.UpdatedAt,
 	}
@@ -67,4 +66,17 @@ func ShopModelsToEntities(ss []model.Shop) []entity.Shop {
 		shops[i] = ShopModelToEntity(item)
 	}
 	return shops
+}
+
+func ShopEntityToModel(s entity.Shop) model.Shop {
+	return model.Shop{
+		ID:        int64(s.ID),
+		Name:      s.Name,
+		Address:   s.Address,
+		Longitude: s.Location.Longitude,
+		Latitude:  s.Location.Latitude,
+		Slug:      s.Slug,
+		CreatedAt: s.CreatedAt,
+		UpdatedAt: s.UpdatedAt,
+	}
 }

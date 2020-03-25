@@ -9,36 +9,33 @@ package catalogproto;
 service MarketplaceCatalog {
     // Product
     rpc ListProducts (ListProductsReq) returns (ListProductsResp) {}
-    rpc GetProductByID (GetProductByIDReq) returns (Product) {}
-    rpc GetProductBySlug (GetProductBySlugReq) returns (Product) {}
+    rpc GetProduct (GetProductReq) returns (Product) {}
+
     rpc CreateProduct (Product) returns (Product) {}
     rpc UpdateProduct (Product) returns (Product) {}
-    rpc DeleteProduct (PKReq) returns (Empty) {}
+    rpc DeleteProduct (GetProductReq) returns (Empty) {}
 
     // Shop
     rpc ListShops(ListShopsReq) returns (ListShopsResp) {}
-    rpc GetShopByID(GetShopByPKReq) returns (Shop) {}
-    rpc GetShopBySlug(GetShopBySlugReq) returns (Shop) {}
+    rpc GetShop(GetShopReq) returns (Shop) {}
 
     rpc CreateShop(Shop) returns (Shop) {}
     rpc UpdateShop(Shop) returns (Shop) {}
-    rpc DeleteShop(PKReq) returns(Empty) {}
+    rpc DeleteShop(GetShopReq) returns(Empty) {}
 }
 
 message ListProductsReq {
-    Pagination pagination = 1;
+    int32 shopID = 1;
+    Pagination pagination = 2;
 }
 
 message ListProductsResp {
     repeated Product products = 1;
 }
 
-message GetProductByIDReq {
+message GetProductReq {
     int32 id = 1;
-}
-
-message GetProductBySlugReq {
-    string slug = 1;
+    string slug = 2;
 }
 
 message PKReq {
@@ -53,10 +50,7 @@ message ListShopsResp {
     repeated Shop shops = 1;
 }
 
-message GetShopByPKReq {
+message GetShopReq {
     int32 id = 1;
-}
-
-message GetShopBySlugReq {
-    string slug = 1;
+    string slug = 2;
 }

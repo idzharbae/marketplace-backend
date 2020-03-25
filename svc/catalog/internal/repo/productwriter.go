@@ -48,7 +48,7 @@ func (pw *ProductWriter) Update(req entity.Product) (entity.Product, error) {
 	return converter.ProductModelToEntity(update), nil
 }
 
-func (pw *ProductWriter) Delete(productID int32) error {
+func (pw *ProductWriter) DeleteByID(productID int32) error {
 	const op = "ProductWriter::Delete()"
 	var found model.Product
 	query := pw.db.Where("id=?", productID).First(&found)
@@ -58,7 +58,24 @@ func (pw *ProductWriter) Delete(productID int32) error {
 	if query.RecordNotFound() {
 		return errors.NewWithPrefix("record not found", op)
 	}
-	err := pw.db.Delete(&model.Product{ID: productID}).Error()
+	err := pw.db.Delete(&model.Product{ID: found.ID}).Error()
+	if err != nil {
+		return errors.WithPrefix(err, op)
+	}
+	return nil
+}
+
+func (pw *ProductWriter) DeleteBySlug(productSlug string) error {
+	const op = "ProductWriter::Delete()"
+	var found model.Product
+	query := pw.db.Where("slug=?", productSlug).First(&found)
+	if err := query.Error(); err != nil {
+		return errors.WithPrefix(err, op)
+	}
+	if query.RecordNotFound() {
+		return errors.NewWithPrefix("record not found", op)
+	}
+	err := pw.db.Delete(&model.Product{ID: found.ID}).Error()
 	if err != nil {
 		return errors.WithPrefix(err, op)
 	}

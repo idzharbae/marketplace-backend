@@ -115,7 +115,7 @@ func TestShopService_GetShopBySlug(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 
-		got, err := test.Unit.GetShopBySlug(test.Ctx, nil)
+		got, err := test.Unit.GetShop(test.Ctx, nil)
 		assert.Nil(t, got)
 		assert.NotNil(t, err)
 	})
@@ -123,10 +123,13 @@ func TestShopService_GetShopBySlug(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		slug := "slug"
+		shop := entity.Shop{
+			Slug: slug,
+		}
 
-		test.UC.EXPECT().GetBySlug(slug).Return(entity.Shop{}, errors.New("error"))
+		test.UC.EXPECT().Get(shop).Return(entity.Shop{}, errors.New("error"))
 
-		got, err := test.Unit.GetShopBySlug(test.Ctx, &catalogproto.GetShopBySlugReq{Slug: slug})
+		got, err := test.Unit.GetShop(test.Ctx, &catalogproto.GetShopReq{Slug: slug})
 		assert.Nil(t, got)
 		assert.NotNil(t, err)
 		assert.Equal(t, "error", err.Error())
@@ -135,10 +138,12 @@ func TestShopService_GetShopBySlug(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		slug := "slug"
+		shop := entity.Shop{
+			Slug: slug,
+		}
+		test.UC.EXPECT().Get(shop).Return(entity.Shop{ID: 1337, Name: "test", Slug: slug}, nil)
 
-		test.UC.EXPECT().GetBySlug(slug).Return(entity.Shop{ID: 1337, Name: "test", Slug: slug}, nil)
-
-		got, err := test.Unit.GetShopBySlug(test.Ctx, &catalogproto.GetShopBySlugReq{Slug: slug})
+		got, err := test.Unit.GetShop(test.Ctx, &catalogproto.GetShopReq{Slug: slug})
 		assert.NotNil(t, got)
 		assert.Nil(t, err)
 	})
@@ -150,7 +155,7 @@ func TestShopService_GetShopByID(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 
-		got, err := test.Unit.GetShopByID(test.Ctx, nil)
+		got, err := test.Unit.GetShop(test.Ctx, nil)
 		assert.Nil(t, got)
 		assert.NotNil(t, err)
 	})
@@ -158,10 +163,12 @@ func TestShopService_GetShopByID(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		shopID := int32(1337)
+		shop := entity.Shop{
+			ID: shopID,
+		}
+		test.UC.EXPECT().Get(shop).Return(entity.Shop{}, errors.New("error"))
 
-		test.UC.EXPECT().GetByID(shopID).Return(entity.Shop{}, errors.New("error"))
-
-		got, err := test.Unit.GetShopByID(test.Ctx, &catalogproto.GetShopByPKReq{Id: shopID})
+		got, err := test.Unit.GetShop(test.Ctx, &catalogproto.GetShopReq{Id: shopID})
 		assert.Nil(t, got)
 		assert.NotNil(t, err)
 		assert.Equal(t, "error", err.Error())
@@ -170,10 +177,12 @@ func TestShopService_GetShopByID(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		shopID := int32(1337)
+		shop := entity.Shop{
+			ID: shopID,
+		}
+		test.UC.EXPECT().Get(shop).Return(entity.Shop{ID: 1337, Name: "test"}, nil)
 
-		test.UC.EXPECT().GetByID(shopID).Return(entity.Shop{ID: 1337, Name: "test"}, nil)
-
-		got, err := test.Unit.GetShopByID(test.Ctx, &catalogproto.GetShopByPKReq{Id: shopID})
+		got, err := test.Unit.GetShop(test.Ctx, &catalogproto.GetShopReq{Id: shopID})
 		assert.NotNil(t, got)
 		assert.Nil(t, err)
 	})
@@ -278,9 +287,12 @@ func TestShopService_DeleteShop(t *testing.T) {
 		defer test.Finish()
 
 		req := int32(13)
-		test.UC.EXPECT().Delete(req).Return(errors.New("error"))
+		shop := entity.Shop{
+			ID: req,
+		}
+		test.UC.EXPECT().Delete(shop).Return(errors.New("error"))
 
-		got, err := test.Unit.DeleteShop(test.Ctx, &catalogproto.PKReq{Id: req})
+		got, err := test.Unit.DeleteShop(test.Ctx, &catalogproto.GetShopReq{Id: req})
 		assert.Nil(t, got)
 		assert.NotNil(t, err)
 		assert.Equal(t, "error", err.Error())
@@ -290,9 +302,41 @@ func TestShopService_DeleteShop(t *testing.T) {
 		defer test.Finish()
 
 		req := int32(13)
-		test.UC.EXPECT().Delete(req).Return(nil)
+		shop := entity.Shop{
+			ID: req,
+		}
+		test.UC.EXPECT().Delete(shop).Return(nil)
 
-		got, err := test.Unit.DeleteShop(test.Ctx, &catalogproto.PKReq{Id: req})
+		got, err := test.Unit.DeleteShop(test.Ctx, &catalogproto.GetShopReq{Id: req})
+		assert.NotNil(t, got)
+		assert.Nil(t, err)
+	})
+	t.Run("uc returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		req := "asdasf"
+		shop := entity.Shop{
+			Slug: req,
+		}
+		test.UC.EXPECT().Delete(shop).Return(errors.New("error"))
+
+		got, err := test.Unit.DeleteShop(test.Ctx, &catalogproto.GetShopReq{Slug: req})
+		assert.Nil(t, got)
+		assert.NotNil(t, err)
+		assert.Equal(t, "error", err.Error())
+	})
+	t.Run("uc returns success, should return success", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		req := "asdf"
+		shop := entity.Shop{
+			Slug: req,
+		}
+		test.UC.EXPECT().Delete(shop).Return(nil)
+
+		got, err := test.Unit.DeleteShop(test.Ctx, &catalogproto.GetShopReq{Slug: req})
 		assert.NotNil(t, got)
 		assert.Nil(t, err)
 	})

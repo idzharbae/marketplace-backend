@@ -48,18 +48,32 @@ func (mr *MockShopWriterMockRecorder) Create(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockShopWriter)(nil).Create), arg0)
 }
 
-// Delete mocks base method
-func (m *MockShopWriter) Delete(arg0 int32) error {
+// DeleteByID mocks base method
+func (m *MockShopWriter) DeleteByID(arg0 int32) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Delete", arg0)
+	ret := m.ctrl.Call(m, "DeleteByID", arg0)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// Delete indicates an expected call of Delete
-func (mr *MockShopWriterMockRecorder) Delete(arg0 interface{}) *gomock.Call {
+// DeleteByID indicates an expected call of DeleteByID
+func (mr *MockShopWriterMockRecorder) DeleteByID(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockShopWriter)(nil).Delete), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteByID", reflect.TypeOf((*MockShopWriter)(nil).DeleteByID), arg0)
+}
+
+// DeleteBySlug mocks base method
+func (m *MockShopWriter) DeleteBySlug(arg0 string) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "DeleteBySlug", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// DeleteBySlug indicates an expected call of DeleteBySlug
+func (mr *MockShopWriterMockRecorder) DeleteBySlug(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteBySlug", reflect.TypeOf((*MockShopWriter)(nil).DeleteBySlug), arg0)
 }
 
 // Update mocks base method

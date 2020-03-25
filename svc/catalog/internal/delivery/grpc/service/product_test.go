@@ -73,7 +73,7 @@ func TestProductService_ListProducts(t *testing.T) {
 	})
 }
 
-func TestProductService_GetProductByID(t *testing.T) {
+func TestProductService_GetProduct(t *testing.T) {
 	var (
 		productUC *ucmock.MockProductUC
 		ctrl      *gomock.Controller
@@ -91,12 +91,16 @@ func TestProductService_GetProductByID(t *testing.T) {
 		begin(t)
 		defer finish()
 
-		req := &catalogproto.GetProductByIDReq{
+		req := &catalogproto.GetProductReq{
 			Id: 1,
 		}
-		productUC.EXPECT().GetByID(req.GetId()).Return(entity.Product{}, errors.New("error"))
+		productReq := entity.Product{
+			ID:   req.GetId(),
+			Slug: req.GetSlug(),
+		}
+		productUC.EXPECT().Get(productReq).Return(entity.Product{}, errors.New("error"))
 
-		got, err := unit.GetProductByID(context.Background(), req)
+		got, err := unit.GetProduct(context.Background(), req)
 		assert.NotNil(t, err)
 		assert.Nil(t, got)
 	})
@@ -104,12 +108,16 @@ func TestProductService_GetProductByID(t *testing.T) {
 		begin(t)
 		defer finish()
 
-		req := &catalogproto.GetProductByIDReq{
+		req := &catalogproto.GetProductReq{
 			Id: 2,
 		}
-		productUC.EXPECT().GetByID(req.GetId()).Return(entity.Product{ID: req.GetId()}, nil)
+		productReq := entity.Product{
+			ID:   req.GetId(),
+			Slug: req.GetSlug(),
+		}
+		productUC.EXPECT().Get(productReq).Return(entity.Product{ID: req.GetId()}, nil)
 
-		got, err := unit.GetProductByID(context.Background(), req)
+		got, err := unit.GetProduct(context.Background(), req)
 
 		assert.Nil(t, err)
 		assert.NotNil(t, got)
@@ -134,12 +142,16 @@ func TestProductService_GetProductBySlug(t *testing.T) {
 		begin(t)
 		defer finish()
 
-		req := &catalogproto.GetProductBySlugReq{
+		req := &catalogproto.GetProductReq{
 			Slug: "slug-1",
 		}
-		productUC.EXPECT().GetBySlug(req.Slug).Return(entity.Product{}, errors.New("error"))
+		productReq := entity.Product{
+			ID:   req.GetId(),
+			Slug: req.GetSlug(),
+		}
+		productUC.EXPECT().Get(productReq).Return(entity.Product{}, errors.New("error"))
 
-		got, err := unit.GetProductBySlug(context.Background(), req)
+		got, err := unit.GetProduct(context.Background(), req)
 		assert.NotNil(t, err)
 		assert.Nil(t, got)
 	})
@@ -147,12 +159,16 @@ func TestProductService_GetProductBySlug(t *testing.T) {
 		begin(t)
 		defer finish()
 
-		req := &catalogproto.GetProductBySlugReq{
+		req := &catalogproto.GetProductReq{
 			Slug: "slug-2",
 		}
-		productUC.EXPECT().GetBySlug(req.Slug).Return(entity.Product{ID: 1, Slug: req.Slug}, nil)
+		productReq := entity.Product{
+			ID:   req.GetId(),
+			Slug: req.GetSlug(),
+		}
+		productUC.EXPECT().Get(productReq).Return(entity.Product{ID: 1, Slug: req.Slug}, nil)
 
-		got, err := unit.GetProductBySlug(context.Background(), req)
+		got, err := unit.GetProduct(context.Background(), req)
 
 		assert.Nil(t, err)
 		assert.NotNil(t, got)
@@ -227,10 +243,8 @@ func TestProductService_DeleteProduct(t *testing.T) {
 		productUC *ucmock.MockProductUC
 		ctrl      *gomock.Controller
 		unit      *ProductService
-		req       *catalogproto.PKReq
 	)
 	begin := func(t *testing.T) {
-		req = &catalogproto.PKReq{Id: rand.Int31()}
 		ctrl = gomock.NewController(t)
 		productUC = ucmock.NewMockProductUC(ctrl)
 		unit = NewProductService(productUC)
@@ -241,14 +255,48 @@ func TestProductService_DeleteProduct(t *testing.T) {
 	t.Run("uc returns error should return error", func(t *testing.T) {
 		begin(t)
 		defer finish()
-		productUC.EXPECT().Delete(req.GetId()).Return(errors.New("error"))
+		req := &catalogproto.GetProductReq{Id: rand.Int31()}
+		productReq := entity.Product{
+			ID:   req.GetId(),
+			Slug: req.GetSlug(),
+		}
+		productUC.EXPECT().Delete(productReq).Return(errors.New("error"))
 		_, err := unit.DeleteProduct(context.Background(), req)
 		assert.NotNil(t, err)
 	})
 	t.Run("uc returns no error should return no error", func(t *testing.T) {
 		begin(t)
 		defer finish()
-		productUC.EXPECT().Delete(req.GetId()).Return(nil)
+		req := &catalogproto.GetProductReq{Id: rand.Int31()}
+		productReq := entity.Product{
+			ID:   req.GetId(),
+			Slug: req.GetSlug(),
+		}
+		productUC.EXPECT().Delete(productReq).Return(nil)
+		_, err := unit.DeleteProduct(context.Background(), req)
+		assert.Nil(t, err)
+	})
+	t.Run("uc returns error should return error", func(t *testing.T) {
+		begin(t)
+		defer finish()
+		req := &catalogproto.GetProductReq{Slug: "asdf"}
+		productReq := entity.Product{
+			ID:   req.GetId(),
+			Slug: req.GetSlug(),
+		}
+		productUC.EXPECT().Delete(productReq).Return(errors.New("error"))
+		_, err := unit.DeleteProduct(context.Background(), req)
+		assert.NotNil(t, err)
+	})
+	t.Run("uc returns no error should return no error", func(t *testing.T) {
+		begin(t)
+		defer finish()
+		req := &catalogproto.GetProductReq{Slug: "asdf"}
+		productReq := entity.Product{
+			ID:   req.GetId(),
+			Slug: req.GetSlug(),
+		}
+		productUC.EXPECT().Delete(productReq).Return(nil)
 		_, err := unit.DeleteProduct(context.Background(), req)
 		assert.Nil(t, err)
 	})

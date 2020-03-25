@@ -37,22 +37,15 @@ func (s *ShopService) ListShops(ctx context.Context, in *catalogproto.ListShopsR
 	}, nil
 }
 
-func (s *ShopService) GetShopByID(ctx context.Context, in *catalogproto.GetShopByPKReq) (*catalogproto.Shop, error) {
+func (s *ShopService) GetShop(ctx context.Context, in *catalogproto.GetShopReq) (*catalogproto.Shop, error) {
 	if in == nil {
 		return nil, status.Error(codes.InvalidArgument, "parameter should not be nil")
 	}
-	res, err := s.shopUC.GetByID(in.GetId())
-	if err != nil {
-		return nil, err
+	shopReq := entity.Shop{
+		ID:   in.GetId(),
+		Slug: in.GetSlug(),
 	}
-	shop := converter.ShopEntityToProto(res)
-	return shop, nil
-}
-func (s *ShopService) GetShopBySlug(ctx context.Context, in *catalogproto.GetShopBySlugReq) (*catalogproto.Shop, error) {
-	if in == nil {
-		return nil, status.Error(codes.InvalidArgument, "parameter should not be nil")
-	}
-	res, err := s.shopUC.GetBySlug(in.GetSlug())
+	res, err := s.shopUC.Get(shopReq)
 	if err != nil {
 		return nil, err
 	}
@@ -83,11 +76,15 @@ func (s *ShopService) UpdateShop(ctx context.Context, in *catalogproto.Shop) (*c
 	shop := converter.ShopEntityToProto(res)
 	return shop, nil
 }
-func (s *ShopService) DeleteShop(ctx context.Context, in *catalogproto.PKReq) (*catalogproto.Empty, error) {
+func (s *ShopService) DeleteShop(ctx context.Context, in *catalogproto.GetShopReq) (*catalogproto.Empty, error) {
 	if in == nil {
 		return nil, status.Error(codes.InvalidArgument, "parameter should not be nil")
 	}
-	err := s.shopUC.Delete(in.Id)
+	shopReq := entity.Shop{
+		ID:   in.GetId(),
+		Slug: in.GetSlug(),
+	}
+	err := s.shopUC.Delete(shopReq)
 	if err != nil {
 		return nil, err
 	}

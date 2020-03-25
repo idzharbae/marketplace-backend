@@ -49,21 +49,6 @@ func (mr *MockProductReaderMockRecorder) GetByID(arg0 interface{}) *gomock.Call 
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockProductReader)(nil).GetByID), arg0)
 }
 
-// GetByShopID mocks base method
-func (m *MockProductReader) GetByShopID(arg0 int32) ([]entity.Product, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetByShopID", arg0)
-	ret0, _ := ret[0].([]entity.Product)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetByShopID indicates an expected call of GetByShopID
-func (mr *MockProductReaderMockRecorder) GetByShopID(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByShopID", reflect.TypeOf((*MockProductReader)(nil).GetByShopID), arg0)
-}
-
 // GetBySlug mocks base method
 func (m *MockProductReader) GetBySlug(arg0 string) (entity.Product, error) {
 	m.ctrl.T.Helper()
@@ -79,17 +64,32 @@ func (mr *MockProductReaderMockRecorder) GetBySlug(arg0 interface{}) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBySlug", reflect.TypeOf((*MockProductReader)(nil).GetBySlug), arg0)
 }
 
-// List mocks base method
-func (m *MockProductReader) List(arg0 requests.ListProduct) ([]entity.Product, error) {
+// ListAll mocks base method
+func (m *MockProductReader) ListAll(arg0 requests.Pagination) ([]entity.Product, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "List", arg0)
+	ret := m.ctrl.Call(m, "ListAll", arg0)
 	ret0, _ := ret[0].([]entity.Product)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// List indicates an expected call of List
-func (mr *MockProductReaderMockRecorder) List(arg0 interface{}) *gomock.Call {
+// ListAll indicates an expected call of ListAll
+func (mr *MockProductReaderMockRecorder) ListAll(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockProductReader)(nil).List), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAll", reflect.TypeOf((*MockProductReader)(nil).ListAll), arg0)
+}
+
+// ListByShopID mocks base method
+func (m *MockProductReader) ListByShopID(arg0 int64, arg1 requests.Pagination) ([]entity.Product, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListByShopID", arg0, arg1)
+	ret0, _ := ret[0].([]entity.Product)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListByShopID indicates an expected call of ListByShopID
+func (mr *MockProductReaderMockRecorder) ListByShopID(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListByShopID", reflect.TypeOf((*MockProductReader)(nil).ListByShopID), arg0, arg1)
 }

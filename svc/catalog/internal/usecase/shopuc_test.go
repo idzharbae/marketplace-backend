@@ -43,9 +43,12 @@ func (ts *testShop) GetSampleShop() entity.Shop {
 		Location: entity.GPS{Latitude: 14.9, Longitude: 13.37},
 		Products: []entity.Product{
 			{
-				ID:   1,
-				Name: "test",
-				Slug: "test",
+				ID:         1,
+				Name:       "test",
+				Slug:       "test",
+				StockKG:    123,
+				Quantity:   2134,
+				PricePerKG: 132132,
 			},
 		},
 		CreatedAt: time.Now(),
@@ -53,72 +56,78 @@ func (ts *testShop) GetSampleShop() entity.Shop {
 	}
 }
 
-func TestShop_GetByID(t *testing.T) {
+func TestShop_Get(t *testing.T) {
 	test := newTestShop()
+	t.Run("ID and slug not given, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		shop := entity.Shop{}
+
+		got, err := test.Unit.Get(shop)
+		assert.Equal(t, entity.Shop{}, got)
+		assert.NotNil(t, err)
+	})
 	t.Run("given ID <= 0 should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		shopID := int32(-1)
+		shop := entity.Shop{
+			ID: -1,
+		}
 
-		got, err := test.Unit.GetByID(shopID)
+		got, err := test.Unit.Get(shop)
 		assert.Equal(t, entity.Shop{}, got)
 		assert.NotNil(t, err)
 	})
-	t.Run("repo returns error, should return error", func(t *testing.T) {
+	t.Run("given ID, repo returns error, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		shopID := int32(1337)
+		shop := entity.Shop{
+			ID: 1337,
+		}
 
-		test.Reader.EXPECT().GetByID(shopID).Return(entity.Shop{}, errors.New("error"))
+		test.Reader.EXPECT().GetByID(shop.ID).Return(entity.Shop{}, errors.New("error"))
 
-		got, err := test.Unit.GetByID(shopID)
+		got, err := test.Unit.Get(shop)
 		assert.Equal(t, entity.Shop{}, got)
 		assert.NotNil(t, err)
 	})
-	t.Run("repo returns error, should return error", func(t *testing.T) {
+	t.Run("given ID, repo returns no error, should not return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		shopID := int32(1337)
+		shop := entity.Shop{
+			ID: 1337,
+		}
 
-		test.Reader.EXPECT().GetByID(shopID).Return(entity.Shop{ID: 1337}, nil)
+		test.Reader.EXPECT().GetByID(shop.ID).Return(entity.Shop{ID: shop.ID}, nil)
 
-		got, err := test.Unit.GetByID(shopID)
-		assert.Equal(t, int32(1337), got.ID)
+		got, err := test.Unit.Get(shop)
+		assert.Equal(t, shop.ID, got.ID)
 		assert.Nil(t, err)
 	})
-}
-
-func TestShop_GetBySlug(t *testing.T) {
-	test := newTestShop()
-	t.Run("given empty slug should return error", func(t *testing.T) {
+	t.Run("given slug repo returns error, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		slug := ""
+		shop := entity.Shop{
+			Slug: "asdf",
+		}
 
-		got, err := test.Unit.GetBySlug(slug)
+		test.Reader.EXPECT().GetBySlug(shop.Slug).Return(entity.Shop{ID: 13, Slug: shop.Slug}, errors.New("error"))
+
+		got, err := test.Unit.Get(shop)
 		assert.Equal(t, entity.Shop{}, got)
 		assert.NotNil(t, err)
 	})
-	t.Run("repo returns error, should return error", func(t *testing.T) {
+	t.Run("given slug, repo returns error, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		slug := "slug"
+		shop := entity.Shop{
+			Slug: "asdf",
+		}
 
-		test.Reader.EXPECT().GetBySlug(slug).Return(entity.Shop{}, errors.New("error"))
+		test.Reader.EXPECT().GetBySlug(shop.Slug).Return(entity.Shop{ID: 13, Slug: shop.Slug}, nil)
 
-		got, err := test.Unit.GetBySlug(slug)
-		assert.Equal(t, entity.Shop{}, got)
-		assert.NotNil(t, err)
-	})
-	t.Run("repo returns error, should return error", func(t *testing.T) {
-		test.Begin(t)
-		defer test.Finish()
-		slug := "slug"
-
-		test.Reader.EXPECT().GetBySlug(slug).Return(entity.Shop{ID: 1337, Slug: slug}, nil)
-
-		got, err := test.Unit.GetBySlug(slug)
-		assert.Equal(t, slug, got.Slug)
+		got, err := test.Unit.Get(shop)
+		assert.Equal(t, shop.Slug, got.Slug)
 		assert.Nil(t, err)
 	})
 }
@@ -157,7 +166,7 @@ func TestShop_List(t *testing.T) {
 			Limit: 10,
 		}}
 
-		test.Reader.EXPECT().List(req).Return(nil, errors.New("error"))
+		test.Reader.EXPECT().ListAll(req.Pagination).Return(nil, errors.New("error"))
 
 		got, err := test.Unit.List(req)
 		assert.Nil(t, got)
@@ -171,7 +180,7 @@ func TestShop_List(t *testing.T) {
 			Limit: 10,
 		}}
 
-		test.Reader.EXPECT().List(req).Return([]entity.Shop{
+		test.Reader.EXPECT().ListAll(req.Pagination).Return([]entity.Shop{
 			{ID: 1337},
 			{ID: 1338},
 		}, nil)
@@ -191,31 +200,31 @@ func TestShop_Create(t *testing.T) {
 		var shops []entity.Shop
 		validShop := test.GetSampleShop()
 
-		shop := validShop
+		shop := newShop(validShop)
 		shop.Name = ""
 		shops = append(shops, shop)
 
-		shop = validShop
+		shop = newShop(validShop)
 		shop.Slug = ""
 		shops = append(shops, shop)
 
-		shop = validShop
+		shop = newShop(validShop)
 		shop.Products[0].Name = ""
 		shops = append(shops, shop)
 
-		shop = validShop
+		shop = newShop(validShop)
 		shop.Products[0].Slug = ""
 		shops = append(shops, shop)
 
-		shop = validShop
+		shop = newShop(validShop)
 		shop.Products[0].PricePerKG = -1
 		shops = append(shops, shop)
 
-		shop = validShop
+		shop = newShop(validShop)
 		shop.Products[0].StockKG = -1
 		shops = append(shops, shop)
 
-		shop = validShop
+		shop = newShop(validShop)
 		shop.Products[0].Quantity = -1
 		shops = append(shops, shop)
 
@@ -273,34 +282,37 @@ func TestShop_Update(t *testing.T) {
 		var shops []entity.Shop
 		validShop := test.GetSampleShop()
 
-		shop := validShop
+		shop := newShop(validShop)
 		shop.Name = ""
 		shops = append(shops, shop)
 
-		shop = validShop
+		shop = newShop(validShop)
 		shop.Slug = ""
 		shops = append(shops, shop)
 
-		shop = validShop
+		shop = newShop(validShop)
+		shop.ID = 0
+		shops = append(shops, shop)
+
+		shop = newShop(validShop)
 		shop.Products[0].Name = ""
 		shops = append(shops, shop)
 
-		shop = validShop
+		shop = newShop(validShop)
 		shop.Products[0].Slug = ""
 		shops = append(shops, shop)
 
-		shop = validShop
+		shop = newShop(validShop)
 		shop.Products[0].PricePerKG = -1
 		shops = append(shops, shop)
 
-		shop = validShop
+		shop = newShop(validShop)
 		shop.Products[0].StockKG = -1
 		shops = append(shops, shop)
 
-		shop = validShop
+		shop = newShop(validShop)
 		shop.Products[0].Quantity = -1
 		shops = append(shops, shop)
-
 		for _, item := range shops {
 			got, err := test.Unit.Update(item)
 			assert.Equal(t, entity.Shop{}, got)
@@ -345,4 +357,83 @@ func TestShop_Update(t *testing.T) {
 		assert.NotEqual(t, entity.Shop{}, got)
 		assert.Nil(t, err)
 	})
+}
+
+func TestShop_Delete(t *testing.T) {
+	test := newTestShop()
+	t.Run("given no slug and ID, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		err := test.Unit.Delete(entity.Shop{})
+		assert.NotNil(t, err)
+	})
+	t.Run("given ID, repo returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Shop{ID: 1337}
+		test.Writer.EXPECT().DeleteByID(req.ID).Return(errors.New("error123"))
+
+		err := test.Unit.Delete(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, "error123", err.Error())
+	})
+	t.Run("given ID, repo returns no error, should return no error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		req := entity.Shop{ID: 13213}
+		test.Writer.EXPECT().DeleteByID(req.ID).Return(nil)
+
+		err := test.Unit.Delete(req)
+		assert.Nil(t, err)
+	})
+	t.Run("given slug, repo return error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Shop{Slug: "1337"}
+		test.Writer.EXPECT().DeleteBySlug(req.Slug).Return(errors.New("error1233"))
+
+		err := test.Unit.Delete(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, "error1233", err.Error())
+	})
+	t.Run("given slug, repo returns no error, should return no error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		req := entity.Shop{Slug: "13213"}
+		test.Writer.EXPECT().DeleteBySlug(req.Slug).Return(nil)
+
+		err := test.Unit.Delete(req)
+		assert.Nil(t, err)
+	})
+}
+
+func newShop(shop entity.Shop) entity.Shop {
+	return entity.Shop{
+		ID:      shop.ID,
+		Name:    shop.Name,
+		Address: shop.Address,
+		Slug:    shop.Slug,
+		Location: entity.GPS{
+			Latitude:  shop.Location.Latitude,
+			Longitude: shop.Location.Longitude,
+		},
+		Products: []entity.Product{
+			{
+				ID:         shop.Products[0].ID,
+				ShopID:     shop.ID,
+				Name:       shop.Products[0].Name,
+				Slug:       shop.Products[0].Slug,
+				Quantity:   shop.Products[0].Quantity,
+				PricePerKG: shop.Products[0].PricePerKG,
+				StockKG:    shop.Products[0].StockKG,
+				CreatedAt:  shop.Products[0].CreatedAt,
+				UpdatedAt:  shop.Products[0].UpdatedAt,
+			},
+		},
+		CreatedAt: shop.CreatedAt,
+		UpdatedAt: shop.UpdatedAt,
+	}
 }

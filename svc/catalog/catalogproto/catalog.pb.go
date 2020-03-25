@@ -24,7 +24,8 @@ var _ = math.Inf
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
 type ListProductsReq struct {
-	Pagination           *Pagination `protobuf:"bytes,1,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	ShopID               int32       `protobuf:"varint,1,opt,name=shopID,proto3" json:"shopID,omitempty"`
+	Pagination           *Pagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
 	XXX_unrecognized     []byte      `json:"-"`
 	XXX_sizecache        int32       `json:"-"`
@@ -34,7 +35,7 @@ func (m *ListProductsReq) Reset()         { *m = ListProductsReq{} }
 func (m *ListProductsReq) String() string { return proto.CompactTextString(m) }
 func (*ListProductsReq) ProtoMessage()    {}
 func (*ListProductsReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_catalog_6ce5c586dc5fb196, []int{0}
+	return fileDescriptor_catalog_ba0247aea77b0e7e, []int{0}
 }
 func (m *ListProductsReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListProductsReq.Unmarshal(m, b)
@@ -54,6 +55,13 @@ func (m *ListProductsReq) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ListProductsReq proto.InternalMessageInfo
 
+func (m *ListProductsReq) GetShopID() int32 {
+	if m != nil {
+		return m.ShopID
+	}
+	return 0
+}
+
 func (m *ListProductsReq) GetPagination() *Pagination {
 	if m != nil {
 		return m.Pagination
@@ -72,7 +80,7 @@ func (m *ListProductsResp) Reset()         { *m = ListProductsResp{} }
 func (m *ListProductsResp) String() string { return proto.CompactTextString(m) }
 func (*ListProductsResp) ProtoMessage()    {}
 func (*ListProductsResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_catalog_6ce5c586dc5fb196, []int{1}
+	return fileDescriptor_catalog_ba0247aea77b0e7e, []int{1}
 }
 func (m *ListProductsResp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListProductsResp.Unmarshal(m, b)
@@ -99,76 +107,46 @@ func (m *ListProductsResp) GetProducts() []*Product {
 	return nil
 }
 
-type GetProductByIDReq struct {
+type GetProductReq struct {
 	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Slug                 string   `protobuf:"bytes,2,opt,name=slug,proto3" json:"slug,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetProductByIDReq) Reset()         { *m = GetProductByIDReq{} }
-func (m *GetProductByIDReq) String() string { return proto.CompactTextString(m) }
-func (*GetProductByIDReq) ProtoMessage()    {}
-func (*GetProductByIDReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_catalog_6ce5c586dc5fb196, []int{2}
+func (m *GetProductReq) Reset()         { *m = GetProductReq{} }
+func (m *GetProductReq) String() string { return proto.CompactTextString(m) }
+func (*GetProductReq) ProtoMessage()    {}
+func (*GetProductReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_catalog_ba0247aea77b0e7e, []int{2}
 }
-func (m *GetProductByIDReq) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetProductByIDReq.Unmarshal(m, b)
+func (m *GetProductReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetProductReq.Unmarshal(m, b)
 }
-func (m *GetProductByIDReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetProductByIDReq.Marshal(b, m, deterministic)
+func (m *GetProductReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetProductReq.Marshal(b, m, deterministic)
 }
-func (dst *GetProductByIDReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetProductByIDReq.Merge(dst, src)
+func (dst *GetProductReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetProductReq.Merge(dst, src)
 }
-func (m *GetProductByIDReq) XXX_Size() int {
-	return xxx_messageInfo_GetProductByIDReq.Size(m)
+func (m *GetProductReq) XXX_Size() int {
+	return xxx_messageInfo_GetProductReq.Size(m)
 }
-func (m *GetProductByIDReq) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetProductByIDReq.DiscardUnknown(m)
+func (m *GetProductReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetProductReq.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetProductByIDReq proto.InternalMessageInfo
+var xxx_messageInfo_GetProductReq proto.InternalMessageInfo
 
-func (m *GetProductByIDReq) GetId() int32 {
+func (m *GetProductReq) GetId() int32 {
 	if m != nil {
 		return m.Id
 	}
 	return 0
 }
 
-type GetProductBySlugReq struct {
-	Slug                 string   `protobuf:"bytes,1,opt,name=slug,proto3" json:"slug,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *GetProductBySlugReq) Reset()         { *m = GetProductBySlugReq{} }
-func (m *GetProductBySlugReq) String() string { return proto.CompactTextString(m) }
-func (*GetProductBySlugReq) ProtoMessage()    {}
-func (*GetProductBySlugReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_catalog_6ce5c586dc5fb196, []int{3}
-}
-func (m *GetProductBySlugReq) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetProductBySlugReq.Unmarshal(m, b)
-}
-func (m *GetProductBySlugReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetProductBySlugReq.Marshal(b, m, deterministic)
-}
-func (dst *GetProductBySlugReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetProductBySlugReq.Merge(dst, src)
-}
-func (m *GetProductBySlugReq) XXX_Size() int {
-	return xxx_messageInfo_GetProductBySlugReq.Size(m)
-}
-func (m *GetProductBySlugReq) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetProductBySlugReq.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GetProductBySlugReq proto.InternalMessageInfo
-
-func (m *GetProductBySlugReq) GetSlug() string {
+func (m *GetProductReq) GetSlug() string {
 	if m != nil {
 		return m.Slug
 	}
@@ -186,7 +164,7 @@ func (m *PKReq) Reset()         { *m = PKReq{} }
 func (m *PKReq) String() string { return proto.CompactTextString(m) }
 func (*PKReq) ProtoMessage()    {}
 func (*PKReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_catalog_6ce5c586dc5fb196, []int{4}
+	return fileDescriptor_catalog_ba0247aea77b0e7e, []int{3}
 }
 func (m *PKReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_PKReq.Unmarshal(m, b)
@@ -224,7 +202,7 @@ func (m *ListShopsReq) Reset()         { *m = ListShopsReq{} }
 func (m *ListShopsReq) String() string { return proto.CompactTextString(m) }
 func (*ListShopsReq) ProtoMessage()    {}
 func (*ListShopsReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_catalog_6ce5c586dc5fb196, []int{5}
+	return fileDescriptor_catalog_ba0247aea77b0e7e, []int{4}
 }
 func (m *ListShopsReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListShopsReq.Unmarshal(m, b)
@@ -262,7 +240,7 @@ func (m *ListShopsResp) Reset()         { *m = ListShopsResp{} }
 func (m *ListShopsResp) String() string { return proto.CompactTextString(m) }
 func (*ListShopsResp) ProtoMessage()    {}
 func (*ListShopsResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_catalog_6ce5c586dc5fb196, []int{6}
+	return fileDescriptor_catalog_ba0247aea77b0e7e, []int{5}
 }
 func (m *ListShopsResp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListShopsResp.Unmarshal(m, b)
@@ -289,76 +267,46 @@ func (m *ListShopsResp) GetShops() []*Shop {
 	return nil
 }
 
-type GetShopByPKReq struct {
+type GetShopReq struct {
 	Id                   int32    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	Slug                 string   `protobuf:"bytes,2,opt,name=slug,proto3" json:"slug,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *GetShopByPKReq) Reset()         { *m = GetShopByPKReq{} }
-func (m *GetShopByPKReq) String() string { return proto.CompactTextString(m) }
-func (*GetShopByPKReq) ProtoMessage()    {}
-func (*GetShopByPKReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_catalog_6ce5c586dc5fb196, []int{7}
+func (m *GetShopReq) Reset()         { *m = GetShopReq{} }
+func (m *GetShopReq) String() string { return proto.CompactTextString(m) }
+func (*GetShopReq) ProtoMessage()    {}
+func (*GetShopReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_catalog_ba0247aea77b0e7e, []int{6}
 }
-func (m *GetShopByPKReq) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetShopByPKReq.Unmarshal(m, b)
+func (m *GetShopReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetShopReq.Unmarshal(m, b)
 }
-func (m *GetShopByPKReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetShopByPKReq.Marshal(b, m, deterministic)
+func (m *GetShopReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetShopReq.Marshal(b, m, deterministic)
 }
-func (dst *GetShopByPKReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetShopByPKReq.Merge(dst, src)
+func (dst *GetShopReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetShopReq.Merge(dst, src)
 }
-func (m *GetShopByPKReq) XXX_Size() int {
-	return xxx_messageInfo_GetShopByPKReq.Size(m)
+func (m *GetShopReq) XXX_Size() int {
+	return xxx_messageInfo_GetShopReq.Size(m)
 }
-func (m *GetShopByPKReq) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetShopByPKReq.DiscardUnknown(m)
+func (m *GetShopReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetShopReq.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_GetShopByPKReq proto.InternalMessageInfo
+var xxx_messageInfo_GetShopReq proto.InternalMessageInfo
 
-func (m *GetShopByPKReq) GetId() int32 {
+func (m *GetShopReq) GetId() int32 {
 	if m != nil {
 		return m.Id
 	}
 	return 0
 }
 
-type GetShopBySlugReq struct {
-	Slug                 string   `protobuf:"bytes,1,opt,name=slug,proto3" json:"slug,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *GetShopBySlugReq) Reset()         { *m = GetShopBySlugReq{} }
-func (m *GetShopBySlugReq) String() string { return proto.CompactTextString(m) }
-func (*GetShopBySlugReq) ProtoMessage()    {}
-func (*GetShopBySlugReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_catalog_6ce5c586dc5fb196, []int{8}
-}
-func (m *GetShopBySlugReq) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_GetShopBySlugReq.Unmarshal(m, b)
-}
-func (m *GetShopBySlugReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_GetShopBySlugReq.Marshal(b, m, deterministic)
-}
-func (dst *GetShopBySlugReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_GetShopBySlugReq.Merge(dst, src)
-}
-func (m *GetShopBySlugReq) XXX_Size() int {
-	return xxx_messageInfo_GetShopBySlugReq.Size(m)
-}
-func (m *GetShopBySlugReq) XXX_DiscardUnknown() {
-	xxx_messageInfo_GetShopBySlugReq.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_GetShopBySlugReq proto.InternalMessageInfo
-
-func (m *GetShopBySlugReq) GetSlug() string {
+func (m *GetShopReq) GetSlug() string {
 	if m != nil {
 		return m.Slug
 	}
@@ -368,13 +316,11 @@ func (m *GetShopBySlugReq) GetSlug() string {
 func init() {
 	proto.RegisterType((*ListProductsReq)(nil), "catalogproto.ListProductsReq")
 	proto.RegisterType((*ListProductsResp)(nil), "catalogproto.ListProductsResp")
-	proto.RegisterType((*GetProductByIDReq)(nil), "catalogproto.GetProductByIDReq")
-	proto.RegisterType((*GetProductBySlugReq)(nil), "catalogproto.GetProductBySlugReq")
+	proto.RegisterType((*GetProductReq)(nil), "catalogproto.GetProductReq")
 	proto.RegisterType((*PKReq)(nil), "catalogproto.PKReq")
 	proto.RegisterType((*ListShopsReq)(nil), "catalogproto.ListShopsReq")
 	proto.RegisterType((*ListShopsResp)(nil), "catalogproto.ListShopsResp")
-	proto.RegisterType((*GetShopByPKReq)(nil), "catalogproto.GetShopByPKReq")
-	proto.RegisterType((*GetShopBySlugReq)(nil), "catalogproto.GetShopBySlugReq")
+	proto.RegisterType((*GetShopReq)(nil), "catalogproto.GetShopReq")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -391,18 +337,16 @@ const _ = grpc.SupportPackageIsVersion4
 type MarketplaceCatalogClient interface {
 	// Product
 	ListProducts(ctx context.Context, in *ListProductsReq, opts ...grpc.CallOption) (*ListProductsResp, error)
-	GetProductByID(ctx context.Context, in *GetProductByIDReq, opts ...grpc.CallOption) (*Product, error)
-	GetProductBySlug(ctx context.Context, in *GetProductBySlugReq, opts ...grpc.CallOption) (*Product, error)
+	GetProduct(ctx context.Context, in *GetProductReq, opts ...grpc.CallOption) (*Product, error)
 	CreateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
 	UpdateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
-	DeleteProduct(ctx context.Context, in *PKReq, opts ...grpc.CallOption) (*Empty, error)
+	DeleteProduct(ctx context.Context, in *GetProductReq, opts ...grpc.CallOption) (*Empty, error)
 	// Shop
 	ListShops(ctx context.Context, in *ListShopsReq, opts ...grpc.CallOption) (*ListShopsResp, error)
-	GetShopByID(ctx context.Context, in *GetShopByPKReq, opts ...grpc.CallOption) (*Shop, error)
-	GetShopBySlug(ctx context.Context, in *GetShopBySlugReq, opts ...grpc.CallOption) (*Shop, error)
+	GetShop(ctx context.Context, in *GetShopReq, opts ...grpc.CallOption) (*Shop, error)
 	CreateShop(ctx context.Context, in *Shop, opts ...grpc.CallOption) (*Shop, error)
 	UpdateShop(ctx context.Context, in *Shop, opts ...grpc.CallOption) (*Shop, error)
-	DeleteShop(ctx context.Context, in *PKReq, opts ...grpc.CallOption) (*Empty, error)
+	DeleteShop(ctx context.Context, in *GetShopReq, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type marketplaceCatalogClient struct {
@@ -422,18 +366,9 @@ func (c *marketplaceCatalogClient) ListProducts(ctx context.Context, in *ListPro
 	return out, nil
 }
 
-func (c *marketplaceCatalogClient) GetProductByID(ctx context.Context, in *GetProductByIDReq, opts ...grpc.CallOption) (*Product, error) {
+func (c *marketplaceCatalogClient) GetProduct(ctx context.Context, in *GetProductReq, opts ...grpc.CallOption) (*Product, error) {
 	out := new(Product)
-	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/GetProductByID", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *marketplaceCatalogClient) GetProductBySlug(ctx context.Context, in *GetProductBySlugReq, opts ...grpc.CallOption) (*Product, error) {
-	out := new(Product)
-	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/GetProductBySlug", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/GetProduct", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -458,7 +393,7 @@ func (c *marketplaceCatalogClient) UpdateProduct(ctx context.Context, in *Produc
 	return out, nil
 }
 
-func (c *marketplaceCatalogClient) DeleteProduct(ctx context.Context, in *PKReq, opts ...grpc.CallOption) (*Empty, error) {
+func (c *marketplaceCatalogClient) DeleteProduct(ctx context.Context, in *GetProductReq, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/DeleteProduct", in, out, opts...)
 	if err != nil {
@@ -476,18 +411,9 @@ func (c *marketplaceCatalogClient) ListShops(ctx context.Context, in *ListShopsR
 	return out, nil
 }
 
-func (c *marketplaceCatalogClient) GetShopByID(ctx context.Context, in *GetShopByPKReq, opts ...grpc.CallOption) (*Shop, error) {
+func (c *marketplaceCatalogClient) GetShop(ctx context.Context, in *GetShopReq, opts ...grpc.CallOption) (*Shop, error) {
 	out := new(Shop)
-	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/GetShopByID", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *marketplaceCatalogClient) GetShopBySlug(ctx context.Context, in *GetShopBySlugReq, opts ...grpc.CallOption) (*Shop, error) {
-	out := new(Shop)
-	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/GetShopBySlug", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/GetShop", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -512,7 +438,7 @@ func (c *marketplaceCatalogClient) UpdateShop(ctx context.Context, in *Shop, opt
 	return out, nil
 }
 
-func (c *marketplaceCatalogClient) DeleteShop(ctx context.Context, in *PKReq, opts ...grpc.CallOption) (*Empty, error) {
+func (c *marketplaceCatalogClient) DeleteShop(ctx context.Context, in *GetShopReq, opts ...grpc.CallOption) (*Empty, error) {
 	out := new(Empty)
 	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/DeleteShop", in, out, opts...)
 	if err != nil {
@@ -525,18 +451,16 @@ func (c *marketplaceCatalogClient) DeleteShop(ctx context.Context, in *PKReq, op
 type MarketplaceCatalogServer interface {
 	// Product
 	ListProducts(context.Context, *ListProductsReq) (*ListProductsResp, error)
-	GetProductByID(context.Context, *GetProductByIDReq) (*Product, error)
-	GetProductBySlug(context.Context, *GetProductBySlugReq) (*Product, error)
+	GetProduct(context.Context, *GetProductReq) (*Product, error)
 	CreateProduct(context.Context, *Product) (*Product, error)
 	UpdateProduct(context.Context, *Product) (*Product, error)
-	DeleteProduct(context.Context, *PKReq) (*Empty, error)
+	DeleteProduct(context.Context, *GetProductReq) (*Empty, error)
 	// Shop
 	ListShops(context.Context, *ListShopsReq) (*ListShopsResp, error)
-	GetShopByID(context.Context, *GetShopByPKReq) (*Shop, error)
-	GetShopBySlug(context.Context, *GetShopBySlugReq) (*Shop, error)
+	GetShop(context.Context, *GetShopReq) (*Shop, error)
 	CreateShop(context.Context, *Shop) (*Shop, error)
 	UpdateShop(context.Context, *Shop) (*Shop, error)
-	DeleteShop(context.Context, *PKReq) (*Empty, error)
+	DeleteShop(context.Context, *GetShopReq) (*Empty, error)
 }
 
 func RegisterMarketplaceCatalogServer(s *grpc.Server, srv MarketplaceCatalogServer) {
@@ -561,38 +485,20 @@ func _MarketplaceCatalog_ListProducts_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MarketplaceCatalog_GetProductByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetProductByIDReq)
+func _MarketplaceCatalog_GetProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProductReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MarketplaceCatalogServer).GetProductByID(ctx, in)
+		return srv.(MarketplaceCatalogServer).GetProduct(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/catalogproto.MarketplaceCatalog/GetProductByID",
+		FullMethod: "/catalogproto.MarketplaceCatalog/GetProduct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MarketplaceCatalogServer).GetProductByID(ctx, req.(*GetProductByIDReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _MarketplaceCatalog_GetProductBySlug_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetProductBySlugReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MarketplaceCatalogServer).GetProductBySlug(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/catalogproto.MarketplaceCatalog/GetProductBySlug",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MarketplaceCatalogServer).GetProductBySlug(ctx, req.(*GetProductBySlugReq))
+		return srv.(MarketplaceCatalogServer).GetProduct(ctx, req.(*GetProductReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -634,7 +540,7 @@ func _MarketplaceCatalog_UpdateProduct_Handler(srv interface{}, ctx context.Cont
 }
 
 func _MarketplaceCatalog_DeleteProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PKReq)
+	in := new(GetProductReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -646,7 +552,7 @@ func _MarketplaceCatalog_DeleteProduct_Handler(srv interface{}, ctx context.Cont
 		FullMethod: "/catalogproto.MarketplaceCatalog/DeleteProduct",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MarketplaceCatalogServer).DeleteProduct(ctx, req.(*PKReq))
+		return srv.(MarketplaceCatalogServer).DeleteProduct(ctx, req.(*GetProductReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -669,38 +575,20 @@ func _MarketplaceCatalog_ListShops_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _MarketplaceCatalog_GetShopByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetShopByPKReq)
+func _MarketplaceCatalog_GetShop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetShopReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(MarketplaceCatalogServer).GetShopByID(ctx, in)
+		return srv.(MarketplaceCatalogServer).GetShop(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/catalogproto.MarketplaceCatalog/GetShopByID",
+		FullMethod: "/catalogproto.MarketplaceCatalog/GetShop",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MarketplaceCatalogServer).GetShopByID(ctx, req.(*GetShopByPKReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _MarketplaceCatalog_GetShopBySlug_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetShopBySlugReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(MarketplaceCatalogServer).GetShopBySlug(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/catalogproto.MarketplaceCatalog/GetShopBySlug",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MarketplaceCatalogServer).GetShopBySlug(ctx, req.(*GetShopBySlugReq))
+		return srv.(MarketplaceCatalogServer).GetShop(ctx, req.(*GetShopReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -742,7 +630,7 @@ func _MarketplaceCatalog_UpdateShop_Handler(srv interface{}, ctx context.Context
 }
 
 func _MarketplaceCatalog_DeleteShop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PKReq)
+	in := new(GetShopReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -754,7 +642,7 @@ func _MarketplaceCatalog_DeleteShop_Handler(srv interface{}, ctx context.Context
 		FullMethod: "/catalogproto.MarketplaceCatalog/DeleteShop",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(MarketplaceCatalogServer).DeleteShop(ctx, req.(*PKReq))
+		return srv.(MarketplaceCatalogServer).DeleteShop(ctx, req.(*GetShopReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -768,12 +656,8 @@ var _MarketplaceCatalog_serviceDesc = grpc.ServiceDesc{
 			Handler:    _MarketplaceCatalog_ListProducts_Handler,
 		},
 		{
-			MethodName: "GetProductByID",
-			Handler:    _MarketplaceCatalog_GetProductByID_Handler,
-		},
-		{
-			MethodName: "GetProductBySlug",
-			Handler:    _MarketplaceCatalog_GetProductBySlug_Handler,
+			MethodName: "GetProduct",
+			Handler:    _MarketplaceCatalog_GetProduct_Handler,
 		},
 		{
 			MethodName: "CreateProduct",
@@ -792,12 +676,8 @@ var _MarketplaceCatalog_serviceDesc = grpc.ServiceDesc{
 			Handler:    _MarketplaceCatalog_ListShops_Handler,
 		},
 		{
-			MethodName: "GetShopByID",
-			Handler:    _MarketplaceCatalog_GetShopByID_Handler,
-		},
-		{
-			MethodName: "GetShopBySlug",
-			Handler:    _MarketplaceCatalog_GetShopBySlug_Handler,
+			MethodName: "GetShop",
+			Handler:    _MarketplaceCatalog_GetShop_Handler,
 		},
 		{
 			MethodName: "CreateShop",
@@ -816,37 +696,34 @@ var _MarketplaceCatalog_serviceDesc = grpc.ServiceDesc{
 	Metadata: "catalog.proto",
 }
 
-func init() { proto.RegisterFile("catalog.proto", fileDescriptor_catalog_6ce5c586dc5fb196) }
+func init() { proto.RegisterFile("catalog.proto", fileDescriptor_catalog_ba0247aea77b0e7e) }
 
-var fileDescriptor_catalog_6ce5c586dc5fb196 = []byte{
-	// 451 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x92, 0x6f, 0x8f, 0xd2, 0x40,
-	0x10, 0xc6, 0xcb, 0x29, 0x17, 0x6f, 0xb8, 0x9e, 0xe7, 0x5c, 0x8c, 0x64, 0xd5, 0x13, 0xd7, 0xc4,
-	0xe0, 0x1b, 0x12, 0x31, 0x31, 0x67, 0x7c, 0x61, 0x3c, 0x40, 0x44, 0xfc, 0x43, 0x4a, 0xfc, 0x00,
-	0x0b, 0xdd, 0x94, 0xc6, 0x4a, 0xd7, 0xee, 0xf2, 0x82, 0xef, 0xe6, 0x87, 0x33, 0xdd, 0x6d, 0x6b,
-	0x5b, 0x5a, 0x12, 0xc2, 0xbb, 0x9d, 0xce, 0x33, 0xbf, 0xce, 0xcc, 0x33, 0x60, 0x2f, 0x99, 0x62,
-	0x41, 0xe8, 0xf5, 0x44, 0x14, 0xaa, 0x10, 0xcf, 0x93, 0x50, 0x47, 0xc4, 0x16, 0x51, 0xe8, 0x6e,
-	0x96, 0xca, 0x24, 0x09, 0xc8, 0x55, 0x28, 0xd2, 0xf7, 0x82, 0x49, 0x6e, 0xde, 0x74, 0x0a, 0xf7,
-	0xbf, 0xfa, 0x52, 0xcd, 0x8c, 0x58, 0x3a, 0xfc, 0x0f, 0xde, 0x00, 0x08, 0xe6, 0xf9, 0x6b, 0xa6,
-	0xfc, 0x70, 0xdd, 0x6e, 0x74, 0x1a, 0xdd, 0x56, 0xbf, 0xdd, 0xcb, 0xc3, 0x7b, 0xb3, 0x2c, 0xef,
-	0xe4, 0xb4, 0x74, 0x04, 0x97, 0x45, 0x98, 0x14, 0xf8, 0x1a, 0xee, 0x25, 0x9d, 0xc8, 0x76, 0xa3,
-	0x73, 0xa7, 0xdb, 0xea, 0x3f, 0x2c, 0xb1, 0x4c, 0xd6, 0xc9, 0x64, 0xf4, 0x05, 0x3c, 0x18, 0xf3,
-	0x94, 0x72, 0xbb, 0x9d, 0x0c, 0xe3, 0xae, 0x2e, 0xe0, 0xc4, 0x77, 0x75, 0x37, 0x4d, 0xe7, 0xc4,
-	0x77, 0xe9, 0x2b, 0xb8, 0xca, 0x8b, 0xe6, 0xc1, 0xc6, 0x8b, 0x65, 0x08, 0x77, 0x65, 0xb0, 0xf1,
-	0xb4, 0xf0, 0xcc, 0xd1, 0x6f, 0xfa, 0x08, 0x9a, 0xb3, 0x69, 0x15, 0xe3, 0x33, 0x9c, 0xc7, 0xfd,
-	0xce, 0x57, 0xa1, 0x38, 0x72, 0xf2, 0x77, 0x60, 0xe7, 0x48, 0x52, 0x60, 0x17, 0x9a, 0xf1, 0xc6,
-	0xd3, 0x99, 0xb1, 0x48, 0x89, 0x75, 0x8e, 0x11, 0xd0, 0x0e, 0x5c, 0x8c, 0xb9, 0xae, 0xbc, 0xdd,
-	0x56, 0xb7, 0xf9, 0x12, 0x2e, 0x33, 0xc5, 0x9e, 0x39, 0xfb, 0x7f, 0x4f, 0x01, 0xbf, 0xb1, 0xe8,
-	0x17, 0x57, 0x22, 0x60, 0x4b, 0x3e, 0x30, 0x7f, 0xc4, 0x1f, 0x66, 0xca, 0xd4, 0x15, 0x7c, 0x5a,
-	0xec, 0xa5, 0x64, 0x3f, 0xb9, 0xde, 0x97, 0x96, 0x82, 0x5a, 0xf8, 0x45, 0x77, 0x9c, 0xf3, 0x07,
-	0x9f, 0x15, 0x6b, 0x76, 0xdc, 0x23, 0xd5, 0x9e, 0x53, 0x0b, 0xbf, 0xeb, 0xd9, 0x0a, 0x36, 0xe2,
-	0xf3, 0x7a, 0x5a, 0x32, 0x7e, 0x3d, 0xef, 0x03, 0xd8, 0x83, 0x88, 0x33, 0xc5, 0x93, 0x4f, 0x58,
-	0xad, 0xdc, 0x0b, 0xf8, 0x29, 0xdc, 0x23, 0x00, 0xef, 0xc1, 0x1e, 0xf2, 0x80, 0xff, 0x07, 0x5c,
-	0x95, 0x94, 0xb1, 0xc7, 0xa4, 0xf4, 0x71, 0xf4, 0x5b, 0xa8, 0x2d, 0xb5, 0xf0, 0x13, 0x9c, 0x65,
-	0x77, 0x84, 0x64, 0xd7, 0x89, 0xf4, 0x54, 0xc9, 0xe3, 0xda, 0x9c, 0xb6, 0xe8, 0x23, 0xb4, 0xb2,
-	0x93, 0x99, 0x0c, 0xf1, 0xc9, 0xce, 0x46, 0x73, 0xf7, 0x46, 0x2a, 0x8e, 0x93, 0x5a, 0x38, 0x02,
-	0xbb, 0x70, 0x75, 0x78, 0x5d, 0x03, 0x49, 0x3d, 0xa9, 0xc6, 0xbc, 0x05, 0x30, 0x86, 0xc4, 0x31,
-	0x56, 0x68, 0xea, 0xeb, 0x8c, 0x0f, 0x07, 0xd6, 0xdd, 0x00, 0x98, 0xf5, 0xeb, 0xba, 0x03, 0x76,
-	0xbf, 0x38, 0xd5, 0xe1, 0x9b, 0x7f, 0x01, 0x00, 0x00, 0xff, 0xff, 0xdc, 0x5d, 0x52, 0xef, 0x57,
-	0x05, 0x00, 0x00,
+var fileDescriptor_catalog_ba0247aea77b0e7e = []byte{
+	// 413 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x52, 0xd1, 0x6e, 0xda, 0x30,
+	0x14, 0x4d, 0xd8, 0xc2, 0xc6, 0x85, 0x6c, 0xd3, 0x9d, 0xb6, 0x45, 0x41, 0x9b, 0x90, 0x9f, 0xf2,
+	0x84, 0x36, 0x90, 0xa6, 0xf1, 0x30, 0x4d, 0x1a, 0x30, 0x56, 0xb5, 0x55, 0x51, 0xaa, 0x7e, 0x80,
+	0x49, 0x2c, 0x88, 0x9a, 0x12, 0x37, 0x36, 0x0f, 0xfd, 0x9d, 0x7e, 0x69, 0x15, 0x3b, 0xa1, 0x04,
+	0x02, 0x2d, 0xea, 0x9b, 0xaf, 0xef, 0xb9, 0xc7, 0xe7, 0x9c, 0x6b, 0xb0, 0x03, 0x2a, 0x69, 0x9c,
+	0xcc, 0xbb, 0x3c, 0x4d, 0x64, 0x82, 0xad, 0xbc, 0x54, 0x95, 0x6b, 0xf3, 0x34, 0x09, 0x57, 0x81,
+	0xd4, 0x4d, 0x17, 0xc4, 0x22, 0xe1, 0xc5, 0x79, 0x46, 0x05, 0xd3, 0x67, 0x12, 0xc0, 0xfb, 0xb3,
+	0x48, 0xc8, 0xa9, 0x06, 0x0b, 0x9f, 0xdd, 0xe2, 0x67, 0xa8, 0x67, 0xe0, 0x93, 0x91, 0x63, 0x76,
+	0x4c, 0xcf, 0xf2, 0xf3, 0x0a, 0x7f, 0x01, 0x70, 0x3a, 0x8f, 0x96, 0x54, 0x46, 0xc9, 0xd2, 0xa9,
+	0x75, 0x4c, 0xaf, 0xd9, 0x73, 0xba, 0x9b, 0x8f, 0x76, 0xa7, 0xeb, 0xbe, 0xbf, 0x81, 0x25, 0x63,
+	0xf8, 0x50, 0x7e, 0x44, 0x70, 0xfc, 0x01, 0x6f, 0x73, 0x85, 0xc2, 0x31, 0x3b, 0xaf, 0xbc, 0x66,
+	0xef, 0xd3, 0x16, 0x97, 0xee, 0xfa, 0x6b, 0x18, 0xe9, 0x83, 0x3d, 0x61, 0x05, 0x4b, 0xa6, 0xf4,
+	0x1d, 0xd4, 0xa2, 0x30, 0x57, 0x59, 0x8b, 0x42, 0x44, 0x78, 0x2d, 0xe2, 0xd5, 0x5c, 0x69, 0x6b,
+	0xf8, 0xea, 0x4c, 0xbe, 0x80, 0x35, 0x3d, 0xad, 0x00, 0x93, 0xff, 0xd0, 0xca, 0x44, 0x5d, 0x2e,
+	0x12, 0xae, 0x6c, 0x97, 0xed, 0x99, 0x47, 0xd8, 0x1b, 0x80, 0xbd, 0xc1, 0x24, 0x38, 0x7a, 0x60,
+	0x65, 0x99, 0x15, 0xc6, 0xb0, 0xcc, 0x92, 0xe1, 0x7c, 0x0d, 0x20, 0xdf, 0x01, 0x26, 0x4c, 0x4d,
+	0x3e, 0xd3, 0x4f, 0xef, 0xde, 0x02, 0x3c, 0xa7, 0xe9, 0x35, 0x93, 0x3c, 0xa6, 0x01, 0x1b, 0x6a,
+	0x66, 0xbc, 0xd0, 0x6e, 0x8a, 0x88, 0xf1, 0x6b, 0xf9, 0xcd, 0xad, 0x1d, 0xbb, 0xdf, 0x0e, 0xb5,
+	0x05, 0x27, 0x06, 0xfe, 0x55, 0xca, 0xf2, 0x4b, 0x6c, 0x97, 0xf1, 0xa5, 0x35, 0xb8, 0xd5, 0x8b,
+	0x23, 0x06, 0xfe, 0x01, 0x7b, 0x98, 0x32, 0x2a, 0x59, 0x41, 0x53, 0x8d, 0x3c, 0x48, 0x70, 0xc5,
+	0xc3, 0x17, 0x10, 0x0c, 0xc1, 0x1e, 0xb1, 0x98, 0x3d, 0x12, 0x1c, 0x34, 0xf2, 0xb1, 0xdc, 0x1c,
+	0xdf, 0x70, 0x79, 0x47, 0x0c, 0xfc, 0x07, 0x8d, 0xf5, 0x7e, 0xd1, 0xdd, 0x4d, 0xae, 0xf8, 0x42,
+	0x6e, 0x7b, 0x6f, 0x4f, 0x45, 0x3a, 0x80, 0x37, 0xf9, 0xb2, 0xd1, 0xd9, 0x91, 0x91, 0xff, 0x01,
+	0xb7, 0xe2, 0xb3, 0x10, 0x03, 0x7f, 0x02, 0xe8, 0x24, 0xd5, 0x74, 0x05, 0x66, 0xff, 0x9c, 0x0e,
+	0xf0, 0xc8, 0xb9, 0xdf, 0x00, 0x3a, 0xb7, 0x27, 0xd4, 0x56, 0x27, 0x36, 0xab, 0xab, 0xb2, 0xff,
+	0x10, 0x00, 0x00, 0xff, 0xff, 0xa6, 0xe0, 0x6d, 0xca, 0xa2, 0x04, 0x00, 0x00,
 }

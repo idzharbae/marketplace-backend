@@ -16,11 +16,11 @@ func NewShopReader(db connection.Gormw) *ShopReader {
 	return &ShopReader{db: db}
 }
 
-func (sr *ShopReader) List(req requests.ListShop) ([]entity.Shop, error) {
-	shops := make([]model.Shop, req.Pagination.Limit)
-	db := sr.db.Limit(req.Pagination.Limit)
-	if req.Pagination.Page > 1 {
-		db = db.Offset(req.Pagination.OffsetFromPagination())
+func (sr *ShopReader) ListAll(req requests.Pagination) ([]entity.Shop, error) {
+	shops := make([]model.Shop, req.Limit)
+	db := sr.db.Limit(req.Limit)
+	if req.Page > 1 {
+		db = db.Offset(req.OffsetFromPagination())
 	}
 	err := db.Find(&shops).Error()
 	if err != nil {

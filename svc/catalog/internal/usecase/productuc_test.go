@@ -34,7 +34,7 @@ func (p *ProductUCTest) Finish() {
 
 func TestProductUC_List(t *testing.T) {
 	test := NewProductUCTest()
-	t.Run("reader returns error, should return error", func(t *testing.T) {
+	t.Run("no shopID, reader returns error, should return error", func(t *testing.T) {
 		// preparations
 		test.Begin(t)
 		defer test.Finish()
@@ -45,14 +45,14 @@ func TestProductUC_List(t *testing.T) {
 			Limit: 10,
 		}}
 		// expects
-		test.Reader.EXPECT().List(req).Return(nil, errors.New("error"))
+		test.Reader.EXPECT().ListAll(req.Pagination).Return(nil, errors.New("error"))
 
 		// assertions
 		got, err := test.Unit.List(req)
 		assert.NotNil(t, err)
 		assert.Nil(t, got)
 	})
-	t.Run("reader returns no error, should return entity slice", func(t *testing.T) {
+	t.Run("no shopID, reader returns no error, should return entity slice", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 
@@ -63,7 +63,46 @@ func TestProductUC_List(t *testing.T) {
 		res := []entity.Product{
 			{ID: 1}, {ID: 2},
 		}
-		test.Reader.EXPECT().List(req).Return(res, nil)
+		test.Reader.EXPECT().ListAll(req.Pagination).Return(res, nil)
+
+		got, err := test.Unit.List(req)
+		assert.Nil(t, err)
+		assert.NotNil(t, got)
+	})
+	t.Run("given shopID, reader returns error, should return error", func(t *testing.T) {
+		// preparations
+		test.Begin(t)
+		defer test.Finish()
+
+		// input and output
+		req := requests.ListProduct{
+			ShopID: 1337,
+			Pagination: requests.Pagination{
+				Page:  1,
+				Limit: 10,
+			}}
+		// expects
+		test.Reader.EXPECT().ListByShopID(req.ShopID, req.Pagination).Return(nil, errors.New("error"))
+
+		// assertions
+		got, err := test.Unit.List(req)
+		assert.NotNil(t, err)
+		assert.Nil(t, got)
+	})
+	t.Run("given shopID, reader returns no error, should return entity slice", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		req := requests.ListProduct{
+			ShopID: 1337,
+			Pagination: requests.Pagination{
+				Page:  1,
+				Limit: 10,
+			}}
+		res := []entity.Product{
+			{ID: 1}, {ID: 2},
+		}
+		test.Reader.EXPECT().ListByShopID(req.ShopID, req.Pagination).Return(res, nil)
 
 		got, err := test.Unit.List(req)
 		assert.Nil(t, err)
@@ -71,50 +110,65 @@ func TestProductUC_List(t *testing.T) {
 	})
 }
 
-func TestProductUC_GetByID(t *testing.T) {
+func TestProductUC_Get(t *testing.T) {
 	test := NewProductUCTest()
+	t.Run("given no id and slug, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		product := entity.Product{}
+
+		got, err := test.Unit.Get(product)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Product{}, got)
+	})
+	// ID
 	t.Run("reader returns error, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		id := int32(1)
-		test.Reader.EXPECT().GetByID(id).Return(entity.Product{}, errors.New("error"))
+		product := entity.Product{
+			ID: 1,
+		}
+		test.Reader.EXPECT().GetByID(product.ID).Return(entity.Product{}, errors.New("error"))
 
-		got, err := test.Unit.GetByID(id)
+		got, err := test.Unit.Get(product)
 		assert.NotNil(t, err)
 		assert.Equal(t, entity.Product{}, got)
 	})
 	t.Run("reader returns no error, should return product entity with the same id", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		id := int32(3)
-		test.Reader.EXPECT().GetByID(id).Return(entity.Product{ID: id}, nil)
+		product := entity.Product{
+			ID: 3,
+		}
+		test.Reader.EXPECT().GetByID(product.ID).Return(entity.Product{ID: product.ID}, nil)
 
-		got, err := test.Unit.GetByID(id)
+		got, err := test.Unit.Get(product)
 		assert.Nil(t, err)
-		assert.Equal(t, id, got.ID)
+		assert.Equal(t, product.ID, got.ID)
 	})
-}
-
-func TestProductUC_GetBySlug(t *testing.T) {
-	test := NewProductUCTest()
+	// Slug
 	t.Run("reader returns error, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		slug := "slug-1"
-		test.Reader.EXPECT().GetBySlug(slug).Return(entity.Product{}, errors.New("error"))
+		product := entity.Product{
+			Slug: "slug-5432",
+		}
+		test.Reader.EXPECT().GetBySlug(product.Slug).Return(entity.Product{}, errors.New("error"))
 
-		got, err := test.Unit.GetBySlug(slug)
+		got, err := test.Unit.Get(product)
 		assert.NotNil(t, err)
 		assert.Equal(t, entity.Product{}, got)
 	})
 	t.Run("reader returns no error, should return product entity with the same slug", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		slug := "slug-3412"
-		test.Reader.EXPECT().GetBySlug(slug).Return(entity.Product{ID: 1, Slug: slug}, nil)
+		product := entity.Product{
+			Slug: "slug-5432",
+		}
+		test.Reader.EXPECT().GetBySlug(product.Slug).Return(entity.Product{ID: 1, Slug: product.Slug}, nil)
 
-		got, err := test.Unit.GetBySlug(slug)
+		got, err := test.Unit.Get(product)
 		assert.Nil(t, err)
-		assert.Equal(t, slug, got.Slug)
+		assert.Equal(t, product.Slug, got.Slug)
 	})
 }

@@ -26,7 +26,7 @@ func (p *ProductWriterTest) Begin(t *testing.T) {
 	p.Ctrl = gomock.NewController(t)
 	p.DB = gormmock.NewMockGormw(p.Ctrl)
 	p.Unit = NewProductWriter(p.DB)
-	p.Req = entity.Product{ID: 23, Name: "test"}
+	p.Req = entity.Product{ID: 23, Name: "name", Slug: "test"}
 }
 
 func (p *ProductWriterTest) Finish() {
@@ -135,7 +135,7 @@ func TestProductWriter_Update(t *testing.T) {
 	})
 }
 
-func TestProductWriter_Delete(t *testing.T) {
+func TestProductWriter_DeleteByID(t *testing.T) {
 	test := NewProductWriterTest()
 	t.Run("error when finding, should return error", func(t *testing.T) {
 		test.Begin(t)
@@ -145,7 +145,7 @@ func TestProductWriter_Delete(t *testing.T) {
 		test.DB.EXPECT().First(gomock.Any()).Return(test.DB)
 		test.DB.EXPECT().Error().Return(errors.New("error"))
 
-		err := test.Unit.Delete(test.Req.ID)
+		err := test.Unit.DeleteByID(test.Req.ID)
 		assert.NotNil(t, err)
 	})
 	t.Run("record not found, should return error", func(t *testing.T) {
@@ -157,7 +157,7 @@ func TestProductWriter_Delete(t *testing.T) {
 		test.DB.EXPECT().Error().Return(nil)
 		test.DB.EXPECT().RecordNotFound().Return(true)
 
-		err := test.Unit.Delete(test.Req.ID)
+		err := test.Unit.DeleteByID(test.Req.ID)
 		assert.NotNil(t, err)
 	})
 	t.Run("error when deleting, should return error", func(t *testing.T) {
@@ -171,7 +171,7 @@ func TestProductWriter_Delete(t *testing.T) {
 		test.DB.EXPECT().Delete(gomock.Any()).Return(test.DB)
 		test.DB.EXPECT().Error().Return(errors.New("error"))
 
-		err := test.Unit.Delete(test.Req.ID)
+		err := test.Unit.DeleteByID(test.Req.ID)
 		assert.NotNil(t, err)
 	})
 	t.Run("no error, should return no error", func(t *testing.T) {
@@ -185,7 +185,62 @@ func TestProductWriter_Delete(t *testing.T) {
 		test.DB.EXPECT().Delete(gomock.Any()).Return(test.DB)
 		test.DB.EXPECT().Error().Return(nil)
 
-		err := test.Unit.Delete(test.Req.ID)
+		err := test.Unit.DeleteByID(test.Req.ID)
+		assert.Nil(t, err)
+	})
+}
+
+func TestProductWriter_DeleteBySlug(t *testing.T) {
+	test := NewProductWriterTest()
+	t.Run("error when finding, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		test.DB.EXPECT().Where(gomock.Any(), gomock.Any()).Return(test.DB)
+		test.DB.EXPECT().First(gomock.Any()).Return(test.DB)
+		test.DB.EXPECT().Error().Return(errors.New("error"))
+
+		err := test.Unit.DeleteBySlug(test.Req.Slug)
+		assert.NotNil(t, err)
+	})
+	t.Run("record not found, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		test.DB.EXPECT().Where(gomock.Any(), gomock.Any()).Return(test.DB)
+		test.DB.EXPECT().First(gomock.Any()).Return(test.DB)
+		test.DB.EXPECT().Error().Return(nil)
+		test.DB.EXPECT().RecordNotFound().Return(true)
+
+		err := test.Unit.DeleteBySlug(test.Req.Slug)
+		assert.NotNil(t, err)
+	})
+	t.Run("error when deleting, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		test.DB.EXPECT().Where(gomock.Any(), gomock.Any()).Return(test.DB)
+		test.DB.EXPECT().First(gomock.Any()).Return(test.DB)
+		test.DB.EXPECT().Error().Return(nil)
+		test.DB.EXPECT().RecordNotFound().Return(false)
+		test.DB.EXPECT().Delete(gomock.Any()).Return(test.DB)
+		test.DB.EXPECT().Error().Return(errors.New("error"))
+
+		err := test.Unit.DeleteBySlug(test.Req.Slug)
+		assert.NotNil(t, err)
+	})
+	t.Run("no error, should return no error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		test.DB.EXPECT().Where(gomock.Any(), gomock.Any()).Return(test.DB)
+		test.DB.EXPECT().First(gomock.Any()).Return(test.DB)
+		test.DB.EXPECT().Error().Return(nil)
+		test.DB.EXPECT().RecordNotFound().Return(false)
+		test.DB.EXPECT().Delete(gomock.Any()).Return(test.DB)
+		test.DB.EXPECT().Error().Return(nil)
+
+		err := test.Unit.DeleteBySlug(test.Req.Slug)
 		assert.Nil(t, err)
 	})
 }

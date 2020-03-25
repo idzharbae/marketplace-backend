@@ -13,5 +13,4 @@ type Shop struct {
 	Slug      string
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	Products  []Product
 }

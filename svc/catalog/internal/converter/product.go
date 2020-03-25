@@ -29,6 +29,14 @@ func ProductModelsToEntities(ps []model.Product) []entity.Product {
 	return products
 }
 
+func ProductEntitiesToModels(ps []entity.Product) []model.Product {
+	products := make([]model.Product, len(ps))
+	for i, prod := range ps {
+		products[i] = ProductEntityToModel(prod)
+	}
+	return products
+}
+
 func ProductEntityToModel(p entity.Product) model.Product {
 	return model.Product{
 		ID:         p.ID,

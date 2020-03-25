@@ -5,6 +5,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/catalog/catalogproto"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/converter"
+	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/requests"
 )
 
@@ -19,10 +20,12 @@ func NewProductService(productUC internal.ProductUC) *ProductService {
 }
 
 func (p *ProductService) ListProducts(ctx context.Context, req *catalogproto.ListProductsReq) (*catalogproto.ListProductsResp, error) {
-	ucReq := requests.ListProduct{Pagination: requests.Pagination{
-		Page:  int(req.Pagination.Page),
-		Limit: int(req.Pagination.Limit),
-	}}
+	ucReq := requests.ListProduct{
+		ShopID: int64(req.GetShopID()),
+		Pagination: requests.Pagination{
+			Page:  int(req.Pagination.Page),
+			Limit: int(req.Pagination.Limit),
+		}}
 	products, err := p.ProductUC.List(ucReq)
 	productProtos := converter.ProductEntitiesToProtos(products)
 
@@ -35,16 +38,12 @@ func (p *ProductService) ListProducts(ctx context.Context, req *catalogproto.Lis
 	}, nil
 }
 
-func (p *ProductService) GetProductByID(ctx context.Context, req *catalogproto.GetProductByIDReq) (*catalogproto.Product, error) {
-	got, err := p.ProductUC.GetByID(req.GetId())
-	if err != nil {
-		return nil, err
+func (p *ProductService) GetProduct(ctx context.Context, req *catalogproto.GetProductReq) (*catalogproto.Product, error) {
+	productReq := entity.Product{
+		ID:   req.GetId(),
+		Slug: req.GetSlug(),
 	}
-	return converter.ProductEntityToProto(got), nil
-}
-
-func (p *ProductService) GetProductBySlug(ctx context.Context, req *catalogproto.GetProductBySlugReq) (*catalogproto.Product, error) {
-	got, err := p.ProductUC.GetBySlug(req.Slug)
+	got, err := p.ProductUC.Get(productReq)
 	if err != nil {
 		return nil, err
 	}
@@ -69,6 +68,10 @@ func (p *ProductService) UpdateProduct(ctx context.Context, req *catalogproto.Pr
 	return converter.ProductEntityToProto(got), nil
 }
 
-func (p *ProductService) DeleteProduct(ctx context.Context, req *catalogproto.PKReq) (*catalogproto.Empty, error) {
-	return &catalogproto.Empty{}, p.ProductUC.Delete(req.GetId())
+func (p *ProductService) DeleteProduct(ctx context.Context, req *catalogproto.GetProductReq) (*catalogproto.Empty, error) {
+	product := entity.Product{
+		ID:   req.GetId(),
+		Slug: req.GetSlug(),
+	}
+	return &catalogproto.Empty{}, p.ProductUC.Delete(product)
 }

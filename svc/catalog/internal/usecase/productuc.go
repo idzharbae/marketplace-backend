@@ -3,16 +3,50 @@ package usecase
 import (
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/entity"
+	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/requests"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/util/errors"
 )
 
 type Product struct {
-	internal.ProductReader
+	ProductReader internal.ProductReader
 	ProductWriter internal.ProductWriter
 }
 
 func NewProduct(productReader internal.ProductReader, productWriter internal.ProductWriter) *Product {
 	return &Product{ProductReader: productReader, ProductWriter: productWriter}
+}
+
+func (p *Product) List(req requests.ListProduct) ([]entity.Product, error) {
+	if req.ShopID != 0 {
+		got, err := p.ProductReader.ListByShopID(req.ShopID, req.Pagination)
+		if err != nil {
+			return nil, err
+		}
+		return got, nil
+	}
+	got, err := p.ProductReader.ListAll(req.Pagination)
+	if err != nil {
+		return nil, err
+	}
+	return got, nil
+}
+
+func (p *Product) Get(product entity.Product) (entity.Product, error) {
+	if product.ID != 0 {
+		got, err := p.ProductReader.GetByID(product.ID)
+		if err != nil {
+			return entity.Product{}, err
+		}
+		return got, nil
+	}
+	if product.Slug == "" {
+		return entity.Product{}, errors.New("either product ID or slug should not be empty")
+	}
+	got, err := p.ProductReader.GetBySlug(product.Slug)
+	if err != nil {
+		return entity.Product{}, err
+	}
+	return got, nil
 }
 
 func (p *Product) Create(product entity.Product) (entity.Product, error) {
@@ -39,6 +73,9 @@ func (p *Product) Update(product entity.Product) (entity.Product, error) {
 	}
 	return p.ProductWriter.Update(product)
 }
-func (p *Product) Delete(productID int32) error {
-	return p.ProductWriter.Delete(productID)
+func (p *Product) Delete(product entity.Product) error {
+	if product.ID != 0 {
+		return p.ProductWriter.DeleteByID(product.ID)
+	}
+	return p.ProductWriter.DeleteBySlug(product.Slug)
 }
