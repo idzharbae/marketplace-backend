@@ -19,3 +19,6 @@ docker-stop:
 dep:
 	@dep ensure -v
 	@dep ensure -v --vendor-only
+
+init:
+	@dep init -v

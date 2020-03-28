@@ -5,7 +5,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/config"
+	"github.com/idzharbae/marketplace-backend/svc/auth/internal/config"
 	"io/ioutil"
 	"log"
 	"os"

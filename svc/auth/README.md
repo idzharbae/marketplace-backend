@@ -5,6 +5,8 @@
 - PostgreSQL
 
 ## How to run
+### initialize
+`make init`
 ### Install dependencies
 `make dep`
 ### Run docker services
