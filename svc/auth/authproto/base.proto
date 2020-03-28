@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package authproto;
+
+message Pagination {
+    int32 page = 1;
+    int32 limit = 2;
+}
+
+message Empty {
+
+}

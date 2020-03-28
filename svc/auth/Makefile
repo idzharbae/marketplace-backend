@@ -1,14 +1,14 @@
 grpc:
-	@protoc -I catalogproto/ catalogproto/*.proto --go_out=plugins=grpc:catalogproto
+	@protoc -I authproto/ authproto/*.proto --go_out=plugins=grpc:authproto
 
 # go build command
 build:
 	@echo " >> building binaries"
-	@go build -v -o marketplace cmd/main.go
+	@go build -v -o auth cmd/main.go
 
 # go run command
 run: build
-	@./marketplace
+	@./auth
 
 docker-run:
 	@docker-compose up -d

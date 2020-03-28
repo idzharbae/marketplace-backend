@@ -1,0 +1,23 @@
+version: "3"
+services:
+  auth_postgres:
+    image: postgres
+    volumes:
+      - auth_db_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_DB: cabai_auth
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: secret
+
+  auth_redis:
+    image: redis:5-alpine
+    ports:
+      - "6380:6379"
+
+volumes:
+  # This volume is located at /var/lib/docker/auth_db_data
+  # If you want to reset the DB's data, you might want to remove that file
+  auth_db_data:
+    driver: local
