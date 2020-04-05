@@ -17,6 +17,7 @@ type UserUC interface {
 
 //go:generate mockgen -destination=usecase/ucmock/tokenuc_mock.go -package=ucmock github.com/idzharbae/marketplace-backend/svc/auth/internal TokenUC
 type TokenUC interface {
-	Get(req request.GetToken) (entity.AuthToken, error)
+	Get(req entity.User) (entity.AuthToken, error)
 	Refresh(req request.RefreshToken) (entity.AuthToken, error)
+	Validate(req entity.AuthToken) error
 }

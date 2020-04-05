@@ -1,9 +1,11 @@
 package usecase
 
 import (
+	"errors"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/request"
+	"github.com/idzharbae/marketplace-backend/svc/auth/internal/util"
 )
 
 type User struct {
@@ -19,7 +21,13 @@ func NewUser(userReader internal.UserReader, userWriter internal.UserWriter) *Us
 }
 
 func (u *User) Get(user entity.User) (entity.User, error) {
-	return entity.User{}, nil
+	if user.UserName != "" {
+		return u.userReader.GetByUserNameAndPassword(user)
+	}
+	if !util.IsEmail(user.Email) {
+		return entity.User{}, errors.New("email is invalid")
+	}
+	return u.userReader.GetByEmailAndPassword(user)
 }
 func (u *User) List(req request.ListUser) ([]entity.User, error) {
 	return nil, nil

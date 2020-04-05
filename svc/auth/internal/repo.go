@@ -9,6 +9,8 @@ import (
 type UserReader interface {
 	ListAll(req request.ListUser) ([]entity.User, error)
 	GetByID(ID int64) (entity.User, error)
+	GetByEmailAndPassword(user entity.User) (entity.User, error)
+	GetByUserNameAndPassword(user entity.User) (entity.User, error)
 }
 
 //go:generate mockgen -destination=repo/repomock/userwriter_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/auth/internal UserWriter
