@@ -21,7 +21,7 @@ func NewAuth(cfgPath string) (*Auth, error) {
 		return nil, err
 	}
 	Repos := NewRepos(cfg)
-	UCS := NewUsecases(Repos)
+	UCS := NewUsecases(cfg, Repos)
 
 	return &Auth{
 		Config:   cfg,

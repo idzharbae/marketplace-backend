@@ -35,7 +35,7 @@ func (m *MockTokenUC) EXPECT() *MockTokenUCMockRecorder {
 }
 
 // Get mocks base method
-func (m *MockTokenUC) Get(arg0 request.GetToken) (entity.AuthToken, error) {
+func (m *MockTokenUC) Get(arg0 entity.User) (entity.AuthToken, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", arg0)
 	ret0, _ := ret[0].(entity.AuthToken)
@@ -62,4 +62,18 @@ func (m *MockTokenUC) Refresh(arg0 request.RefreshToken) (entity.AuthToken, erro
 func (mr *MockTokenUCMockRecorder) Refresh(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Refresh", reflect.TypeOf((*MockTokenUC)(nil).Refresh), arg0)
+}
+
+// Validate mocks base method
+func (m *MockTokenUC) Validate(arg0 entity.AuthToken) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Validate", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Validate indicates an expected call of Validate
+func (mr *MockTokenUCMockRecorder) Validate(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Validate", reflect.TypeOf((*MockTokenUC)(nil).Validate), arg0)
 }

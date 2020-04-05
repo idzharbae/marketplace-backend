@@ -2,6 +2,7 @@ package app
 
 import (
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal"
+	"github.com/idzharbae/marketplace-backend/svc/auth/internal/config"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/usecase"
 )
 
@@ -10,10 +11,10 @@ type UseCases struct {
 	TokenUC internal.TokenUC
 }
 
-func NewUsecases(repos *Repos) *UseCases {
+func NewUsecases(cfg config.Config, repos *Repos) *UseCases {
 	return &UseCases{
 		UserUC:  usecase.NewUser(repos.UserReader, repos.UserWriter),
-		TokenUC: usecase.NewToken(repos.UserReader),
+		TokenUC: usecase.NewToken(cfg),
 	}
 }
 

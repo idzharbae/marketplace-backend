@@ -8,6 +8,6 @@ type Services struct {
 
 func GetServices(a *app.Auth) *Services {
 	return &Services{
-		AuthService: NewAuthService(a.UseCases.TokenUC),
+		AuthService: NewAuthService(a.UseCases.TokenUC, a.UseCases.UserUC),
 	}
 }
