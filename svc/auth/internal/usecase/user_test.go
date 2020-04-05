@@ -61,3 +61,58 @@ func TestUser_Get(t *testing.T) {
 		assert.Equal(t, entity.User{}, got)
 	})
 }
+
+func TestUser_Create(t *testing.T) {
+	test := newUserTest()
+	t.Run("given invalid email, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.User{
+			ID:       0,
+			Name:     "asdasfasfas",
+			UserName: "asdasdasdas",
+			Email:    "asadsasdadf",
+			Phone:    "123123123",
+			Password: "asdasdasdsd",
+			Type:     1,
+		}
+		got, err := test.unit.Create(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.User{}, got)
+	})
+	t.Run("given invalid phone number, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.User{
+			ID:       0,
+			Name:     "asdasfasfas",
+			UserName: "asdasdasdas",
+			Email:    "idzharbae@gmail.com",
+			Phone:    "12312312a3",
+			Password: "asdasdasdsd",
+			Type:     1,
+		}
+		got, err := test.unit.Create(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.User{}, got)
+	})
+	t.Run("repo returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.User{
+			ID:       0,
+			Name:     "asdasfasfas",
+			UserName: "asdasdasdas",
+			Email:    "idzharbae@gmail.com",
+			Phone:    "123123122133",
+			Password: "asdasdasdsd",
+			Type:     1,
+		}
+
+		test.writer.EXPECT().Create(gomock.Any()).Return(entity.User{}, errors.New("error"))
+
+		got, err := test.unit.Create(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.User{}, got)
+	})
+}

@@ -25,7 +25,7 @@ func UserFromEntity(user entity.User) User {
 }
 
 func (u User) TableName() string {
-	return "user"
+	return "user_account"
 }
 
 func (u User) ToEntity() entity.User {

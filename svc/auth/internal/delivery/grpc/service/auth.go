@@ -5,6 +5,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/auth/authproto"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/entity"
+	"github.com/idzharbae/marketplace-backend/svc/auth/internal/request"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/util"
 )
 
@@ -41,9 +42,28 @@ func (as *AuthService) Login(ctx context.Context, in *authproto.LoginReq) (*auth
 }
 
 func (as *AuthService) Register(ctx context.Context, in *authproto.RegisterReq) (*authproto.RegisterResp, error) {
-	return nil, nil
+	_, err := as.userUC.Create(entity.User{
+		Name:     in.GetFullName(),
+		UserName: in.GetUserName(),
+		Email:    in.GetEmail(),
+		Phone:    in.GetPhone(),
+		Password: in.GetPassword(),
+		Type:     in.GetType(),
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &authproto.RegisterResp{
+		Success: true,
+	}, nil
 }
 
 func (as *AuthService) RefreshToken(ctx context.Context, in *authproto.RefreshTokenReq) (*authproto.RefreshTokenResp, error) {
-	return nil, nil
+	token, err := as.tokenUC.Refresh(request.RefreshToken{CurrentToken: in.GetToken()})
+	if err != nil {
+		return nil, err
+	}
+	return &authproto.RefreshTokenResp{
+		Token: token.Token,
+	}, nil
 }

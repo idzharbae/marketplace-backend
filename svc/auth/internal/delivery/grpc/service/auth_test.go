@@ -6,7 +6,6 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/idzharbae/marketplace-backend/svc/auth/authproto"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/entity"
-	"github.com/idzharbae/marketplace-backend/svc/auth/internal/request"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/usecase/ucmock"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -59,9 +58,11 @@ func TestAuthService_Login(t *testing.T) {
 			UsernameOrEmail: "asdf",
 			Password:        "asdaf",
 		}
-		reqToken := request.GetToken{
-			UserID: 1337,
-			Role:   1,
+		reqToken := entity.User{
+			ID:       1337,
+			UserName: "asdf",
+			Email:    "asdf@asdf.com",
+			Type:     1,
 		}
 
 		test.userUC.EXPECT().Get(gomock.Any()).Return(entity.User{UserName: "asdf", Email: "asdf@asdf.com", ID: 1337, Type: 1}, nil)
@@ -78,9 +79,11 @@ func TestAuthService_Login(t *testing.T) {
 			UsernameOrEmail: "asdf",
 			Password:        "asdaf",
 		}
-		reqToken := request.GetToken{
-			UserID: 1337,
-			Role:   1,
+		reqToken := entity.User{
+			ID:       1337,
+			UserName: "asdf",
+			Email:    "asdf@asdf.com",
+			Type:     1,
 		}
 
 		test.userUC.EXPECT().Get(gomock.Any()).Return(entity.User{UserName: "asdf", Email: "asdf@asdf.com", ID: 1337, Type: 1}, nil)
@@ -116,5 +119,47 @@ func TestAuthService_Login(t *testing.T) {
 			Password: req.Password,
 		}).Return(entity.User{}, errors.New("error"))
 		test.unit.Login(context.Background(), req)
+	})
+}
+
+func TestAuthService_Register(t *testing.T) {
+	test := newTestAuth()
+	t.Run("uc returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := &authproto.RegisterReq{
+			Id:       0,
+			UserName: "asdf",
+			Email:    "asdf",
+			Phone:    "asdfg",
+			Password: "asdasdasd",
+			Type:     1,
+			FullName: "asdasd",
+		}
+
+		test.userUC.EXPECT().Create(gomock.Any()).Return(entity.User{}, errors.New("error"))
+
+		got, err := test.unit.Register(context.Background(), req)
+		assert.NotNil(t, err)
+		assert.Nil(t, got)
+	})
+	t.Run("uc returns no error, should not return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := &authproto.RegisterReq{
+			Id:       0,
+			UserName: "asdf",
+			Email:    "asdf",
+			Phone:    "asdfg",
+			Password: "asdasdasd",
+			Type:     1,
+			FullName: "asdasd",
+		}
+
+		test.userUC.EXPECT().Create(gomock.Any()).Return(entity.User{}, nil)
+
+		got, err := test.unit.Register(context.Background(), req)
+		assert.Nil(t, err)
+		assert.NotNil(t, got)
 	})
 }
