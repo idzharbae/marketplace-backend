@@ -1,13 +1,13 @@
 grpc:
 	@protoc -I protoresources/ protoresources/*.proto --go_out=plugins=grpc:protoresources
 # go build command
-build:
+build-grpc:
 	@echo " >> building binaries"
-	@go build -v -o resource cmd/main.go
+	@go build -v -o resource_grpc cmd/grpc/main.go
 
 # go run command
-run: build
-	@./resource
+run-grpc: build-grpc
+	@./resource_grpc
 
 docker-run:
 	@docker-compose up -d

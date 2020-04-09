@@ -1,6 +1,9 @@
 {
+  "REST": {
+    "Port": ":1441",
+  },
   "Grpc": {
-    "Port": ":1443"
+    "Port": ":1442"
   },
   "db": {
     "debug": true,
