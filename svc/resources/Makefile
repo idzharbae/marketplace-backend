@@ -1,14 +1,13 @@
 grpc:
-	@protoc -I authproto/ authproto/*.proto --go_out=plugins=grpc:authproto
-
+	@protoc -I protoresources/ protoresources/*.proto --go_out=plugins=grpc:protoresources
 # go build command
 build:
 	@echo " >> building binaries"
-	@go build -v -o auth cmd/main.go
+	@go build -v -o resource cmd/main.go
 
 # go run command
 run: build
-	@./auth
+	@./resource
 
 docker-run:
 	@docker-compose up -d
@@ -25,7 +24,7 @@ init:
 
 migration-init:
 	@go run migrations/main.go init
-	
+
 migration-up:
 	@go run migrations/main.go up
 

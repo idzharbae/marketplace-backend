@@ -1,0 +1,17 @@
+version: "3"
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - resources_db_data:/var/lib/postgresql/data
+    ports:
+      - "5430:5430"
+    environment:
+      POSTGRES_DB: cabai_resources
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: secret
+volumes:
+  # This volume is located at /var/lib/docker/marketplace_db_data
+  # If you want to reset the DB's data, you might want to remove that file
+  resources_db_data:
+    driver: local

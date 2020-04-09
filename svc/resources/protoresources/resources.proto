@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+import "base.proto";
+
+package protoresources;
+
+service MarketplaceResources {
+  rpc UploadPhoto(UploadPhotoReq) returns (UploadPhotoResp) {}
+}
+
+message UploadPhotoReq {
+  bytes file = 1;
+  string file_name = 2;
+}
+
+message UploadPhotoResp {
+  string file_url = 1;
+}

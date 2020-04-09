@@ -22,3 +22,13 @@ dep:
 
 init:
 	@dep init -v
+
+migration-init:
+	@go run migrations/main.go init
+	
+migration-up:
+	@go run migrations/main.go up
+
+migration-down:
+	@go run migrations/main.go down
+
