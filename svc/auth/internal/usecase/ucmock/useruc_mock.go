@@ -11,30 +11,30 @@ import (
 	reflect "reflect"
 )
 
-// MockUserUC is a mock of UserUC interface
+// MockUserUC is a mock of UserUC interface.
 type MockUserUC struct {
 	ctrl     *gomock.Controller
 	recorder *MockUserUCMockRecorder
 }
 
-// MockUserUCMockRecorder is the mock recorder for MockUserUC
+// MockUserUCMockRecorder is the mock recorder for MockUserUC.
 type MockUserUCMockRecorder struct {
 	mock *MockUserUC
 }
 
-// NewMockUserUC creates a new mock instance
+// NewMockUserUC creates a new mock instance.
 func NewMockUserUC(ctrl *gomock.Controller) *MockUserUC {
 	mock := &MockUserUC{ctrl: ctrl}
 	mock.recorder = &MockUserUCMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockUserUC) EXPECT() *MockUserUCMockRecorder {
 	return m.recorder
 }
 
-// Create mocks base method
+// Create mocks base method.
 func (m *MockUserUC) Create(arg0 entity.User) (entity.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", arg0)
@@ -43,13 +43,13 @@ func (m *MockUserUC) Create(arg0 entity.User) (entity.User, error) {
 	return ret0, ret1
 }
 
-// Create indicates an expected call of Create
+// Create indicates an expected call of Create.
 func (mr *MockUserUCMockRecorder) Create(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockUserUC)(nil).Create), arg0)
 }
 
-// Delete mocks base method
+// Delete mocks base method.
 func (m *MockUserUC) Delete(arg0 entity.User) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Delete", arg0)
@@ -57,13 +57,13 @@ func (m *MockUserUC) Delete(arg0 entity.User) error {
 	return ret0
 }
 
-// Delete indicates an expected call of Delete
+// Delete indicates an expected call of Delete.
 func (mr *MockUserUCMockRecorder) Delete(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockUserUC)(nil).Delete), arg0)
 }
 
-// Get mocks base method
+// Get mocks base method.
 func (m *MockUserUC) Get(arg0 entity.User) (entity.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", arg0)
@@ -72,13 +72,28 @@ func (m *MockUserUC) Get(arg0 entity.User) (entity.User, error) {
 	return ret0, ret1
 }
 
-// Get indicates an expected call of Get
+// Get indicates an expected call of Get.
 func (mr *MockUserUCMockRecorder) Get(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockUserUC)(nil).Get), arg0)
 }
 
-// List mocks base method
+// GetWithPassword mocks base method.
+func (m *MockUserUC) GetWithPassword(arg0 entity.User) (entity.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetWithPassword", arg0)
+	ret0, _ := ret[0].(entity.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetWithPassword indicates an expected call of GetWithPassword.
+func (mr *MockUserUCMockRecorder) GetWithPassword(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetWithPassword", reflect.TypeOf((*MockUserUC)(nil).GetWithPassword), arg0)
+}
+
+// List mocks base method.
 func (m *MockUserUC) List(arg0 request.ListUser) ([]entity.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "List", arg0)
@@ -87,13 +102,13 @@ func (m *MockUserUC) List(arg0 request.ListUser) ([]entity.User, error) {
 	return ret0, ret1
 }
 
-// List indicates an expected call of List
+// List indicates an expected call of List.
 func (mr *MockUserUCMockRecorder) List(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockUserUC)(nil).List), arg0)
 }
 
-// Update mocks base method
+// Update mocks base method.
 func (m *MockUserUC) Update(arg0 entity.User) (entity.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", arg0)
@@ -102,7 +117,7 @@ func (m *MockUserUC) Update(arg0 entity.User) (entity.User, error) {
 	return ret0, ret1
 }
 
-// Update indicates an expected call of Update
+// Update indicates an expected call of Update.
 func (mr *MockUserUCMockRecorder) Update(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockUserUC)(nil).Update), arg0)

@@ -2,10 +2,14 @@ syntax = "proto3";
 
 package authproto;
 
+import "user.proto";
+
 service MarketplaceAuth {
     rpc Login(LoginReq) returns (LoginResp) {}
     rpc Register(RegisterReq) returns (RegisterResp) {}
     rpc RefreshToken(RefreshTokenReq) returns (RefreshTokenResp) {}
+    rpc GetUser(GetUserReq) returns (User) {}
+    rpc UpdateUser(User) returns (User) {}
 }
 
 message LoginReq {
@@ -24,6 +28,7 @@ message RegisterReq {
     string password = 4;
     int32 type = 5;
     string full_name = 6;
+    string photo_url = 7;
 }
 
 message RegisterResp {
@@ -36,4 +41,10 @@ message RefreshTokenReq {
 
 message RefreshTokenResp {
     string token = 1;
+}
+
+message GetUserReq {
+    int64 id = 1;
+    string user_name = 2;
+    string email = 3;
 }

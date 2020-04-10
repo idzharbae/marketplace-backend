@@ -45,7 +45,7 @@ func TestAuthService_Login(t *testing.T) {
 			Password:        "asdaf",
 		}
 
-		test.userUC.EXPECT().Get(gomock.Any()).Return(entity.User{}, errors.New("error"))
+		test.userUC.EXPECT().GetWithPassword(gomock.Any()).Return(entity.User{}, errors.New("error"))
 
 		got, err := test.unit.Login(test.ctx, req)
 		assert.NotNil(t, err)
@@ -65,7 +65,7 @@ func TestAuthService_Login(t *testing.T) {
 			Type:     1,
 		}
 
-		test.userUC.EXPECT().Get(gomock.Any()).Return(entity.User{UserName: "asdf", Email: "asdf@asdf.com", ID: 1337, Type: 1}, nil)
+		test.userUC.EXPECT().GetWithPassword(gomock.Any()).Return(entity.User{UserName: "asdf", Email: "asdf@asdf.com", ID: 1337, Type: 1}, nil)
 		test.tokenUC.EXPECT().Get(reqToken).Return(entity.AuthToken{}, errors.New("error"))
 
 		got, err := test.unit.Login(test.ctx, req)
@@ -86,7 +86,7 @@ func TestAuthService_Login(t *testing.T) {
 			Type:     1,
 		}
 
-		test.userUC.EXPECT().Get(gomock.Any()).Return(entity.User{UserName: "asdf", Email: "asdf@asdf.com", ID: 1337, Type: 1}, nil)
+		test.userUC.EXPECT().GetWithPassword(gomock.Any()).Return(entity.User{UserName: "asdf", Email: "asdf@asdf.com", ID: 1337, Type: 1}, nil)
 		test.tokenUC.EXPECT().Get(reqToken).Return(entity.AuthToken{Token: "asdasdasd"}, nil)
 
 		got, err := test.unit.Login(test.ctx, req)
@@ -101,7 +101,7 @@ func TestAuthService_Login(t *testing.T) {
 			UsernameOrEmail: "asdf@asdf.com",
 			Password:        "asdasdsad",
 		}
-		test.userUC.EXPECT().Get(entity.User{
+		test.userUC.EXPECT().GetWithPassword(entity.User{
 			Email:    req.UsernameOrEmail,
 			Password: req.Password,
 		}).Return(entity.User{}, errors.New("error"))
@@ -114,7 +114,7 @@ func TestAuthService_Login(t *testing.T) {
 			UsernameOrEmail: "asdfghjk",
 			Password:        "asdasdsad",
 		}
-		test.userUC.EXPECT().Get(entity.User{
+		test.userUC.EXPECT().GetWithPassword(entity.User{
 			UserName: req.UsernameOrEmail,
 			Password: req.Password,
 		}).Return(entity.User{}, errors.New("error"))
@@ -128,7 +128,6 @@ func TestAuthService_Register(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		req := &authproto.RegisterReq{
-			Id:       0,
 			UserName: "asdf",
 			Email:    "asdf",
 			Phone:    "asdfg",
@@ -147,7 +146,6 @@ func TestAuthService_Register(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		req := &authproto.RegisterReq{
-			Id:       0,
 			UserName: "asdf",
 			Email:    "asdf",
 			Phone:    "asdfg",

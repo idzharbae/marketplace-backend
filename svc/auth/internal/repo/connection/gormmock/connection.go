@@ -12,30 +12,30 @@ import (
 	reflect "reflect"
 )
 
-// MockGormw is a mock of Gormw interface
+// MockGormw is a mock of Gormw interface.
 type MockGormw struct {
 	ctrl     *gomock.Controller
 	recorder *MockGormwMockRecorder
 }
 
-// MockGormwMockRecorder is the mock recorder for MockGormw
+// MockGormwMockRecorder is the mock recorder for MockGormw.
 type MockGormwMockRecorder struct {
 	mock *MockGormw
 }
 
-// NewMockGormw creates a new mock instance
+// NewMockGormw creates a new mock instance.
 func NewMockGormw(ctrl *gomock.Controller) *MockGormw {
 	mock := &MockGormw{ctrl: ctrl}
 	mock.recorder = &MockGormwMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockGormw) EXPECT() *MockGormwMockRecorder {
 	return m.recorder
 }
 
-// AddError mocks base method
+// AddError mocks base method.
 func (m *MockGormw) AddError(arg0 error) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AddError", arg0)
@@ -43,13 +43,13 @@ func (m *MockGormw) AddError(arg0 error) error {
 	return ret0
 }
 
-// AddError indicates an expected call of AddError
+// AddError indicates an expected call of AddError.
 func (mr *MockGormwMockRecorder) AddError(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddError", reflect.TypeOf((*MockGormw)(nil).AddError), arg0)
 }
 
-// AddForeignKey mocks base method
+// AddForeignKey mocks base method.
 func (m *MockGormw) AddForeignKey(arg0, arg1, arg2, arg3 string) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AddForeignKey", arg0, arg1, arg2, arg3)
@@ -57,13 +57,13 @@ func (m *MockGormw) AddForeignKey(arg0, arg1, arg2, arg3 string) connection.Gorm
 	return ret0
 }
 
-// AddForeignKey indicates an expected call of AddForeignKey
+// AddForeignKey indicates an expected call of AddForeignKey.
 func (mr *MockGormwMockRecorder) AddForeignKey(arg0, arg1, arg2, arg3 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddForeignKey", reflect.TypeOf((*MockGormw)(nil).AddForeignKey), arg0, arg1, arg2, arg3)
 }
 
-// AddIndex mocks base method
+// AddIndex mocks base method.
 func (m *MockGormw) AddIndex(arg0 string, arg1 ...string) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -75,14 +75,14 @@ func (m *MockGormw) AddIndex(arg0 string, arg1 ...string) connection.Gormw {
 	return ret0
 }
 
-// AddIndex indicates an expected call of AddIndex
+// AddIndex indicates an expected call of AddIndex.
 func (mr *MockGormwMockRecorder) AddIndex(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddIndex", reflect.TypeOf((*MockGormw)(nil).AddIndex), varargs...)
 }
 
-// AddUniqueIndex mocks base method
+// AddUniqueIndex mocks base method.
 func (m *MockGormw) AddUniqueIndex(arg0 string, arg1 ...string) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -94,14 +94,14 @@ func (m *MockGormw) AddUniqueIndex(arg0 string, arg1 ...string) connection.Gormw
 	return ret0
 }
 
-// AddUniqueIndex indicates an expected call of AddUniqueIndex
+// AddUniqueIndex indicates an expected call of AddUniqueIndex.
 func (mr *MockGormwMockRecorder) AddUniqueIndex(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AddUniqueIndex", reflect.TypeOf((*MockGormw)(nil).AddUniqueIndex), varargs...)
 }
 
-// Assign mocks base method
+// Assign mocks base method.
 func (m *MockGormw) Assign(arg0 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{}
@@ -113,13 +113,13 @@ func (m *MockGormw) Assign(arg0 ...interface{}) connection.Gormw {
 	return ret0
 }
 
-// Assign indicates an expected call of Assign
+// Assign indicates an expected call of Assign.
 func (mr *MockGormwMockRecorder) Assign(arg0 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Assign", reflect.TypeOf((*MockGormw)(nil).Assign), arg0...)
 }
 
-// Association mocks base method
+// Association mocks base method.
 func (m *MockGormw) Association(arg0 string) *gorm.Association {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Association", arg0)
@@ -127,13 +127,13 @@ func (m *MockGormw) Association(arg0 string) *gorm.Association {
 	return ret0
 }
 
-// Association indicates an expected call of Association
+// Association indicates an expected call of Association.
 func (mr *MockGormwMockRecorder) Association(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Association", reflect.TypeOf((*MockGormw)(nil).Association), arg0)
 }
 
-// Attrs mocks base method
+// Attrs mocks base method.
 func (m *MockGormw) Attrs(arg0 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{}
@@ -145,13 +145,13 @@ func (m *MockGormw) Attrs(arg0 ...interface{}) connection.Gormw {
 	return ret0
 }
 
-// Attrs indicates an expected call of Attrs
+// Attrs indicates an expected call of Attrs.
 func (mr *MockGormwMockRecorder) Attrs(arg0 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Attrs", reflect.TypeOf((*MockGormw)(nil).Attrs), arg0...)
 }
 
-// AutoMigrate mocks base method
+// AutoMigrate mocks base method.
 func (m *MockGormw) AutoMigrate(arg0 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{}
@@ -163,13 +163,13 @@ func (m *MockGormw) AutoMigrate(arg0 ...interface{}) connection.Gormw {
 	return ret0
 }
 
-// AutoMigrate indicates an expected call of AutoMigrate
+// AutoMigrate indicates an expected call of AutoMigrate.
 func (mr *MockGormwMockRecorder) AutoMigrate(arg0 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "AutoMigrate", reflect.TypeOf((*MockGormw)(nil).AutoMigrate), arg0...)
 }
 
-// Begin mocks base method
+// Begin mocks base method.
 func (m *MockGormw) Begin() connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Begin")
@@ -177,13 +177,13 @@ func (m *MockGormw) Begin() connection.Gormw {
 	return ret0
 }
 
-// Begin indicates an expected call of Begin
+// Begin indicates an expected call of Begin.
 func (mr *MockGormwMockRecorder) Begin() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Begin", reflect.TypeOf((*MockGormw)(nil).Begin))
 }
 
-// Callback mocks base method
+// Callback mocks base method.
 func (m *MockGormw) Callback() *gorm.Callback {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Callback")
@@ -191,13 +191,13 @@ func (m *MockGormw) Callback() *gorm.Callback {
 	return ret0
 }
 
-// Callback indicates an expected call of Callback
+// Callback indicates an expected call of Callback.
 func (mr *MockGormwMockRecorder) Callback() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Callback", reflect.TypeOf((*MockGormw)(nil).Callback))
 }
 
-// Close mocks base method
+// Close mocks base method.
 func (m *MockGormw) Close() error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Close")
@@ -205,13 +205,13 @@ func (m *MockGormw) Close() error {
 	return ret0
 }
 
-// Close indicates an expected call of Close
+// Close indicates an expected call of Close.
 func (mr *MockGormwMockRecorder) Close() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockGormw)(nil).Close))
 }
 
-// Commit mocks base method
+// Commit mocks base method.
 func (m *MockGormw) Commit() connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Commit")
@@ -219,13 +219,13 @@ func (m *MockGormw) Commit() connection.Gormw {
 	return ret0
 }
 
-// Commit indicates an expected call of Commit
+// Commit indicates an expected call of Commit.
 func (mr *MockGormwMockRecorder) Commit() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Commit", reflect.TypeOf((*MockGormw)(nil).Commit))
 }
 
-// CommonDB mocks base method
+// CommonDB mocks base method.
 func (m *MockGormw) CommonDB() gorm.SQLCommon {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CommonDB")
@@ -233,13 +233,13 @@ func (m *MockGormw) CommonDB() gorm.SQLCommon {
 	return ret0
 }
 
-// CommonDB indicates an expected call of CommonDB
+// CommonDB indicates an expected call of CommonDB.
 func (mr *MockGormwMockRecorder) CommonDB() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CommonDB", reflect.TypeOf((*MockGormw)(nil).CommonDB))
 }
 
-// Count mocks base method
+// Count mocks base method.
 func (m *MockGormw) Count(arg0 interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Count", arg0)
@@ -247,13 +247,13 @@ func (m *MockGormw) Count(arg0 interface{}) connection.Gormw {
 	return ret0
 }
 
-// Count indicates an expected call of Count
+// Count indicates an expected call of Count.
 func (mr *MockGormwMockRecorder) Count(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Count", reflect.TypeOf((*MockGormw)(nil).Count), arg0)
 }
 
-// Create mocks base method
+// Create mocks base method.
 func (m *MockGormw) Create(arg0 interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", arg0)
@@ -261,13 +261,13 @@ func (m *MockGormw) Create(arg0 interface{}) connection.Gormw {
 	return ret0
 }
 
-// Create indicates an expected call of Create
+// Create indicates an expected call of Create.
 func (mr *MockGormwMockRecorder) Create(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockGormw)(nil).Create), arg0)
 }
 
-// CreateTable mocks base method
+// CreateTable mocks base method.
 func (m *MockGormw) CreateTable(arg0 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{}
@@ -279,13 +279,13 @@ func (m *MockGormw) CreateTable(arg0 ...interface{}) connection.Gormw {
 	return ret0
 }
 
-// CreateTable indicates an expected call of CreateTable
+// CreateTable indicates an expected call of CreateTable.
 func (mr *MockGormwMockRecorder) CreateTable(arg0 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateTable", reflect.TypeOf((*MockGormw)(nil).CreateTable), arg0...)
 }
 
-// DB mocks base method
+// DB mocks base method.
 func (m *MockGormw) DB() *sql.DB {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DB")
@@ -293,13 +293,13 @@ func (m *MockGormw) DB() *sql.DB {
 	return ret0
 }
 
-// DB indicates an expected call of DB
+// DB indicates an expected call of DB.
 func (mr *MockGormwMockRecorder) DB() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DB", reflect.TypeOf((*MockGormw)(nil).DB))
 }
 
-// Debug mocks base method
+// Debug mocks base method.
 func (m *MockGormw) Debug() connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Debug")
@@ -307,13 +307,13 @@ func (m *MockGormw) Debug() connection.Gormw {
 	return ret0
 }
 
-// Debug indicates an expected call of Debug
+// Debug indicates an expected call of Debug.
 func (mr *MockGormwMockRecorder) Debug() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Debug", reflect.TypeOf((*MockGormw)(nil).Debug))
 }
 
-// Delete mocks base method
+// Delete mocks base method.
 func (m *MockGormw) Delete(arg0 interface{}, arg1 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -325,14 +325,14 @@ func (m *MockGormw) Delete(arg0 interface{}, arg1 ...interface{}) connection.Gor
 	return ret0
 }
 
-// Delete indicates an expected call of Delete
+// Delete indicates an expected call of Delete.
 func (mr *MockGormwMockRecorder) Delete(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockGormw)(nil).Delete), varargs...)
 }
 
-// DropColumn mocks base method
+// DropColumn mocks base method.
 func (m *MockGormw) DropColumn(arg0 string) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DropColumn", arg0)
@@ -340,13 +340,13 @@ func (m *MockGormw) DropColumn(arg0 string) connection.Gormw {
 	return ret0
 }
 
-// DropColumn indicates an expected call of DropColumn
+// DropColumn indicates an expected call of DropColumn.
 func (mr *MockGormwMockRecorder) DropColumn(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DropColumn", reflect.TypeOf((*MockGormw)(nil).DropColumn), arg0)
 }
 
-// DropTable mocks base method
+// DropTable mocks base method.
 func (m *MockGormw) DropTable(arg0 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{}
@@ -358,13 +358,13 @@ func (m *MockGormw) DropTable(arg0 ...interface{}) connection.Gormw {
 	return ret0
 }
 
-// DropTable indicates an expected call of DropTable
+// DropTable indicates an expected call of DropTable.
 func (mr *MockGormwMockRecorder) DropTable(arg0 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DropTable", reflect.TypeOf((*MockGormw)(nil).DropTable), arg0...)
 }
 
-// DropTableIfExists mocks base method
+// DropTableIfExists mocks base method.
 func (m *MockGormw) DropTableIfExists(arg0 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{}
@@ -376,13 +376,13 @@ func (m *MockGormw) DropTableIfExists(arg0 ...interface{}) connection.Gormw {
 	return ret0
 }
 
-// DropTableIfExists indicates an expected call of DropTableIfExists
+// DropTableIfExists indicates an expected call of DropTableIfExists.
 func (mr *MockGormwMockRecorder) DropTableIfExists(arg0 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DropTableIfExists", reflect.TypeOf((*MockGormw)(nil).DropTableIfExists), arg0...)
 }
 
-// Error mocks base method
+// Error mocks base method.
 func (m *MockGormw) Error() error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Error")
@@ -390,13 +390,13 @@ func (m *MockGormw) Error() error {
 	return ret0
 }
 
-// Error indicates an expected call of Error
+// Error indicates an expected call of Error.
 func (mr *MockGormwMockRecorder) Error() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Error", reflect.TypeOf((*MockGormw)(nil).Error))
 }
 
-// Exec mocks base method
+// Exec mocks base method.
 func (m *MockGormw) Exec(arg0 string, arg1 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -408,14 +408,14 @@ func (m *MockGormw) Exec(arg0 string, arg1 ...interface{}) connection.Gormw {
 	return ret0
 }
 
-// Exec indicates an expected call of Exec
+// Exec indicates an expected call of Exec.
 func (mr *MockGormwMockRecorder) Exec(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Exec", reflect.TypeOf((*MockGormw)(nil).Exec), varargs...)
 }
 
-// Find mocks base method
+// Find mocks base method.
 func (m *MockGormw) Find(arg0 interface{}, arg1 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -427,14 +427,14 @@ func (m *MockGormw) Find(arg0 interface{}, arg1 ...interface{}) connection.Gormw
 	return ret0
 }
 
-// Find indicates an expected call of Find
+// Find indicates an expected call of Find.
 func (mr *MockGormwMockRecorder) Find(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Find", reflect.TypeOf((*MockGormw)(nil).Find), varargs...)
 }
 
-// First mocks base method
+// First mocks base method.
 func (m *MockGormw) First(arg0 interface{}, arg1 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -446,14 +446,14 @@ func (m *MockGormw) First(arg0 interface{}, arg1 ...interface{}) connection.Gorm
 	return ret0
 }
 
-// First indicates an expected call of First
+// First indicates an expected call of First.
 func (mr *MockGormwMockRecorder) First(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "First", reflect.TypeOf((*MockGormw)(nil).First), varargs...)
 }
 
-// FirstOrCreate mocks base method
+// FirstOrCreate mocks base method.
 func (m *MockGormw) FirstOrCreate(arg0 interface{}, arg1 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -465,14 +465,14 @@ func (m *MockGormw) FirstOrCreate(arg0 interface{}, arg1 ...interface{}) connect
 	return ret0
 }
 
-// FirstOrCreate indicates an expected call of FirstOrCreate
+// FirstOrCreate indicates an expected call of FirstOrCreate.
 func (mr *MockGormwMockRecorder) FirstOrCreate(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FirstOrCreate", reflect.TypeOf((*MockGormw)(nil).FirstOrCreate), varargs...)
 }
 
-// FirstOrInit mocks base method
+// FirstOrInit mocks base method.
 func (m *MockGormw) FirstOrInit(arg0 interface{}, arg1 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -484,14 +484,14 @@ func (m *MockGormw) FirstOrInit(arg0 interface{}, arg1 ...interface{}) connectio
 	return ret0
 }
 
-// FirstOrInit indicates an expected call of FirstOrInit
+// FirstOrInit indicates an expected call of FirstOrInit.
 func (mr *MockGormwMockRecorder) FirstOrInit(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FirstOrInit", reflect.TypeOf((*MockGormw)(nil).FirstOrInit), varargs...)
 }
 
-// Get mocks base method
+// Get mocks base method.
 func (m *MockGormw) Get(arg0 string) (interface{}, bool) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", arg0)
@@ -500,13 +500,13 @@ func (m *MockGormw) Get(arg0 string) (interface{}, bool) {
 	return ret0, ret1
 }
 
-// Get indicates an expected call of Get
+// Get indicates an expected call of Get.
 func (mr *MockGormwMockRecorder) Get(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockGormw)(nil).Get), arg0)
 }
 
-// GetErrors mocks base method
+// GetErrors mocks base method.
 func (m *MockGormw) GetErrors() []error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetErrors")
@@ -514,13 +514,13 @@ func (m *MockGormw) GetErrors() []error {
 	return ret0
 }
 
-// GetErrors indicates an expected call of GetErrors
+// GetErrors indicates an expected call of GetErrors.
 func (mr *MockGormwMockRecorder) GetErrors() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetErrors", reflect.TypeOf((*MockGormw)(nil).GetErrors))
 }
 
-// Group mocks base method
+// Group mocks base method.
 func (m *MockGormw) Group(arg0 string) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Group", arg0)
@@ -528,13 +528,13 @@ func (m *MockGormw) Group(arg0 string) connection.Gormw {
 	return ret0
 }
 
-// Group indicates an expected call of Group
+// Group indicates an expected call of Group.
 func (mr *MockGormwMockRecorder) Group(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Group", reflect.TypeOf((*MockGormw)(nil).Group), arg0)
 }
 
-// HasTable mocks base method
+// HasTable mocks base method.
 func (m *MockGormw) HasTable(arg0 interface{}) bool {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "HasTable", arg0)
@@ -542,13 +542,13 @@ func (m *MockGormw) HasTable(arg0 interface{}) bool {
 	return ret0
 }
 
-// HasTable indicates an expected call of HasTable
+// HasTable indicates an expected call of HasTable.
 func (mr *MockGormwMockRecorder) HasTable(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "HasTable", reflect.TypeOf((*MockGormw)(nil).HasTable), arg0)
 }
 
-// Having mocks base method
+// Having mocks base method.
 func (m *MockGormw) Having(arg0 string, arg1 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -560,14 +560,14 @@ func (m *MockGormw) Having(arg0 string, arg1 ...interface{}) connection.Gormw {
 	return ret0
 }
 
-// Having indicates an expected call of Having
+// Having indicates an expected call of Having.
 func (mr *MockGormwMockRecorder) Having(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Having", reflect.TypeOf((*MockGormw)(nil).Having), varargs...)
 }
 
-// InstantSet mocks base method
+// InstantSet mocks base method.
 func (m *MockGormw) InstantSet(arg0 string, arg1 interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "InstantSet", arg0, arg1)
@@ -575,13 +575,13 @@ func (m *MockGormw) InstantSet(arg0 string, arg1 interface{}) connection.Gormw {
 	return ret0
 }
 
-// InstantSet indicates an expected call of InstantSet
+// InstantSet indicates an expected call of InstantSet.
 func (mr *MockGormwMockRecorder) InstantSet(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "InstantSet", reflect.TypeOf((*MockGormw)(nil).InstantSet), arg0, arg1)
 }
 
-// Joins mocks base method
+// Joins mocks base method.
 func (m *MockGormw) Joins(arg0 string, arg1 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -593,14 +593,14 @@ func (m *MockGormw) Joins(arg0 string, arg1 ...interface{}) connection.Gormw {
 	return ret0
 }
 
-// Joins indicates an expected call of Joins
+// Joins indicates an expected call of Joins.
 func (mr *MockGormwMockRecorder) Joins(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Joins", reflect.TypeOf((*MockGormw)(nil).Joins), varargs...)
 }
 
-// Last mocks base method
+// Last mocks base method.
 func (m *MockGormw) Last(arg0 interface{}, arg1 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -612,14 +612,14 @@ func (m *MockGormw) Last(arg0 interface{}, arg1 ...interface{}) connection.Gormw
 	return ret0
 }
 
-// Last indicates an expected call of Last
+// Last indicates an expected call of Last.
 func (mr *MockGormwMockRecorder) Last(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Last", reflect.TypeOf((*MockGormw)(nil).Last), varargs...)
 }
 
-// Limit mocks base method
+// Limit mocks base method.
 func (m *MockGormw) Limit(arg0 int) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Limit", arg0)
@@ -627,13 +627,13 @@ func (m *MockGormw) Limit(arg0 int) connection.Gormw {
 	return ret0
 }
 
-// Limit indicates an expected call of Limit
+// Limit indicates an expected call of Limit.
 func (mr *MockGormwMockRecorder) Limit(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Limit", reflect.TypeOf((*MockGormw)(nil).Limit), arg0)
 }
 
-// LogMode mocks base method
+// LogMode mocks base method.
 func (m *MockGormw) LogMode(arg0 bool) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "LogMode", arg0)
@@ -641,13 +641,13 @@ func (m *MockGormw) LogMode(arg0 bool) connection.Gormw {
 	return ret0
 }
 
-// LogMode indicates an expected call of LogMode
+// LogMode indicates an expected call of LogMode.
 func (mr *MockGormwMockRecorder) LogMode(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LogMode", reflect.TypeOf((*MockGormw)(nil).LogMode), arg0)
 }
 
-// Model mocks base method
+// Model mocks base method.
 func (m *MockGormw) Model(arg0 interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Model", arg0)
@@ -655,13 +655,13 @@ func (m *MockGormw) Model(arg0 interface{}) connection.Gormw {
 	return ret0
 }
 
-// Model indicates an expected call of Model
+// Model indicates an expected call of Model.
 func (mr *MockGormwMockRecorder) Model(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Model", reflect.TypeOf((*MockGormw)(nil).Model), arg0)
 }
 
-// ModifyColumn mocks base method
+// ModifyColumn mocks base method.
 func (m *MockGormw) ModifyColumn(arg0, arg1 string) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ModifyColumn", arg0, arg1)
@@ -669,13 +669,13 @@ func (m *MockGormw) ModifyColumn(arg0, arg1 string) connection.Gormw {
 	return ret0
 }
 
-// ModifyColumn indicates an expected call of ModifyColumn
+// ModifyColumn indicates an expected call of ModifyColumn.
 func (mr *MockGormwMockRecorder) ModifyColumn(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ModifyColumn", reflect.TypeOf((*MockGormw)(nil).ModifyColumn), arg0, arg1)
 }
 
-// New mocks base method
+// New mocks base method.
 func (m *MockGormw) New() connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "New")
@@ -683,13 +683,13 @@ func (m *MockGormw) New() connection.Gormw {
 	return ret0
 }
 
-// New indicates an expected call of New
+// New indicates an expected call of New.
 func (mr *MockGormwMockRecorder) New() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "New", reflect.TypeOf((*MockGormw)(nil).New))
 }
 
-// NewRecord mocks base method
+// NewRecord mocks base method.
 func (m *MockGormw) NewRecord(arg0 interface{}) bool {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "NewRecord", arg0)
@@ -697,13 +697,13 @@ func (m *MockGormw) NewRecord(arg0 interface{}) bool {
 	return ret0
 }
 
-// NewRecord indicates an expected call of NewRecord
+// NewRecord indicates an expected call of NewRecord.
 func (mr *MockGormwMockRecorder) NewRecord(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NewRecord", reflect.TypeOf((*MockGormw)(nil).NewRecord), arg0)
 }
 
-// NewScope mocks base method
+// NewScope mocks base method.
 func (m *MockGormw) NewScope(arg0 interface{}) *gorm.Scope {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "NewScope", arg0)
@@ -711,13 +711,13 @@ func (m *MockGormw) NewScope(arg0 interface{}) *gorm.Scope {
 	return ret0
 }
 
-// NewScope indicates an expected call of NewScope
+// NewScope indicates an expected call of NewScope.
 func (mr *MockGormwMockRecorder) NewScope(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NewScope", reflect.TypeOf((*MockGormw)(nil).NewScope), arg0)
 }
 
-// Not mocks base method
+// Not mocks base method.
 func (m *MockGormw) Not(arg0 interface{}, arg1 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -729,14 +729,14 @@ func (m *MockGormw) Not(arg0 interface{}, arg1 ...interface{}) connection.Gormw 
 	return ret0
 }
 
-// Not indicates an expected call of Not
+// Not indicates an expected call of Not.
 func (mr *MockGormwMockRecorder) Not(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Not", reflect.TypeOf((*MockGormw)(nil).Not), varargs...)
 }
 
-// Offset mocks base method
+// Offset mocks base method.
 func (m *MockGormw) Offset(arg0 int) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Offset", arg0)
@@ -744,13 +744,13 @@ func (m *MockGormw) Offset(arg0 int) connection.Gormw {
 	return ret0
 }
 
-// Offset indicates an expected call of Offset
+// Offset indicates an expected call of Offset.
 func (mr *MockGormwMockRecorder) Offset(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Offset", reflect.TypeOf((*MockGormw)(nil).Offset), arg0)
 }
 
-// Omit mocks base method
+// Omit mocks base method.
 func (m *MockGormw) Omit(arg0 ...string) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{}
@@ -762,13 +762,13 @@ func (m *MockGormw) Omit(arg0 ...string) connection.Gormw {
 	return ret0
 }
 
-// Omit indicates an expected call of Omit
+// Omit indicates an expected call of Omit.
 func (mr *MockGormwMockRecorder) Omit(arg0 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Omit", reflect.TypeOf((*MockGormw)(nil).Omit), arg0...)
 }
 
-// Or mocks base method
+// Or mocks base method.
 func (m *MockGormw) Or(arg0 interface{}, arg1 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -780,14 +780,14 @@ func (m *MockGormw) Or(arg0 interface{}, arg1 ...interface{}) connection.Gormw {
 	return ret0
 }
 
-// Or indicates an expected call of Or
+// Or indicates an expected call of Or.
 func (mr *MockGormwMockRecorder) Or(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Or", reflect.TypeOf((*MockGormw)(nil).Or), varargs...)
 }
 
-// Order mocks base method
+// Order mocks base method.
 func (m *MockGormw) Order(arg0 string, arg1 ...bool) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -799,14 +799,14 @@ func (m *MockGormw) Order(arg0 string, arg1 ...bool) connection.Gormw {
 	return ret0
 }
 
-// Order indicates an expected call of Order
+// Order indicates an expected call of Order.
 func (mr *MockGormwMockRecorder) Order(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Order", reflect.TypeOf((*MockGormw)(nil).Order), varargs...)
 }
 
-// Pluck mocks base method
+// Pluck mocks base method.
 func (m *MockGormw) Pluck(arg0 string, arg1 interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Pluck", arg0, arg1)
@@ -814,13 +814,13 @@ func (m *MockGormw) Pluck(arg0 string, arg1 interface{}) connection.Gormw {
 	return ret0
 }
 
-// Pluck indicates an expected call of Pluck
+// Pluck indicates an expected call of Pluck.
 func (mr *MockGormwMockRecorder) Pluck(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Pluck", reflect.TypeOf((*MockGormw)(nil).Pluck), arg0, arg1)
 }
 
-// Preload mocks base method
+// Preload mocks base method.
 func (m *MockGormw) Preload(arg0 string, arg1 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -832,14 +832,14 @@ func (m *MockGormw) Preload(arg0 string, arg1 ...interface{}) connection.Gormw {
 	return ret0
 }
 
-// Preload indicates an expected call of Preload
+// Preload indicates an expected call of Preload.
 func (mr *MockGormwMockRecorder) Preload(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Preload", reflect.TypeOf((*MockGormw)(nil).Preload), varargs...)
 }
 
-// Raw mocks base method
+// Raw mocks base method.
 func (m *MockGormw) Raw(arg0 string, arg1 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -851,14 +851,14 @@ func (m *MockGormw) Raw(arg0 string, arg1 ...interface{}) connection.Gormw {
 	return ret0
 }
 
-// Raw indicates an expected call of Raw
+// Raw indicates an expected call of Raw.
 func (mr *MockGormwMockRecorder) Raw(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Raw", reflect.TypeOf((*MockGormw)(nil).Raw), varargs...)
 }
 
-// RecordNotFound mocks base method
+// RecordNotFound mocks base method.
 func (m *MockGormw) RecordNotFound() bool {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "RecordNotFound")
@@ -866,13 +866,13 @@ func (m *MockGormw) RecordNotFound() bool {
 	return ret0
 }
 
-// RecordNotFound indicates an expected call of RecordNotFound
+// RecordNotFound indicates an expected call of RecordNotFound.
 func (mr *MockGormwMockRecorder) RecordNotFound() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RecordNotFound", reflect.TypeOf((*MockGormw)(nil).RecordNotFound))
 }
 
-// Related mocks base method
+// Related mocks base method.
 func (m *MockGormw) Related(arg0 interface{}, arg1 ...string) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -884,14 +884,14 @@ func (m *MockGormw) Related(arg0 interface{}, arg1 ...string) connection.Gormw {
 	return ret0
 }
 
-// Related indicates an expected call of Related
+// Related indicates an expected call of Related.
 func (mr *MockGormwMockRecorder) Related(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Related", reflect.TypeOf((*MockGormw)(nil).Related), varargs...)
 }
 
-// RemoveIndex mocks base method
+// RemoveIndex mocks base method.
 func (m *MockGormw) RemoveIndex(arg0 string) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "RemoveIndex", arg0)
@@ -899,13 +899,13 @@ func (m *MockGormw) RemoveIndex(arg0 string) connection.Gormw {
 	return ret0
 }
 
-// RemoveIndex indicates an expected call of RemoveIndex
+// RemoveIndex indicates an expected call of RemoveIndex.
 func (mr *MockGormwMockRecorder) RemoveIndex(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RemoveIndex", reflect.TypeOf((*MockGormw)(nil).RemoveIndex), arg0)
 }
 
-// Rollback mocks base method
+// Rollback mocks base method.
 func (m *MockGormw) Rollback() connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Rollback")
@@ -913,13 +913,13 @@ func (m *MockGormw) Rollback() connection.Gormw {
 	return ret0
 }
 
-// Rollback indicates an expected call of Rollback
+// Rollback indicates an expected call of Rollback.
 func (mr *MockGormwMockRecorder) Rollback() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Rollback", reflect.TypeOf((*MockGormw)(nil).Rollback))
 }
 
-// Row mocks base method
+// Row mocks base method.
 func (m *MockGormw) Row() *sql.Row {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Row")
@@ -927,13 +927,13 @@ func (m *MockGormw) Row() *sql.Row {
 	return ret0
 }
 
-// Row indicates an expected call of Row
+// Row indicates an expected call of Row.
 func (mr *MockGormwMockRecorder) Row() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Row", reflect.TypeOf((*MockGormw)(nil).Row))
 }
 
-// Rows mocks base method
+// Rows mocks base method.
 func (m *MockGormw) Rows() (*sql.Rows, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Rows")
@@ -942,13 +942,13 @@ func (m *MockGormw) Rows() (*sql.Rows, error) {
 	return ret0, ret1
 }
 
-// Rows indicates an expected call of Rows
+// Rows indicates an expected call of Rows.
 func (mr *MockGormwMockRecorder) Rows() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Rows", reflect.TypeOf((*MockGormw)(nil).Rows))
 }
 
-// Save mocks base method
+// Save mocks base method.
 func (m *MockGormw) Save(arg0 interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Save", arg0)
@@ -956,13 +956,13 @@ func (m *MockGormw) Save(arg0 interface{}) connection.Gormw {
 	return ret0
 }
 
-// Save indicates an expected call of Save
+// Save indicates an expected call of Save.
 func (mr *MockGormwMockRecorder) Save(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Save", reflect.TypeOf((*MockGormw)(nil).Save), arg0)
 }
 
-// Scan mocks base method
+// Scan mocks base method.
 func (m *MockGormw) Scan(arg0 interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Scan", arg0)
@@ -970,13 +970,13 @@ func (m *MockGormw) Scan(arg0 interface{}) connection.Gormw {
 	return ret0
 }
 
-// Scan indicates an expected call of Scan
+// Scan indicates an expected call of Scan.
 func (mr *MockGormwMockRecorder) Scan(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Scan", reflect.TypeOf((*MockGormw)(nil).Scan), arg0)
 }
 
-// ScanRows mocks base method
+// ScanRows mocks base method.
 func (m *MockGormw) ScanRows(arg0 *sql.Rows, arg1 interface{}) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ScanRows", arg0, arg1)
@@ -984,13 +984,13 @@ func (m *MockGormw) ScanRows(arg0 *sql.Rows, arg1 interface{}) error {
 	return ret0
 }
 
-// ScanRows indicates an expected call of ScanRows
+// ScanRows indicates an expected call of ScanRows.
 func (mr *MockGormwMockRecorder) ScanRows(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ScanRows", reflect.TypeOf((*MockGormw)(nil).ScanRows), arg0, arg1)
 }
 
-// Scopes mocks base method
+// Scopes mocks base method.
 func (m *MockGormw) Scopes(arg0 ...func(*gorm.DB) *gorm.DB) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{}
@@ -1002,13 +1002,13 @@ func (m *MockGormw) Scopes(arg0 ...func(*gorm.DB) *gorm.DB) connection.Gormw {
 	return ret0
 }
 
-// Scopes indicates an expected call of Scopes
+// Scopes indicates an expected call of Scopes.
 func (mr *MockGormwMockRecorder) Scopes(arg0 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Scopes", reflect.TypeOf((*MockGormw)(nil).Scopes), arg0...)
 }
 
-// Select mocks base method
+// Select mocks base method.
 func (m *MockGormw) Select(arg0 interface{}, arg1 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -1020,14 +1020,14 @@ func (m *MockGormw) Select(arg0 interface{}, arg1 ...interface{}) connection.Gor
 	return ret0
 }
 
-// Select indicates an expected call of Select
+// Select indicates an expected call of Select.
 func (mr *MockGormwMockRecorder) Select(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Select", reflect.TypeOf((*MockGormw)(nil).Select), varargs...)
 }
 
-// Set mocks base method
+// Set mocks base method.
 func (m *MockGormw) Set(arg0 string, arg1 interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Set", arg0, arg1)
@@ -1035,49 +1035,49 @@ func (m *MockGormw) Set(arg0 string, arg1 interface{}) connection.Gormw {
 	return ret0
 }
 
-// Set indicates an expected call of Set
+// Set indicates an expected call of Set.
 func (mr *MockGormwMockRecorder) Set(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Set", reflect.TypeOf((*MockGormw)(nil).Set), arg0, arg1)
 }
 
-// SetJoinTableHandler mocks base method
+// SetJoinTableHandler mocks base method.
 func (m *MockGormw) SetJoinTableHandler(arg0 interface{}, arg1 string, arg2 gorm.JoinTableHandlerInterface) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "SetJoinTableHandler", arg0, arg1, arg2)
 }
 
-// SetJoinTableHandler indicates an expected call of SetJoinTableHandler
+// SetJoinTableHandler indicates an expected call of SetJoinTableHandler.
 func (mr *MockGormwMockRecorder) SetJoinTableHandler(arg0, arg1, arg2 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetJoinTableHandler", reflect.TypeOf((*MockGormw)(nil).SetJoinTableHandler), arg0, arg1, arg2)
 }
 
-// SetLogger mocks base method
+// SetLogger mocks base method.
 func (m *MockGormw) SetLogger(arg0 gorm.Logger) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "SetLogger", arg0)
 }
 
-// SetLogger indicates an expected call of SetLogger
+// SetLogger indicates an expected call of SetLogger.
 func (mr *MockGormwMockRecorder) SetLogger(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetLogger", reflect.TypeOf((*MockGormw)(nil).SetLogger), arg0)
 }
 
-// SingularTable mocks base method
+// SingularTable mocks base method.
 func (m *MockGormw) SingularTable(arg0 bool) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "SingularTable", arg0)
 }
 
-// SingularTable indicates an expected call of SingularTable
+// SingularTable indicates an expected call of SingularTable.
 func (mr *MockGormwMockRecorder) SingularTable(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SingularTable", reflect.TypeOf((*MockGormw)(nil).SingularTable), arg0)
 }
 
-// Table mocks base method
+// Table mocks base method.
 func (m *MockGormw) Table(arg0 string) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Table", arg0)
@@ -1085,13 +1085,13 @@ func (m *MockGormw) Table(arg0 string) connection.Gormw {
 	return ret0
 }
 
-// Table indicates an expected call of Table
+// Table indicates an expected call of Table.
 func (mr *MockGormwMockRecorder) Table(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Table", reflect.TypeOf((*MockGormw)(nil).Table), arg0)
 }
 
-// Unscoped mocks base method
+// Unscoped mocks base method.
 func (m *MockGormw) Unscoped() connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Unscoped")
@@ -1099,13 +1099,13 @@ func (m *MockGormw) Unscoped() connection.Gormw {
 	return ret0
 }
 
-// Unscoped indicates an expected call of Unscoped
+// Unscoped indicates an expected call of Unscoped.
 func (mr *MockGormwMockRecorder) Unscoped() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Unscoped", reflect.TypeOf((*MockGormw)(nil).Unscoped))
 }
 
-// Update mocks base method
+// Update mocks base method.
 func (m *MockGormw) Update(arg0 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{}
@@ -1117,13 +1117,13 @@ func (m *MockGormw) Update(arg0 ...interface{}) connection.Gormw {
 	return ret0
 }
 
-// Update indicates an expected call of Update
+// Update indicates an expected call of Update.
 func (mr *MockGormwMockRecorder) Update(arg0 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockGormw)(nil).Update), arg0...)
 }
 
-// UpdateColumn mocks base method
+// UpdateColumn mocks base method.
 func (m *MockGormw) UpdateColumn(arg0 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{}
@@ -1135,13 +1135,13 @@ func (m *MockGormw) UpdateColumn(arg0 ...interface{}) connection.Gormw {
 	return ret0
 }
 
-// UpdateColumn indicates an expected call of UpdateColumn
+// UpdateColumn indicates an expected call of UpdateColumn.
 func (mr *MockGormwMockRecorder) UpdateColumn(arg0 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateColumn", reflect.TypeOf((*MockGormw)(nil).UpdateColumn), arg0...)
 }
 
-// UpdateColumns mocks base method
+// UpdateColumns mocks base method.
 func (m *MockGormw) UpdateColumns(arg0 interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "UpdateColumns", arg0)
@@ -1149,13 +1149,13 @@ func (m *MockGormw) UpdateColumns(arg0 interface{}) connection.Gormw {
 	return ret0
 }
 
-// UpdateColumns indicates an expected call of UpdateColumns
+// UpdateColumns indicates an expected call of UpdateColumns.
 func (mr *MockGormwMockRecorder) UpdateColumns(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateColumns", reflect.TypeOf((*MockGormw)(nil).UpdateColumns), arg0)
 }
 
-// Updates mocks base method
+// Updates mocks base method.
 func (m *MockGormw) Updates(arg0 interface{}, arg1 ...bool) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -1167,14 +1167,14 @@ func (m *MockGormw) Updates(arg0 interface{}, arg1 ...bool) connection.Gormw {
 	return ret0
 }
 
-// Updates indicates an expected call of Updates
+// Updates indicates an expected call of Updates.
 func (mr *MockGormwMockRecorder) Updates(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Updates", reflect.TypeOf((*MockGormw)(nil).Updates), varargs...)
 }
 
-// Where mocks base method
+// Where mocks base method.
 func (m *MockGormw) Where(arg0 interface{}, arg1 ...interface{}) connection.Gormw {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{arg0}
@@ -1186,7 +1186,7 @@ func (m *MockGormw) Where(arg0 interface{}, arg1 ...interface{}) connection.Gorm
 	return ret0
 }
 
-// Where indicates an expected call of Where
+// Where indicates an expected call of Where.
 func (mr *MockGormwMockRecorder) Where(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	varargs := append([]interface{}{arg0}, arg1...)

@@ -10,30 +10,30 @@ import (
 	reflect "reflect"
 )
 
-// MockUserWriter is a mock of UserWriter interface
+// MockUserWriter is a mock of UserWriter interface.
 type MockUserWriter struct {
 	ctrl     *gomock.Controller
 	recorder *MockUserWriterMockRecorder
 }
 
-// MockUserWriterMockRecorder is the mock recorder for MockUserWriter
+// MockUserWriterMockRecorder is the mock recorder for MockUserWriter.
 type MockUserWriterMockRecorder struct {
 	mock *MockUserWriter
 }
 
-// NewMockUserWriter creates a new mock instance
+// NewMockUserWriter creates a new mock instance.
 func NewMockUserWriter(ctrl *gomock.Controller) *MockUserWriter {
 	mock := &MockUserWriter{ctrl: ctrl}
 	mock.recorder = &MockUserWriterMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockUserWriter) EXPECT() *MockUserWriterMockRecorder {
 	return m.recorder
 }
 
-// Create mocks base method
+// Create mocks base method.
 func (m *MockUserWriter) Create(arg0 entity.User) (entity.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", arg0)
@@ -42,13 +42,13 @@ func (m *MockUserWriter) Create(arg0 entity.User) (entity.User, error) {
 	return ret0, ret1
 }
 
-// Create indicates an expected call of Create
+// Create indicates an expected call of Create.
 func (mr *MockUserWriterMockRecorder) Create(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockUserWriter)(nil).Create), arg0)
 }
 
-// DeleteByID mocks base method
+// DeleteByID mocks base method.
 func (m *MockUserWriter) DeleteByID(arg0 int64) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeleteByID", arg0)
@@ -56,13 +56,13 @@ func (m *MockUserWriter) DeleteByID(arg0 int64) error {
 	return ret0
 }
 
-// DeleteByID indicates an expected call of DeleteByID
+// DeleteByID indicates an expected call of DeleteByID.
 func (mr *MockUserWriterMockRecorder) DeleteByID(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteByID", reflect.TypeOf((*MockUserWriter)(nil).DeleteByID), arg0)
 }
 
-// Update mocks base method
+// Update mocks base method.
 func (m *MockUserWriter) Update(arg0 entity.User) (entity.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", arg0)
@@ -71,7 +71,7 @@ func (m *MockUserWriter) Update(arg0 entity.User) (entity.User, error) {
 	return ret0, ret1
 }
 
-// Update indicates an expected call of Update
+// Update indicates an expected call of Update.
 func (mr *MockUserWriterMockRecorder) Update(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockUserWriter)(nil).Update), arg0)

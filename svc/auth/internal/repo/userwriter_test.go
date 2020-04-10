@@ -132,3 +132,50 @@ func TestUserWriter_Create(t *testing.T) {
 		assert.Equal(t, int64(1), got.ID)
 	})
 }
+
+func TestUserWriter_Update(t *testing.T) {
+	test := newUserWriterTest()
+	t.Run("repo returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.User{
+			ID:       1,
+			Name:     "Asdf",
+			UserName: "asdff",
+			Email:    "asdasd",
+			Phone:    "Asdasd",
+			PhotoURL: "Asdasd",
+			Password: "asdasd",
+			Type:     1,
+		}
+		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := test.unit.Update(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.User{}, got)
+	})
+	t.Run("repo returns no error, should not return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.User{
+			ID:       1,
+			Name:     "Asdf",
+			UserName: "asdff",
+			Email:    "asdasd",
+			Phone:    "Asdasd",
+			PhotoURL: "Asdasd",
+			Password: "asdasd",
+			Type:     1,
+		}
+		test.db.EXPECT().Save(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = model.UserFromEntity(req)
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+
+		got, err := test.unit.Update(req)
+		assert.Nil(t, err)
+		assert.Equal(t, req.Name, got.Name)
+	})
+}

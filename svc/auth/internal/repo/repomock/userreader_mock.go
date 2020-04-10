@@ -11,30 +11,45 @@ import (
 	reflect "reflect"
 )
 
-// MockUserReader is a mock of UserReader interface
+// MockUserReader is a mock of UserReader interface.
 type MockUserReader struct {
 	ctrl     *gomock.Controller
 	recorder *MockUserReaderMockRecorder
 }
 
-// MockUserReaderMockRecorder is the mock recorder for MockUserReader
+// MockUserReaderMockRecorder is the mock recorder for MockUserReader.
 type MockUserReaderMockRecorder struct {
 	mock *MockUserReader
 }
 
-// NewMockUserReader creates a new mock instance
+// NewMockUserReader creates a new mock instance.
 func NewMockUserReader(ctrl *gomock.Controller) *MockUserReader {
 	mock := &MockUserReader{ctrl: ctrl}
 	mock.recorder = &MockUserReaderMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockUserReader) EXPECT() *MockUserReaderMockRecorder {
 	return m.recorder
 }
 
-// GetByEmailAndPassword mocks base method
+// GetByEmail mocks base method.
+func (m *MockUserReader) GetByEmail(arg0 string) (entity.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetByEmail", arg0)
+	ret0, _ := ret[0].(entity.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetByEmail indicates an expected call of GetByEmail.
+func (mr *MockUserReaderMockRecorder) GetByEmail(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByEmail", reflect.TypeOf((*MockUserReader)(nil).GetByEmail), arg0)
+}
+
+// GetByEmailAndPassword mocks base method.
 func (m *MockUserReader) GetByEmailAndPassword(arg0 entity.User) (entity.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetByEmailAndPassword", arg0)
@@ -43,13 +58,13 @@ func (m *MockUserReader) GetByEmailAndPassword(arg0 entity.User) (entity.User, e
 	return ret0, ret1
 }
 
-// GetByEmailAndPassword indicates an expected call of GetByEmailAndPassword
+// GetByEmailAndPassword indicates an expected call of GetByEmailAndPassword.
 func (mr *MockUserReaderMockRecorder) GetByEmailAndPassword(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByEmailAndPassword", reflect.TypeOf((*MockUserReader)(nil).GetByEmailAndPassword), arg0)
 }
 
-// GetByID mocks base method
+// GetByID mocks base method.
 func (m *MockUserReader) GetByID(arg0 int64) (entity.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetByID", arg0)
@@ -58,13 +73,28 @@ func (m *MockUserReader) GetByID(arg0 int64) (entity.User, error) {
 	return ret0, ret1
 }
 
-// GetByID indicates an expected call of GetByID
+// GetByID indicates an expected call of GetByID.
 func (mr *MockUserReaderMockRecorder) GetByID(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockUserReader)(nil).GetByID), arg0)
 }
 
-// GetByUserNameAndPassword mocks base method
+// GetByUserName mocks base method.
+func (m *MockUserReader) GetByUserName(arg0 string) (entity.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetByUserName", arg0)
+	ret0, _ := ret[0].(entity.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetByUserName indicates an expected call of GetByUserName.
+func (mr *MockUserReaderMockRecorder) GetByUserName(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByUserName", reflect.TypeOf((*MockUserReader)(nil).GetByUserName), arg0)
+}
+
+// GetByUserNameAndPassword mocks base method.
 func (m *MockUserReader) GetByUserNameAndPassword(arg0 entity.User) (entity.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetByUserNameAndPassword", arg0)
@@ -73,13 +103,13 @@ func (m *MockUserReader) GetByUserNameAndPassword(arg0 entity.User) (entity.User
 	return ret0, ret1
 }
 
-// GetByUserNameAndPassword indicates an expected call of GetByUserNameAndPassword
+// GetByUserNameAndPassword indicates an expected call of GetByUserNameAndPassword.
 func (mr *MockUserReaderMockRecorder) GetByUserNameAndPassword(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByUserNameAndPassword", reflect.TypeOf((*MockUserReader)(nil).GetByUserNameAndPassword), arg0)
 }
 
-// ListAll mocks base method
+// ListAll mocks base method.
 func (m *MockUserReader) ListAll(arg0 request.ListUser) ([]entity.User, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListAll", arg0)
@@ -88,7 +118,7 @@ func (m *MockUserReader) ListAll(arg0 request.ListUser) ([]entity.User, error) {
 	return ret0, ret1
 }
 
-// ListAll indicates an expected call of ListAll
+// ListAll indicates an expected call of ListAll.
 func (mr *MockUserReaderMockRecorder) ListAll(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAll", reflect.TypeOf((*MockUserReader)(nil).ListAll), arg0)

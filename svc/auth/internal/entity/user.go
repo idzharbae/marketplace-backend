@@ -13,6 +13,7 @@ type User struct {
 	UserName string
 	Email    string
 	Phone    string
+	PhotoURL string
 	Password string
 	Type     int32
 }
@@ -33,6 +34,9 @@ func (u User) Validate() error {
 	}
 	if len(u.UserName) < 6 {
 		return errors.New("username too short")
+	}
+	if len(u.Email) > 60 {
+		return errors.New("email too long")
 	}
 	if len(u.Password) > 60 {
 		return errors.New("password too long")

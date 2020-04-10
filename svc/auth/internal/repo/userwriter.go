@@ -31,7 +31,12 @@ func (uw *UserWriter) Create(user entity.User) (entity.User, error) {
 	return res.ToEntity(), nil
 }
 func (uw *UserWriter) Update(user entity.User) (entity.User, error) {
-	return entity.User{}, nil
+	savedModel := model.UserFromEntity(user)
+	err := uw.db.Save(&savedModel).Error()
+	if err != nil {
+		return entity.User{}, err
+	}
+	return savedModel.ToEntity(), nil
 }
 func (uw *UserWriter) DeleteByID(ID int64) error {
 	return nil

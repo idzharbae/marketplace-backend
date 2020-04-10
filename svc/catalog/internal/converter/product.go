@@ -18,6 +18,7 @@ func ProductModelToEntity(p model.Product) entity.Product {
 		StockKG:    p.StockKG,
 		CreatedAt:  p.CreatedAt,
 		UpdatedAt:  p.UpdatedAt,
+		PhotoURL:   p.PhotoURL,
 	}
 }
 
@@ -46,6 +47,7 @@ func ProductEntityToModel(p entity.Product) model.Product {
 		Quantity:   p.Quantity,
 		PricePerKG: p.PricePerKG,
 		StockKG:    p.StockKG,
+		PhotoURL:   p.PhotoURL,
 	}
 }
 
@@ -60,6 +62,7 @@ func ProductEntityToProto(p entity.Product) *catalogproto.Product {
 		StockKg:    p.StockKG,
 		CreatedAt:  p.CreatedAt.Unix(),
 		UpdatedAt:  p.UpdatedAt.Unix(),
+		PhotoUrl:   p.PhotoURL,
 	}
 }
 
@@ -82,6 +85,7 @@ func ProductProtoToEntity(p *catalogproto.Product) entity.Product {
 		StockKG:    p.GetStockKg(),
 		CreatedAt:  time.Unix(p.GetCreatedAt(), 0),
 		UpdatedAt:  time.Unix(p.GetUpdatedAt(), 0),
+		PhotoURL:   p.GetPhotoUrl(),
 	}
 }
 

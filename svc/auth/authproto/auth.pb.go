@@ -3,13 +3,14 @@
 
 package authproto
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
-
 import (
-	context "golang.org/x/net/context"
+	context "context"
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
+	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -21,7 +22,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type LoginReq struct {
 	UsernameOrEmail      string   `protobuf:"bytes,1,opt,name=username_or_email,json=usernameOrEmail,proto3" json:"username_or_email,omitempty"`
@@ -35,16 +36,17 @@ func (m *LoginReq) Reset()         { *m = LoginReq{} }
 func (m *LoginReq) String() string { return proto.CompactTextString(m) }
 func (*LoginReq) ProtoMessage()    {}
 func (*LoginReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_auth_b9f778f9ce5ee31b, []int{0}
+	return fileDescriptor_8bbd6f3875b0e874, []int{0}
 }
+
 func (m *LoginReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_LoginReq.Unmarshal(m, b)
 }
 func (m *LoginReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_LoginReq.Marshal(b, m, deterministic)
 }
-func (dst *LoginReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_LoginReq.Merge(dst, src)
+func (m *LoginReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LoginReq.Merge(m, src)
 }
 func (m *LoginReq) XXX_Size() int {
 	return xxx_messageInfo_LoginReq.Size(m)
@@ -80,16 +82,17 @@ func (m *LoginResp) Reset()         { *m = LoginResp{} }
 func (m *LoginResp) String() string { return proto.CompactTextString(m) }
 func (*LoginResp) ProtoMessage()    {}
 func (*LoginResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_auth_b9f778f9ce5ee31b, []int{1}
+	return fileDescriptor_8bbd6f3875b0e874, []int{1}
 }
+
 func (m *LoginResp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_LoginResp.Unmarshal(m, b)
 }
 func (m *LoginResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_LoginResp.Marshal(b, m, deterministic)
 }
-func (dst *LoginResp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_LoginResp.Merge(dst, src)
+func (m *LoginResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LoginResp.Merge(m, src)
 }
 func (m *LoginResp) XXX_Size() int {
 	return xxx_messageInfo_LoginResp.Size(m)
@@ -114,6 +117,7 @@ type RegisterReq struct {
 	Password             string   `protobuf:"bytes,4,opt,name=password,proto3" json:"password,omitempty"`
 	Type                 int32    `protobuf:"varint,5,opt,name=type,proto3" json:"type,omitempty"`
 	FullName             string   `protobuf:"bytes,6,opt,name=full_name,json=fullName,proto3" json:"full_name,omitempty"`
+	PhotoUrl             string   `protobuf:"bytes,7,opt,name=photo_url,json=photoUrl,proto3" json:"photo_url,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -123,16 +127,17 @@ func (m *RegisterReq) Reset()         { *m = RegisterReq{} }
 func (m *RegisterReq) String() string { return proto.CompactTextString(m) }
 func (*RegisterReq) ProtoMessage()    {}
 func (*RegisterReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_auth_b9f778f9ce5ee31b, []int{2}
+	return fileDescriptor_8bbd6f3875b0e874, []int{2}
 }
+
 func (m *RegisterReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RegisterReq.Unmarshal(m, b)
 }
 func (m *RegisterReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_RegisterReq.Marshal(b, m, deterministic)
 }
-func (dst *RegisterReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RegisterReq.Merge(dst, src)
+func (m *RegisterReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RegisterReq.Merge(m, src)
 }
 func (m *RegisterReq) XXX_Size() int {
 	return xxx_messageInfo_RegisterReq.Size(m)
@@ -185,6 +190,13 @@ func (m *RegisterReq) GetFullName() string {
 	return ""
 }
 
+func (m *RegisterReq) GetPhotoUrl() string {
+	if m != nil {
+		return m.PhotoUrl
+	}
+	return ""
+}
+
 type RegisterResp struct {
 	Success              bool     `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -196,16 +208,17 @@ func (m *RegisterResp) Reset()         { *m = RegisterResp{} }
 func (m *RegisterResp) String() string { return proto.CompactTextString(m) }
 func (*RegisterResp) ProtoMessage()    {}
 func (*RegisterResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_auth_b9f778f9ce5ee31b, []int{3}
+	return fileDescriptor_8bbd6f3875b0e874, []int{3}
 }
+
 func (m *RegisterResp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RegisterResp.Unmarshal(m, b)
 }
 func (m *RegisterResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_RegisterResp.Marshal(b, m, deterministic)
 }
-func (dst *RegisterResp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RegisterResp.Merge(dst, src)
+func (m *RegisterResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RegisterResp.Merge(m, src)
 }
 func (m *RegisterResp) XXX_Size() int {
 	return xxx_messageInfo_RegisterResp.Size(m)
@@ -234,16 +247,17 @@ func (m *RefreshTokenReq) Reset()         { *m = RefreshTokenReq{} }
 func (m *RefreshTokenReq) String() string { return proto.CompactTextString(m) }
 func (*RefreshTokenReq) ProtoMessage()    {}
 func (*RefreshTokenReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_auth_b9f778f9ce5ee31b, []int{4}
+	return fileDescriptor_8bbd6f3875b0e874, []int{4}
 }
+
 func (m *RefreshTokenReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RefreshTokenReq.Unmarshal(m, b)
 }
 func (m *RefreshTokenReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_RefreshTokenReq.Marshal(b, m, deterministic)
 }
-func (dst *RefreshTokenReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RefreshTokenReq.Merge(dst, src)
+func (m *RefreshTokenReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RefreshTokenReq.Merge(m, src)
 }
 func (m *RefreshTokenReq) XXX_Size() int {
 	return xxx_messageInfo_RefreshTokenReq.Size(m)
@@ -272,16 +286,17 @@ func (m *RefreshTokenResp) Reset()         { *m = RefreshTokenResp{} }
 func (m *RefreshTokenResp) String() string { return proto.CompactTextString(m) }
 func (*RefreshTokenResp) ProtoMessage()    {}
 func (*RefreshTokenResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_auth_b9f778f9ce5ee31b, []int{5}
+	return fileDescriptor_8bbd6f3875b0e874, []int{5}
 }
+
 func (m *RefreshTokenResp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_RefreshTokenResp.Unmarshal(m, b)
 }
 func (m *RefreshTokenResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_RefreshTokenResp.Marshal(b, m, deterministic)
 }
-func (dst *RefreshTokenResp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RefreshTokenResp.Merge(dst, src)
+func (m *RefreshTokenResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RefreshTokenResp.Merge(m, src)
 }
 func (m *RefreshTokenResp) XXX_Size() int {
 	return xxx_messageInfo_RefreshTokenResp.Size(m)
@@ -299,6 +314,61 @@ func (m *RefreshTokenResp) GetToken() string {
 	return ""
 }
 
+type GetUserReq struct {
+	Id                   int64    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserName             string   `protobuf:"bytes,2,opt,name=user_name,json=userName,proto3" json:"user_name,omitempty"`
+	Email                string   `protobuf:"bytes,3,opt,name=email,proto3" json:"email,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetUserReq) Reset()         { *m = GetUserReq{} }
+func (m *GetUserReq) String() string { return proto.CompactTextString(m) }
+func (*GetUserReq) ProtoMessage()    {}
+func (*GetUserReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_8bbd6f3875b0e874, []int{6}
+}
+
+func (m *GetUserReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetUserReq.Unmarshal(m, b)
+}
+func (m *GetUserReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetUserReq.Marshal(b, m, deterministic)
+}
+func (m *GetUserReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetUserReq.Merge(m, src)
+}
+func (m *GetUserReq) XXX_Size() int {
+	return xxx_messageInfo_GetUserReq.Size(m)
+}
+func (m *GetUserReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetUserReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetUserReq proto.InternalMessageInfo
+
+func (m *GetUserReq) GetId() int64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+func (m *GetUserReq) GetUserName() string {
+	if m != nil {
+		return m.UserName
+	}
+	return ""
+}
+
+func (m *GetUserReq) GetEmail() string {
+	if m != nil {
+		return m.Email
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*LoginReq)(nil), "authproto.LoginReq")
 	proto.RegisterType((*LoginResp)(nil), "authproto.LoginResp")
@@ -306,15 +376,51 @@ func init() {
 	proto.RegisterType((*RegisterResp)(nil), "authproto.RegisterResp")
 	proto.RegisterType((*RefreshTokenReq)(nil), "authproto.RefreshTokenReq")
 	proto.RegisterType((*RefreshTokenResp)(nil), "authproto.RefreshTokenResp")
+	proto.RegisterType((*GetUserReq)(nil), "authproto.GetUserReq")
+}
+
+func init() {
+	proto.RegisterFile("auth.proto", fileDescriptor_8bbd6f3875b0e874)
+}
+
+var fileDescriptor_8bbd6f3875b0e874 = []byte{
+	// 417 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x52, 0xc1, 0x6e, 0xd4, 0x30,
+	0x10, 0xed, 0x66, 0xbb, 0xdd, 0x64, 0x40, 0x04, 0x4c, 0x81, 0x28, 0x7b, 0x29, 0xb9, 0x10, 0x71,
+	0x58, 0x21, 0xca, 0x95, 0x03, 0x07, 0x84, 0x90, 0x80, 0x4a, 0x16, 0x7b, 0x8e, 0xcc, 0x66, 0xda,
+	0x44, 0xcd, 0xc6, 0xc6, 0x76, 0x84, 0xf8, 0x33, 0x8e, 0x7c, 0x1a, 0x1a, 0x3b, 0xe9, 0x26, 0x74,
+	0xf7, 0xe6, 0xf7, 0xfc, 0x66, 0xde, 0xcc, 0xb3, 0x01, 0x44, 0x67, 0xab, 0xb5, 0xd2, 0xd2, 0x4a,
+	0x16, 0xd1, 0xd9, 0x1d, 0x53, 0xe8, 0x0c, 0x6a, 0x4f, 0x67, 0x1c, 0xc2, 0x2f, 0xf2, 0xa6, 0x6e,
+	0x39, 0xfe, 0x64, 0xaf, 0xe1, 0x09, 0xdd, 0xb4, 0x62, 0x87, 0x85, 0xd4, 0x05, 0xee, 0x44, 0xdd,
+	0x24, 0xb3, 0x8b, 0x59, 0x1e, 0xf1, 0x78, 0xb8, 0xb8, 0xd2, 0x1f, 0x89, 0x66, 0x29, 0x84, 0x4a,
+	0x18, 0xf3, 0x4b, 0xea, 0x32, 0x09, 0x9c, 0xe4, 0x0e, 0x67, 0x2f, 0x21, 0xea, 0x7b, 0x1a, 0xc5,
+	0xce, 0x61, 0x61, 0xe5, 0x2d, 0xb6, 0x7d, 0x23, 0x0f, 0xb2, 0xbf, 0x33, 0x78, 0xc0, 0xf1, 0xa6,
+	0x36, 0x16, 0x35, 0x59, 0xaf, 0x20, 0x22, 0x87, 0x82, 0x2c, 0x7a, 0x65, 0x48, 0xc4, 0x37, 0xb1,
+	0x43, 0x6a, 0xe1, 0x67, 0xf1, 0x46, 0x1e, 0x10, 0xab, 0x2a, 0xd9, 0x62, 0x32, 0xf7, 0xac, 0x03,
+	0x93, 0xb9, 0x4e, 0xa7, 0x73, 0x31, 0x06, 0xa7, 0xf6, 0xb7, 0xc2, 0x64, 0x71, 0x31, 0xcb, 0x17,
+	0xdc, 0x9d, 0xc9, 0xf8, 0xba, 0x6b, 0x1a, 0x6f, 0x7c, 0xe6, 0x0b, 0x88, 0x70, 0xc6, 0x2b, 0x88,
+	0x54, 0x25, 0xad, 0x2c, 0x3a, 0xdd, 0x24, 0xcb, 0xbe, 0x1b, 0x11, 0x1b, 0xdd, 0x64, 0x39, 0x3c,
+	0xdc, 0x6f, 0x60, 0x14, 0x4b, 0x60, 0x69, 0xba, 0xed, 0x16, 0x8d, 0x71, 0x0b, 0x84, 0x7c, 0x80,
+	0xd9, 0x2b, 0x88, 0x39, 0x5e, 0x6b, 0x34, 0xd5, 0x77, 0x5a, 0x9e, 0xf6, 0x3d, 0x9c, 0x4a, 0x0e,
+	0x8f, 0xa7, 0xc2, 0xa3, 0xf9, 0x5d, 0x01, 0x7c, 0x42, 0xbb, 0x31, 0x3e, 0xbd, 0x47, 0x10, 0xd4,
+	0xa5, 0x13, 0xcc, 0x79, 0x50, 0x97, 0xd3, 0x34, 0x83, 0x63, 0x69, 0xce, 0x47, 0x69, 0xbe, 0xfd,
+	0x13, 0x40, 0xfc, 0x55, 0xe8, 0x5b, 0xb4, 0xaa, 0x11, 0x5b, 0xfc, 0xd0, 0xd9, 0x8a, 0xbd, 0x83,
+	0x85, 0x7b, 0x47, 0xf6, 0x74, 0x7d, 0xf7, 0x79, 0xd6, 0xc3, 0x6f, 0x49, 0xcf, 0xef, 0x93, 0x46,
+	0x65, 0x27, 0xec, 0x3d, 0x84, 0x43, 0x2e, 0xec, 0xf9, 0x48, 0x33, 0x7a, 0xee, 0xf4, 0xc5, 0x41,
+	0xde, 0x95, 0x7f, 0xa6, 0x58, 0xf7, 0x19, 0xb0, 0x74, 0x22, 0x9d, 0xa4, 0x98, 0xae, 0x8e, 0xde,
+	0xb9, 0x56, 0x97, 0xb0, 0xec, 0x43, 0x62, 0xcf, 0x46, 0xca, 0x7d, 0x70, 0x69, 0x3c, 0xa2, 0x89,
+	0xcb, 0x4e, 0xd8, 0x1b, 0x80, 0x8d, 0x2a, 0x85, 0x45, 0x57, 0xf7, 0xbf, 0xe0, 0x40, 0xc5, 0x8f,
+	0x33, 0x87, 0x2e, 0xff, 0x05, 0x00, 0x00, 0xff, 0xff, 0x2e, 0xb7, 0xa4, 0x88, 0x6e, 0x03, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ context.Context
-var _ grpc.ClientConn
+var _ grpc.ClientConnInterface
 
 // This is a compile-time assertion to ensure that this generated file
 // is compatible with the grpc package it is being compiled against.
-const _ = grpc.SupportPackageIsVersion4
+const _ = grpc.SupportPackageIsVersion6
 
 // MarketplaceAuthClient is the client API for MarketplaceAuth service.
 //
@@ -323,13 +429,15 @@ type MarketplaceAuthClient interface {
 	Login(ctx context.Context, in *LoginReq, opts ...grpc.CallOption) (*LoginResp, error)
 	Register(ctx context.Context, in *RegisterReq, opts ...grpc.CallOption) (*RegisterResp, error)
 	RefreshToken(ctx context.Context, in *RefreshTokenReq, opts ...grpc.CallOption) (*RefreshTokenResp, error)
+	GetUser(ctx context.Context, in *GetUserReq, opts ...grpc.CallOption) (*User, error)
+	UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*User, error)
 }
 
 type marketplaceAuthClient struct {
-	cc *grpc.ClientConn
+	cc grpc.ClientConnInterface
 }
 
-func NewMarketplaceAuthClient(cc *grpc.ClientConn) MarketplaceAuthClient {
+func NewMarketplaceAuthClient(cc grpc.ClientConnInterface) MarketplaceAuthClient {
 	return &marketplaceAuthClient{cc}
 }
 
@@ -360,11 +468,51 @@ func (c *marketplaceAuthClient) RefreshToken(ctx context.Context, in *RefreshTok
 	return out, nil
 }
 
+func (c *marketplaceAuthClient) GetUser(ctx context.Context, in *GetUserReq, opts ...grpc.CallOption) (*User, error) {
+	out := new(User)
+	err := c.cc.Invoke(ctx, "/authproto.MarketplaceAuth/GetUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketplaceAuthClient) UpdateUser(ctx context.Context, in *User, opts ...grpc.CallOption) (*User, error) {
+	out := new(User)
+	err := c.cc.Invoke(ctx, "/authproto.MarketplaceAuth/UpdateUser", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MarketplaceAuthServer is the server API for MarketplaceAuth service.
 type MarketplaceAuthServer interface {
 	Login(context.Context, *LoginReq) (*LoginResp, error)
 	Register(context.Context, *RegisterReq) (*RegisterResp, error)
 	RefreshToken(context.Context, *RefreshTokenReq) (*RefreshTokenResp, error)
+	GetUser(context.Context, *GetUserReq) (*User, error)
+	UpdateUser(context.Context, *User) (*User, error)
+}
+
+// UnimplementedMarketplaceAuthServer can be embedded to have forward compatible implementations.
+type UnimplementedMarketplaceAuthServer struct {
+}
+
+func (*UnimplementedMarketplaceAuthServer) Login(ctx context.Context, req *LoginReq) (*LoginResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+}
+func (*UnimplementedMarketplaceAuthServer) Register(ctx context.Context, req *RegisterReq) (*RegisterResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
+}
+func (*UnimplementedMarketplaceAuthServer) RefreshToken(ctx context.Context, req *RefreshTokenReq) (*RefreshTokenResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RefreshToken not implemented")
+}
+func (*UnimplementedMarketplaceAuthServer) GetUser(ctx context.Context, req *GetUserReq) (*User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
+}
+func (*UnimplementedMarketplaceAuthServer) UpdateUser(ctx context.Context, req *User) (*User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
 
 func RegisterMarketplaceAuthServer(s *grpc.Server, srv MarketplaceAuthServer) {
@@ -425,6 +573,42 @@ func _MarketplaceAuth_RefreshToken_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MarketplaceAuth_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetUserReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceAuthServer).GetUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/authproto.MarketplaceAuth/GetUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceAuthServer).GetUser(ctx, req.(*GetUserReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MarketplaceAuth_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(User)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceAuthServer).UpdateUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/authproto.MarketplaceAuth/UpdateUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceAuthServer).UpdateUser(ctx, req.(*User))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _MarketplaceAuth_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "authproto.MarketplaceAuth",
 	HandlerType: (*MarketplaceAuthServer)(nil),
@@ -441,35 +625,15 @@ var _MarketplaceAuth_serviceDesc = grpc.ServiceDesc{
 			MethodName: "RefreshToken",
 			Handler:    _MarketplaceAuth_RefreshToken_Handler,
 		},
+		{
+			MethodName: "GetUser",
+			Handler:    _MarketplaceAuth_GetUser_Handler,
+		},
+		{
+			MethodName: "UpdateUser",
+			Handler:    _MarketplaceAuth_UpdateUser_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "auth.proto",
-}
-
-func init() { proto.RegisterFile("auth.proto", fileDescriptor_auth_b9f778f9ce5ee31b) }
-
-var fileDescriptor_auth_b9f778f9ce5ee31b = []byte{
-	// 339 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x74, 0x51, 0x4d, 0x4f, 0xe3, 0x30,
-	0x10, 0xdd, 0xec, 0x36, 0xdd, 0x64, 0x76, 0xa5, 0x82, 0xa9, 0x20, 0x4a, 0x2f, 0x25, 0x17, 0x22,
-	0x0e, 0x3d, 0x00, 0x57, 0x0e, 0x1c, 0x38, 0x20, 0xf1, 0x21, 0x59, 0xdc, 0x2b, 0x53, 0xa6, 0x4d,
-	0xd5, 0x34, 0x36, 0xb6, 0x23, 0xc4, 0xef, 0xe1, 0x17, 0xf1, 0x8f, 0xd0, 0xd8, 0x4d, 0xdb, 0x88,
-	0xf6, 0xe6, 0x79, 0xf3, 0x3c, 0xef, 0xbd, 0x19, 0x00, 0x51, 0xdb, 0x62, 0xa4, 0xb4, 0xb4, 0x92,
-	0xc5, 0xf4, 0x76, 0xcf, 0x8c, 0x43, 0x74, 0x2f, 0x67, 0xf3, 0x8a, 0xe3, 0x1b, 0x3b, 0x87, 0xc3,
-	0xda, 0xa0, 0xae, 0xc4, 0x12, 0xc7, 0x52, 0x8f, 0x71, 0x29, 0xe6, 0x65, 0x12, 0x0c, 0x83, 0x3c,
-	0xe6, 0xbd, 0xa6, 0xf1, 0xa4, 0x6f, 0x09, 0x66, 0x29, 0x44, 0x4a, 0x18, 0xf3, 0x2e, 0xf5, 0x6b,
-	0xf2, 0xdb, 0x51, 0xd6, 0x75, 0x76, 0x0a, 0xf1, 0x6a, 0xa6, 0x51, 0xac, 0x0f, 0xa1, 0x95, 0x0b,
-	0xac, 0x56, 0x83, 0x7c, 0x91, 0x7d, 0x06, 0xf0, 0x8f, 0xe3, 0x6c, 0x6e, 0x2c, 0x6a, 0x92, 0x1e,
-	0x40, 0x4c, 0x0a, 0x63, 0x92, 0x58, 0x31, 0x23, 0x02, 0x1e, 0xc5, 0x12, 0x69, 0x84, 0xf7, 0xe2,
-	0x85, 0x7c, 0x41, 0xa8, 0x2a, 0x64, 0x85, 0xc9, 0x1f, 0x8f, 0xba, 0xa2, 0xe5, 0xab, 0xd3, 0xf6,
-	0xc5, 0x18, 0x74, 0xec, 0x87, 0xc2, 0x24, 0x1c, 0x06, 0x79, 0xc8, 0xdd, 0x9b, 0x84, 0xa7, 0x75,
-	0x59, 0x7a, 0xe1, 0xae, 0xff, 0x40, 0x00, 0x09, 0x67, 0x39, 0xfc, 0xdf, 0x98, 0x34, 0x8a, 0x25,
-	0xf0, 0xd7, 0xd4, 0x93, 0x09, 0x1a, 0xe3, 0x3c, 0x46, 0xbc, 0x29, 0xb3, 0x33, 0xe8, 0x71, 0x9c,
-	0x6a, 0x34, 0xc5, 0x33, 0xe5, 0xa3, 0x48, 0xbb, 0x83, 0xe7, 0x70, 0xd0, 0x26, 0xee, 0x5b, 0xd1,
-	0xc5, 0x57, 0x00, 0xbd, 0x07, 0xa1, 0x17, 0x68, 0x55, 0x29, 0x26, 0x78, 0x53, 0xdb, 0x82, 0x5d,
-	0x41, 0xe8, 0x36, 0xcb, 0x8e, 0x46, 0xeb, 0x13, 0x8e, 0x9a, 0xfb, 0xa5, 0xfd, 0x9f, 0xa0, 0x51,
-	0xd9, 0x2f, 0x76, 0x0d, 0x51, 0x13, 0x83, 0x1d, 0x6f, 0x71, 0xb6, 0x0e, 0x90, 0x9e, 0xec, 0xc4,
-	0xdd, 0xf7, 0x3b, 0xda, 0xc2, 0xc6, 0x32, 0x4b, 0x5b, 0xd4, 0x56, 0xe8, 0x74, 0xb0, 0xb7, 0x47,
-	0xa3, 0x5e, 0xba, 0xae, 0x73, 0xf9, 0x1d, 0x00, 0x00, 0xff, 0xff, 0xbd, 0x69, 0x55, 0x85, 0x8d,
-	0x02, 0x00, 0x00,
 }

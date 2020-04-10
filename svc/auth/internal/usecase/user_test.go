@@ -32,7 +32,7 @@ func (ut *userTest) Finish() {
 	ut.ctrl.Finish()
 }
 
-func TestUser_Get(t *testing.T) {
+func TestUser_GetWithPassword(t *testing.T) {
 	test := newUserTest()
 	t.Run("given username, repo error, should return error", func(t *testing.T) {
 		test.Begin(t)
@@ -43,7 +43,7 @@ func TestUser_Get(t *testing.T) {
 		}
 
 		test.reader.EXPECT().GetByUserNameAndPassword(req).Return(entity.User{}, errors.New("error"))
-		got, err := test.unit.Get(req)
+		got, err := test.unit.GetWithPassword(req)
 		assert.NotNil(t, err)
 		assert.Equal(t, entity.User{}, got)
 	})
@@ -55,7 +55,7 @@ func TestUser_Get(t *testing.T) {
 			Password: "asdfghj",
 		}
 
-		got, err := test.unit.Get(req)
+		got, err := test.unit.GetWithPassword(req)
 
 		assert.NotNil(t, err)
 		assert.Equal(t, entity.User{}, got)
@@ -114,5 +114,84 @@ func TestUser_Create(t *testing.T) {
 		got, err := test.unit.Create(req)
 		assert.NotNil(t, err)
 		assert.Equal(t, entity.User{}, got)
+	})
+}
+
+func TestUser_Get(t *testing.T) {
+	test := newUserTest()
+	t.Run("given userID should call GetByUserID", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.User{ID: 1337}
+		test.reader.EXPECT().GetByID(req.ID).Return(entity.User{ID: 1337, Name: "asdfg,"}, errors.New("error"))
+
+		got, err := test.unit.Get(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, "error", err.Error())
+		assert.Equal(t, "asdfg,", got.Name)
+	})
+	t.Run("given email should call GetByEmail", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.User{Email: "asdf"}
+		test.reader.EXPECT().GetByEmail(req.Email).Return(entity.User{ID: 1337, Name: "asdfg,"}, errors.New("error"))
+
+		got, err := test.unit.Get(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, "error", err.Error())
+		assert.Equal(t, "asdfg,", got.Name)
+	})
+	t.Run("given username should call GetByUserName", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.User{UserName: "asdasd"}
+		test.reader.EXPECT().GetByUserName(req.UserName).Return(entity.User{ID: 1337, Name: "asdfg,"}, errors.New("error"))
+
+		got, err := test.unit.Get(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, "error", err.Error())
+		assert.Equal(t, "asdfg,", got.Name)
+	})
+}
+
+func TestUser_Update(t *testing.T) {
+	test := newUserTest()
+	t.Run("repo returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.User{
+			ID:       1,
+			Name:     "asdasd",
+			UserName: "asdasd",
+			Email:    "Asdasdasd",
+			Phone:    "asdasdasd",
+			PhotoURL: "asdasd",
+			Password: "asdasdasd",
+			Type:     1,
+		}
+		test.writer.EXPECT().Update(req).Return(entity.User{}, errors.New("error"))
+
+		got, err := test.unit.Update(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.User{}, got)
+	})
+	t.Run("repo returns no error, should not return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.User{
+			ID:       1,
+			Name:     "asdasd",
+			UserName: "asdasd",
+			Email:    "Asdasdasd",
+			Phone:    "asdasdasd",
+			PhotoURL: "asdasd",
+			Password: "asdasdasd",
+			Type:     1,
+		}
+		test.writer.EXPECT().Update(req).Return(req, nil)
+
+		got, err := test.unit.Update(req)
+		assert.Nil(t, err)
+		assert.NotEqual(t, entity.User{}, got)
 	})
 }
