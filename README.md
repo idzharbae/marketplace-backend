@@ -1,8 +1,9 @@
 # Backend services for chili marketplace app
 
 ## Services
-- Catalog
-- Auth
+- Catalog -> microservice for product discovery
+- Auth -> microservice for authentication
+- Resources -> microservice for storing and retrieving resources
 
 ## Folder Structure
 ```
