@@ -1,6 +1,6 @@
 {
   "REST": {
-    "Port": ":1441",
+    "Port": ":1441"
   },
   "Grpc": {
     "Port": ":1442"
@@ -19,7 +19,7 @@
     "slave": {
       "address": "127.0.0.1",
       "port": 5430,
-      "db_name": "cabai_marketplace",
+      "db_name": "cabai_resources",
       "user": "user",
       "password": "secret",
       "ssl_mode": "disable"

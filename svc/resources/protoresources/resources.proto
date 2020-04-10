@@ -1,18 +1,27 @@
 syntax = "proto3";
 
-import "base.proto";
-
 package protoresources;
 
 service MarketplaceResources {
   rpc UploadPhoto(UploadPhotoReq) returns (UploadPhotoResp) {}
+  rpc DeletePhoto(DeletePhotoReq) returns (DeletePhotoResp) {}
 }
 
 message UploadPhotoReq {
   bytes file = 1;
-  string file_name = 2;
+  string file_ext = 2;
+  int64 owner_id = 3;
 }
 
 message UploadPhotoResp {
   string file_url = 1;
+}
+
+message DeletePhotoReq {
+  string file_url = 1;
+  int64 user_id = 2;
+}
+
+message DeletePhotoResp {
+  bool success = 1;
 }

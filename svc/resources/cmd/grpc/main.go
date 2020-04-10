@@ -16,7 +16,7 @@ var (
 
 func main() {
 	// init app
-	marketplaceApp, err := app.NewResources(basepath + "/../config/resources.json")
+	marketplaceApp, err := app.NewResources(basepath + "/../../config/resources.json")
 	if err != nil {
 		log.Fatal(err)
 	}

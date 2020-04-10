@@ -11,7 +11,7 @@ type Usecases struct {
 
 func NewUsecases(repos *Repos) *Usecases {
 	return &Usecases{
-		File: usecase.NewFile(repos.FileWriter),
+		File: usecase.NewFile(repos.FileWriter, repos.OwnershipWriter, repos.OwnershipReader),
 	}
 }
 

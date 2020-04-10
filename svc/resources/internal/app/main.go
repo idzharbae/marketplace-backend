@@ -22,7 +22,10 @@ func NewResources(cfgPath string) (*Resources, error) {
 		return nil, err
 	}
 	Bridges := NewBridges()
-	Repos := NewRepos(Bridges)
+	Repos, err := NewRepos(Bridges, cfg)
+	if err != nil {
+		return nil, err
+	}
 	UCS := NewUsecases(Repos)
 
 	return &Resources{
