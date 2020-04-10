@@ -20,7 +20,7 @@ func NewUser(userReader internal.UserReader, userWriter internal.UserWriter) *Us
 	}
 }
 
-func (u *User) Get(user entity.User) (entity.User, error) {
+func (u *User) GetWithPassword(user entity.User) (entity.User, error) {
 	if user.UserName != "" {
 		return u.userReader.GetByUserNameAndPassword(user)
 	}
@@ -29,6 +29,17 @@ func (u *User) Get(user entity.User) (entity.User, error) {
 	}
 	return u.userReader.GetByEmailAndPassword(user)
 }
+
+func (u *User) Get(user entity.User) (entity.User, error) {
+	if user.ID != 0 {
+		return u.userReader.GetByID(user.ID)
+	}
+	if user.Email != "" {
+		return u.userReader.GetByEmail(user.Email)
+	}
+	return u.userReader.GetByUserName(user.UserName)
+}
+
 func (u *User) List(req request.ListUser) ([]entity.User, error) {
 	return nil, nil
 }
@@ -41,7 +52,13 @@ func (u *User) Create(user entity.User) (entity.User, error) {
 	return u.userWriter.Create(user)
 }
 func (u *User) Update(user entity.User) (entity.User, error) {
-	return entity.User{}, nil
+	if user.ID == 0 {
+		return entity.User{}, errors.New("user id should not be empty")
+	}
+	if err := user.Validate(); err != nil {
+		return entity.User{}, err
+	}
+	return u.userWriter.Update(user)
 }
 func (u *User) Delete(user entity.User) error {
 	return nil

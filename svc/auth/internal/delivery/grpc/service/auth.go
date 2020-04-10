@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"github.com/idzharbae/marketplace-backend/svc/auth/authproto"
+	"github.com/idzharbae/marketplace-backend/svc/auth/converter"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/request"
@@ -27,7 +28,7 @@ func (as *AuthService) Login(ctx context.Context, in *authproto.LoginReq) (*auth
 	} else {
 		req.UserName = in.GetUsernameOrEmail()
 	}
-	user, err := as.userUC.Get(req)
+	user, err := as.userUC.GetWithPassword(req)
 	if err != nil {
 		return nil, err
 	}
@@ -42,14 +43,7 @@ func (as *AuthService) Login(ctx context.Context, in *authproto.LoginReq) (*auth
 }
 
 func (as *AuthService) Register(ctx context.Context, in *authproto.RegisterReq) (*authproto.RegisterResp, error) {
-	_, err := as.userUC.Create(entity.User{
-		Name:     in.GetFullName(),
-		UserName: in.GetUserName(),
-		Email:    in.GetEmail(),
-		Phone:    in.GetPhone(),
-		Password: in.GetPassword(),
-		Type:     in.GetType(),
-	})
+	_, err := as.userUC.Create(converter.RegisterReqToEntity(in))
 	if err != nil {
 		return nil, err
 	}

@@ -11,6 +11,7 @@ type Shop struct {
 	Longitude float64
 	Latitude  float64
 	Slug      string
+	PhotoURL  string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

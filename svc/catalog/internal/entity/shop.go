@@ -11,6 +11,7 @@ type Shop struct {
 	Name      string
 	Address   string
 	Slug      string
+	PhotoURL  string
 	Location  GPS
 	Products  []Product
 	CreatedAt time.Time

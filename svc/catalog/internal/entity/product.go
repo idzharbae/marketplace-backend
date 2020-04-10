@@ -13,6 +13,7 @@ type Product struct {
 	Quantity   int32
 	PricePerKG int32
 	StockKG    float32
+	PhotoURL   string
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
 }

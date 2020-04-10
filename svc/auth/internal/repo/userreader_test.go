@@ -120,3 +120,134 @@ func TestUserReader_GetByUserNameAndPassword(t *testing.T) {
 		assert.Equal(t, req.Email, got.Email)
 	})
 }
+
+func TestUserReader_GetByID(t *testing.T) {
+	test := newUserReaderTest()
+	t.Run("db return error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := int64(1234)
+		test.db.EXPECT().Where("id=?", req).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := test.unit.GetByID(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.User{}, got)
+	})
+	t.Run("db return no error, should not return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := int64(1234)
+		resp := model.User{
+			ID:       1234,
+			Name:     "asdf",
+			UserName: "asdasd",
+			Email:    "asdasd",
+			Phone:    "asdasd",
+			Password: "asdasd",
+			PhotoURL: "Asdasd",
+		}
+		test.db.EXPECT().Where("id=?", req).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = resp
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+
+		got, err := test.unit.GetByID(req)
+		assert.Nil(t, err)
+		assert.Equal(t, resp.UserName, got.UserName)
+		assert.Equal(t, resp.Email, got.Email)
+		assert.Equal(t, resp.PhotoURL, got.PhotoURL)
+		assert.Equal(t, "", got.Password)
+	})
+}
+
+func TestUserReader_GetByUserName(t *testing.T) {
+	test := newUserReaderTest()
+	t.Run("db return error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := "asdfg"
+		test.db.EXPECT().Where("user_name=?", req).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := test.unit.GetByUserName(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.User{}, got)
+	})
+	t.Run("db return no error, should not return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := "asdfg"
+		resp := model.User{
+			ID:       1234,
+			Name:     "asdf",
+			UserName: "asdasd",
+			Email:    "asdasd",
+			Phone:    "asdasd",
+			Password: "asdasd",
+			PhotoURL: "Asdasd",
+		}
+
+		test.db.EXPECT().Where("user_name=?", req).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = resp
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+
+		got, err := test.unit.GetByUserName(req)
+		assert.Nil(t, err)
+		assert.Equal(t, resp.UserName, got.UserName)
+		assert.Equal(t, resp.Email, got.Email)
+		assert.Equal(t, resp.PhotoURL, got.PhotoURL)
+		assert.Equal(t, "", got.Password)
+	})
+}
+
+func TestUserReader_GetByEmail(t *testing.T) {
+	test := newUserReaderTest()
+	t.Run("db return error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := "asdfg"
+		test.db.EXPECT().Where("email=?", req).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := test.unit.GetByEmail(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.User{}, got)
+	})
+	t.Run("db return no error, should not return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := "asdfg"
+		resp := model.User{
+			ID:       1234,
+			Name:     "asdf",
+			UserName: "asdasd",
+			Email:    "asdasd",
+			Phone:    "asdasd",
+			Password: "asdasd",
+			PhotoURL: "Asdasd",
+		}
+
+		test.db.EXPECT().Where("email=?", req).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = resp
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+
+		got, err := test.unit.GetByEmail(req)
+		assert.Nil(t, err)
+		assert.Equal(t, resp.UserName, got.UserName)
+		assert.Equal(t, resp.Email, got.Email)
+		assert.Equal(t, resp.PhotoURL, got.PhotoURL)
+		assert.Equal(t, "", got.Password)
+	})
+}

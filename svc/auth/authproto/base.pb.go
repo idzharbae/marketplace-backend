@@ -3,9 +3,11 @@
 
 package authproto
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
+import (
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
+	math "math"
+)
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -16,7 +18,7 @@ var _ = math.Inf
 // is compatible with the proto package it is being compiled against.
 // A compilation error at this line likely means your copy of the
 // proto package needs to be updated.
-const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
 type Pagination struct {
 	Page                 int32    `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
@@ -30,16 +32,17 @@ func (m *Pagination) Reset()         { *m = Pagination{} }
 func (m *Pagination) String() string { return proto.CompactTextString(m) }
 func (*Pagination) ProtoMessage()    {}
 func (*Pagination) Descriptor() ([]byte, []int) {
-	return fileDescriptor_base_f6dcf1f743a6781e, []int{0}
+	return fileDescriptor_db1b6b0986796150, []int{0}
 }
+
 func (m *Pagination) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Pagination.Unmarshal(m, b)
 }
 func (m *Pagination) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Pagination.Marshal(b, m, deterministic)
 }
-func (dst *Pagination) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Pagination.Merge(dst, src)
+func (m *Pagination) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Pagination.Merge(m, src)
 }
 func (m *Pagination) XXX_Size() int {
 	return xxx_messageInfo_Pagination.Size(m)
@@ -74,16 +77,17 @@ func (m *Empty) Reset()         { *m = Empty{} }
 func (m *Empty) String() string { return proto.CompactTextString(m) }
 func (*Empty) ProtoMessage()    {}
 func (*Empty) Descriptor() ([]byte, []int) {
-	return fileDescriptor_base_f6dcf1f743a6781e, []int{1}
+	return fileDescriptor_db1b6b0986796150, []int{1}
 }
+
 func (m *Empty) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Empty.Unmarshal(m, b)
 }
 func (m *Empty) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Empty.Marshal(b, m, deterministic)
 }
-func (dst *Empty) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Empty.Merge(dst, src)
+func (m *Empty) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Empty.Merge(m, src)
 }
 func (m *Empty) XXX_Size() int {
 	return xxx_messageInfo_Empty.Size(m)
@@ -99,9 +103,11 @@ func init() {
 	proto.RegisterType((*Empty)(nil), "authproto.Empty")
 }
 
-func init() { proto.RegisterFile("base.proto", fileDescriptor_base_f6dcf1f743a6781e) }
+func init() {
+	proto.RegisterFile("base.proto", fileDescriptor_db1b6b0986796150)
+}
 
-var fileDescriptor_base_f6dcf1f743a6781e = []byte{
+var fileDescriptor_db1b6b0986796150 = []byte{
 	// 103 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x4a, 0x4a, 0x2c, 0x4e,
 	0xd5, 0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0xe2, 0x4c, 0x2c, 0x2d, 0xc9, 0x00, 0x33, 0x95, 0xcc,

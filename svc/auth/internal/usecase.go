@@ -8,6 +8,7 @@ import (
 //go:generate mockgen -destination=usecase/ucmock/useruc_mock.go -package=ucmock github.com/idzharbae/marketplace-backend/svc/auth/internal UserUC
 type UserUC interface {
 	Get(user entity.User) (entity.User, error)
+	GetWithPassword(user entity.User) (entity.User, error)
 	List(req request.ListUser) ([]entity.User, error)
 
 	Create(user entity.User) (entity.User, error)

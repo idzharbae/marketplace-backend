@@ -19,6 +19,7 @@ func ShopEntityToProto(s entity.Shop) *catalogproto.Shop {
 		Products:  ProductEntitiesToProtos(s.Products),
 		CreatedAt: s.CreatedAt.Unix(),
 		UpdatedAt: s.UpdatedAt.Unix(),
+		PhotoUrl:  s.PhotoURL,
 	}
 }
 
@@ -32,6 +33,7 @@ func ShopProtoToEntity(s *catalogproto.Shop) entity.Shop {
 			Latitude:  s.GetLocation().GetLatitude(),
 			Longitude: s.GetLocation().GetLongitude(),
 		},
+		PhotoURL:  s.GetPhotoUrl(),
 		Products:  ProductProtosToEntities(s.GetProducts()),
 		CreatedAt: time.Unix(s.GetCreatedAt(), 0),
 		UpdatedAt: time.Unix(s.GetUpdatedAt(), 0),
@@ -58,6 +60,7 @@ func ShopModelToEntity(s model.Shop) entity.Shop {
 		},
 		CreatedAt: s.CreatedAt,
 		UpdatedAt: s.UpdatedAt,
+		PhotoURL:  s.PhotoURL,
 	}
 }
 
@@ -79,5 +82,6 @@ func ShopEntityToModel(s entity.Shop) model.Shop {
 		Slug:      s.Slug,
 		CreatedAt: s.CreatedAt,
 		UpdatedAt: s.UpdatedAt,
+		PhotoURL:  s.PhotoURL,
 	}
 }

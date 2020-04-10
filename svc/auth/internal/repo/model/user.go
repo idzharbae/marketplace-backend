@@ -10,6 +10,7 @@ type User struct {
 	Phone    string
 	Password string
 	Type     int32
+	PhotoURL string
 }
 
 func UserFromEntity(user entity.User) User {
@@ -21,6 +22,7 @@ func UserFromEntity(user entity.User) User {
 		Phone:    user.Phone,
 		Password: user.GetPasswordHash(),
 		Type:     user.Type,
+		PhotoURL: user.PhotoURL,
 	}
 }
 
@@ -36,5 +38,6 @@ func (u User) ToEntity() entity.User {
 		Email:    u.Email,
 		Phone:    u.Phone,
 		Type:     u.Type,
+		PhotoURL: u.PhotoURL,
 	}
 }
