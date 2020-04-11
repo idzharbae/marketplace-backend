@@ -36,3 +36,15 @@
 .   .
 ```
 
+## Getting Started
+### Install dependencies
+#### Go
+https://golang.org/doc/install/source
+#### dep
+https://golang.github.io/dep/docs/installation.html
+#### Docker
+https://docs.docker.com/get-docker/
+#### docker-compose
+https://docs.docker.com/compose/install/
+### Run services
+Go to service folder (svc/<service_name>) and read the README.md
