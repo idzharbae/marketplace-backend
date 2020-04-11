@@ -13,5 +13,6 @@ message Product {
     int64 updated_at =8;
     string slug = 9;
     string photo_url = 10;
+    string description = 11;
 }
 

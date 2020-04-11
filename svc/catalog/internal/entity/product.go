@@ -6,16 +6,17 @@ import (
 )
 
 type Product struct {
-	ID         int32
-	ShopID     int32
-	Name       string
-	Slug       string
-	Quantity   int32
-	PricePerKG int32
-	StockKG    float32
-	PhotoURL   string
-	CreatedAt  time.Time
-	UpdatedAt  time.Time
+	ID          int32
+	ShopID      int32
+	Name        string
+	Description string
+	Slug        string
+	Quantity    int32
+	PricePerKG  int32
+	StockKG     float32
+	PhotoURL    string
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
 }
 
 func (p Product) Validate() error {

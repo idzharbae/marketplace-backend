@@ -9,16 +9,17 @@ import (
 
 func ProductModelToEntity(p model.Product) entity.Product {
 	return entity.Product{
-		ID:         p.ID,
-		ShopID:     p.ShopID,
-		Name:       p.Name,
-		Slug:       p.Slug,
-		Quantity:   p.Quantity,
-		PricePerKG: p.PricePerKG,
-		StockKG:    p.StockKG,
-		CreatedAt:  p.CreatedAt,
-		UpdatedAt:  p.UpdatedAt,
-		PhotoURL:   p.PhotoURL,
+		ID:          p.ID,
+		ShopID:      p.ShopID,
+		Name:        p.Name,
+		Slug:        p.Slug,
+		Quantity:    p.Quantity,
+		PricePerKG:  p.PricePerKG,
+		StockKG:     p.StockKG,
+		CreatedAt:   p.CreatedAt,
+		UpdatedAt:   p.UpdatedAt,
+		PhotoURL:    p.PhotoURL,
+		Description: p.Description,
 	}
 }
 
