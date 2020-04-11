@@ -7,6 +7,7 @@
 ## How to run
 ### initialize (first time only)
 `make init`
+
 `make migration-init`
 ### Install dependencies
 `make dep`
