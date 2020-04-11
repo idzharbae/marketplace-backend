@@ -42,13 +42,20 @@ func (as *AuthService) Login(ctx context.Context, in *authproto.LoginReq) (*auth
 	}, nil
 }
 
-func (as *AuthService) Register(ctx context.Context, in *authproto.RegisterReq) (*authproto.RegisterResp, error) {
-	_, err := as.userUC.Create(converter.RegisterReqToEntity(in))
+func (as *AuthService) Register(ctx context.Context, in *authproto.RegisterReq) (*authproto.User, error) {
+	res, err := as.userUC.Create(converter.RegisterReqToEntity(in))
 	if err != nil {
 		return nil, err
 	}
-	return &authproto.RegisterResp{
-		Success: true,
+	return &authproto.User{
+		Id:       res.ID,
+		Name:     res.Name,
+		UserName: res.UserName,
+		Email:    res.Email,
+		Phone:    res.Phone,
+		PhotoUrl: res.PhotoURL,
+		Type:     res.Type,
+		Password: res.Password,
 	}, nil
 }
 

@@ -4,6 +4,9 @@ grpc:
 build-grpc:
 	@echo " >> building binaries"
 	@go build -v -o resource_grpc cmd/grpc/main.go
+build-rest:
+	@echo " >> building binaries"
+	@go build -v -o resource_rest cmd/rest/main.go
 
 # go run command
 run-grpc: build-grpc

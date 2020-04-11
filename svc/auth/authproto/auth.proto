@@ -6,7 +6,7 @@ import "user.proto";
 
 service MarketplaceAuth {
     rpc Login(LoginReq) returns (LoginResp) {}
-    rpc Register(RegisterReq) returns (RegisterResp) {}
+    rpc Register(RegisterReq) returns (User) {}
     rpc RefreshToken(RefreshTokenReq) returns (RefreshTokenResp) {}
     rpc GetUser(GetUserReq) returns (User) {}
     rpc UpdateUser(User) returns (User) {}
@@ -29,10 +29,6 @@ message RegisterReq {
     int32 type = 5;
     string full_name = 6;
     string photo_url = 7;
-}
-
-message RegisterResp {
-    bool success = 1;
 }
 
 message RefreshTokenReq {
