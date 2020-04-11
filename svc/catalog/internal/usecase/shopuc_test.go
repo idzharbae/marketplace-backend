@@ -215,13 +215,13 @@ func TestShop_Create(t *testing.T) {
 		}
 
 	})
-	t.Run("given shop or products with ID should set ID to 0", func(t *testing.T) {
+	t.Run("given shop or products with ID should set product ID to 0", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		req := test.GetSampleShop()
 
 		test.Writer.EXPECT().Create(gomock.Any()).DoAndReturn(func(shop entity.Shop) (entity.Shop, error) {
-			assert.Equal(t, int32(0), shop.ID)
+			assert.Equal(t, req.ID, shop.ID)
 			for _, item := range shop.Products {
 				assert.Equal(t, int32(0), item.ID)
 			}

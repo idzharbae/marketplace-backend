@@ -56,7 +56,7 @@ func (s *Shop) Create(shop entity.Shop) (entity.Shop, error) {
 	if err != nil {
 		return entity.Shop{}, err
 	}
-	shop = shop.ZeroID().ZeroProductsID()
+	shop = shop.ZeroProductsID()
 	res, err := s.ShopWriter.Create(shop)
 	if err != nil {
 		return entity.Shop{}, err
