@@ -20,7 +20,6 @@ func NewShopWriter(db connection.Gormw) *ShopWriter {
 func (sw *ShopWriter) Create(req entity.Shop) (entity.Shop, error) {
 	const op = "ShopWriter::Create()"
 	shopModel := converter.ShopEntityToModel(req)
-	shopModel.ID = 0
 	query := sw.db.Save(&shopModel)
 	if err := query.Error(); err != nil {
 		return entity.Shop{}, errors.WithPrefix(err, op)
