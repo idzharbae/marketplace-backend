@@ -21,19 +21,3 @@ type ProductWriter interface {
 	DeleteByID(productID int32) error
 	DeleteBySlug(productSlug string) error
 }
-
-//go:generate mockgen -destination=repo/repomock/shopreader_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/catalog/internal ShopReader
-type ShopReader interface {
-	ListAll(pagination requests.Pagination) ([]entity.Shop, error)
-
-	GetByID(shopID int32) (entity.Shop, error)
-	GetBySlug(slug string) (entity.Shop, error)
-}
-
-//go:generate mockgen -destination=repo/repomock/shopwriter_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/catalog/internal ShopWriter
-type ShopWriter interface {
-	Create(shop entity.Shop) (entity.Shop, error)
-	Update(shop entity.Shop) (entity.Shop, error)
-	DeleteByID(shopID int32) error
-	DeleteBySlug(shopSlug string) error
-}

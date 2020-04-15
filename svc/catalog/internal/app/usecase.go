@@ -7,13 +7,11 @@ import (
 
 type UseCases struct {
 	ProductUC internal.ProductUC
-	ShopUC    internal.ShopUC
 }
 
 func NewUsecase(repos *Repos) *UseCases {
 	return &UseCases{
 		ProductUC: usecase.NewProduct(repos.ProductReader, repos.ProductWriter),
-		ShopUC:    usecase.NewShop(repos.ShopReader, repos.ShopWriter),
 	}
 }
 

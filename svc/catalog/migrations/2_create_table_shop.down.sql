@@ -1,2 +1,0 @@
-ALTER TABLE product DROP CONSTRAINT shop_fk;
-DROP TABLE shop;

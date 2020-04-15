@@ -14,13 +14,3 @@ type ProductUC interface {
 	Update(product entity.Product) (entity.Product, error)
 	Delete(product entity.Product) error
 }
-
-//go:generate mockgen -destination=usecase/ucmock/shopuc_mock.go -package=ucmock github.com/idzharbae/marketplace-backend/svc/catalog/internal ShopUC
-type ShopUC interface {
-	List(req requests.ListShop) ([]entity.Shop, error)
-	Get(shop entity.Shop) (entity.Shop, error)
-
-	Create(shop entity.Shop) (entity.Shop, error)
-	Update(shop entity.Shop) (entity.Shop, error)
-	Delete(shop entity.Shop) error
-}

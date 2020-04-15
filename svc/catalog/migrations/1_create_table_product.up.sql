@@ -6,6 +6,7 @@ CREATE TABLE product(
 	quantity INTEGER,
 	price_per_kg INTEGER,
 	stock_kg numeric(10,2),
+	description VARCHAR(600),
 	created_at timestamp NOT NULL DEFAULT (now() at time zone 'utc'),
 	updated_at timestamp NOT NULL DEFAULT (now() at time zone 'utc')
 );

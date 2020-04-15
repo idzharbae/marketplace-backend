@@ -1,7 +1,6 @@
 syntax = "proto3";
 
 import "product.proto";
-import "shop.proto";
 import "base.proto";
 
 package catalogproto;
@@ -14,14 +13,6 @@ service MarketplaceCatalog {
     rpc CreateProduct (Product) returns (Product) {}
     rpc UpdateProduct (Product) returns (Product) {}
     rpc DeleteProduct (GetProductReq) returns (Empty) {}
-
-    // Shop
-    rpc ListShops(ListShopsReq) returns (ListShopsResp) {}
-    rpc GetShop(GetShopReq) returns (Shop) {}
-
-    rpc CreateShop(Shop) returns (Shop) {}
-    rpc UpdateShop(Shop) returns (Shop) {}
-    rpc DeleteShop(GetShopReq) returns(Empty) {}
 }
 
 message ListProductsReq {
@@ -40,17 +31,4 @@ message GetProductReq {
 
 message PKReq {
     int32 id = 1;
-}
-
-message ListShopsReq {
-    Pagination pagination = 1;
-}
-
-message ListShopsResp {
-    repeated Shop shops = 1;
-}
-
-message GetShopReq {
-    int32 id = 1;
-    string slug = 2;
 }

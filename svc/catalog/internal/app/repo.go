@@ -10,8 +10,6 @@ import (
 type Repos struct {
 	ProductReader internal.ProductReader
 	ProductWriter internal.ProductWriter
-	ShopReader    internal.ShopReader
-	ShopWriter    internal.ShopWriter
 }
 
 func NewRepos(cfg config.Config) *Repos {
@@ -25,13 +23,9 @@ func NewRepos(cfg config.Config) *Repos {
 	}
 	productReader := repo.NewProductReader(connMaster)
 	productWriter := repo.NewProductWriter(connSlave)
-	shopWriter := repo.NewShopWriter(connMaster)
-	shopReader := repo.NewShopReader(connSlave)
 	return &Repos{
 		ProductReader: productReader,
 		ProductWriter: productWriter,
-		ShopWriter:    shopWriter,
-		ShopReader:    shopReader,
 	}
 }
 
