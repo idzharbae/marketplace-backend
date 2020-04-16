@@ -11,6 +11,8 @@ build-rest:
 # go run command
 run-grpc: build-grpc
 	@./resource_grpc
+run-rest: build-rest
+	@./resource_rest
 
 docker-run:
 	@docker-compose up -d
