@@ -157,3 +157,37 @@ func TestUserService_UpdateUser(t *testing.T) {
 		assert.Nil(t, err)
 	})
 }
+
+func TestUserService_GetShopByProvince(t *testing.T) {
+	test := newUserTest()
+	t.Run("nil param should returns error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		got, err := test.unit.GetShopByProvince(context.Background(), nil)
+		assert.Nil(t, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("uc returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := &authproto.ProvinceReq{Province: "jawa"}
+
+		test.mockuc.EXPECT().GetShopsByProvince(req.GetProvince()).Return(nil, errors.New("error"))
+
+		got, err := test.unit.GetShopByProvince(context.Background(), req)
+		assert.Nil(t, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("uc returns no error, should not return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := &authproto.ProvinceReq{Province: "jawa"}
+
+		test.mockuc.EXPECT().GetShopsByProvince(req.GetProvince()).Return([]entity.User{{ID: 1}}, nil)
+
+		got, err := test.unit.GetShopByProvince(context.Background(), req)
+		assert.NotNil(t, got)
+		assert.Nil(t, err)
+	})
+}

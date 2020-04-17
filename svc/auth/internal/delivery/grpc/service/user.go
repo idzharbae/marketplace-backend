@@ -43,3 +43,16 @@ func (us *UserService) UpdateUser(ctx context.Context, in *authproto.User) (*aut
 	}
 	return converter.UserEntityToProto(res), nil
 }
+
+func (us *UserService) GetShopByProvince(ctx context.Context, in *authproto.ProvinceReq) (*authproto.UserArrayResp, error) {
+	if in == nil {
+		return nil, errors.New("parameter should not be nil")
+	}
+	res, err := us.UserUC.GetShopsByProvince(in.GetProvince())
+	if err != nil {
+		return nil, err
+	}
+	return &authproto.UserArrayResp{
+		Users: converter.UserEntitiesToProtos(res),
+	}, nil
+}

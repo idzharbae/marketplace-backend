@@ -63,3 +63,7 @@ func (u *User) Update(user entity.User) (entity.User, error) {
 func (u *User) Delete(user entity.User) error {
 	return nil
 }
+
+func (u *User) GetShopsByProvince(province string) ([]entity.User, error) {
+	return u.userReader.GetShopsByProvince(province)
+}

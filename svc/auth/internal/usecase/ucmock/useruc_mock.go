@@ -78,6 +78,21 @@ func (mr *MockUserUCMockRecorder) Get(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockUserUC)(nil).Get), arg0)
 }
 
+// GetShopsByProvince mocks base method.
+func (m *MockUserUC) GetShopsByProvince(arg0 string) ([]entity.User, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetShopsByProvince", arg0)
+	ret0, _ := ret[0].([]entity.User)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetShopsByProvince indicates an expected call of GetShopsByProvince.
+func (mr *MockUserUCMockRecorder) GetShopsByProvince(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetShopsByProvince", reflect.TypeOf((*MockUserUC)(nil).GetShopsByProvince), arg0)
+}
+
 // GetWithPassword mocks base method.
 func (m *MockUserUC) GetWithPassword(arg0 entity.User) (entity.User, error) {
 	m.ctrl.T.Helper()
