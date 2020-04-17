@@ -1,6 +1,8 @@
 package repo
 
 import (
+	"github.com/idzharbae/cabai-gqlserver/globalconstant"
+	"github.com/idzharbae/marketplace-backend/svc/auth/converter"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/repo/connection"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/repo/model"
@@ -57,4 +59,13 @@ func (ur *UserReader) GetByEmailAndPassword(req entity.User) (entity.User, error
 		return entity.User{}, err
 	}
 	return user.ToEntity(), nil
+}
+
+func (ur *UserReader) GetShopsByProvince(province string) ([]entity.User, error) {
+	var res []model.User
+	err := ur.db.Where("province=?", province).Where("type=?", globalconstant.ShopType).Find(&res).Error()
+	if err != nil {
+		return nil, err
+	}
+	return converter.UserModelsToEntities(res), nil
 }

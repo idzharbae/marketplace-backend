@@ -10,6 +10,7 @@ service MarketplaceAuth {
     rpc RefreshToken(RefreshTokenReq) returns (RefreshTokenResp) {}
     rpc GetUser(GetUserReq) returns (User) {}
     rpc UpdateUser(User) returns (User) {}
+    rpc GetShopByProvince(ProvinceReq) returns (UserArrayResp) {}
 }
 
 message LoginReq {
@@ -48,4 +49,12 @@ message GetUserReq {
     int64 id = 1;
     string user_name = 2;
     string email = 3;
+}
+
+message ProvinceReq {
+    string province = 1;
+}
+
+message UserArrayResp {
+    repeated User users = 1;
 }

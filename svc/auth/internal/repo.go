@@ -12,6 +12,7 @@ type UserReader interface {
 	GetByID(ID int64) (entity.User, error)
 	GetByEmail(email string) (entity.User, error)
 	GetByUserName(username string) (entity.User, error)
+	GetShopsByProvince(province string) ([]entity.User, error)
 
 	GetByEmailAndPassword(user entity.User) (entity.User, error)
 	GetByUserNameAndPassword(user entity.User) (entity.User, error)

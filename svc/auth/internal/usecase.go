@@ -10,6 +10,7 @@ type UserUC interface {
 	Get(user entity.User) (entity.User, error)
 	GetWithPassword(user entity.User) (entity.User, error)
 	List(req request.ListUser) ([]entity.User, error)
+	GetShopsByProvince(province string) ([]entity.User, error)
 
 	Create(user entity.User) (entity.User, error)
 	Update(user entity.User) (entity.User, error)

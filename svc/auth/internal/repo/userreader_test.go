@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/golang/mock/gomock"
+	"github.com/idzharbae/cabai-gqlserver/globalconstant"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/repo/connection/gormmock"
@@ -249,5 +250,36 @@ func TestUserReader_GetByEmail(t *testing.T) {
 		assert.Equal(t, resp.Email, got.Email)
 		assert.Equal(t, resp.PhotoURL, got.PhotoURL)
 		assert.Equal(t, "", got.Password)
+	})
+}
+
+func TestUserReader_GetShopsByProvince(t *testing.T) {
+	test := newUserReaderTest()
+	t.Run("db returns error should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		test.db.EXPECT().Where("province=?", "asdf").Return(test.db)
+		test.db.EXPECT().Where("type=?", globalconstant.ShopType).Return(test.db)
+		test.db.EXPECT().Find(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := test.unit.GetShopsByProvince("asdf")
+		assert.NotNil(t, err)
+		assert.Nil(t, got)
+	})
+	t.Run("db returns no error should not return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		test.db.EXPECT().Where("province=?", "asdf").Return(test.db)
+		test.db.EXPECT().Where("type=?", globalconstant.ShopType).Return(test.db)
+		test.db.EXPECT().Find(gomock.Any()).DoAndReturn(func(arg *[]model.User) *gormmock.MockGormw {
+			*arg = append(*arg, model.User{ID: 1})
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+
+		got, err := test.unit.GetShopsByProvince("asdf")
+		assert.Nil(t, err)
+		assert.NotNil(t, got)
 	})
 }
