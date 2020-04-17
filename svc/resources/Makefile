@@ -29,10 +29,10 @@ init:
 
 migration-init:
 	@go run migrations/main.go init
-
 migration-up:
 	@go run migrations/main.go up
-
 migration-down:
 	@go run migrations/main.go down
+migration-reset:
+	@go run migrations/main.go reset
 

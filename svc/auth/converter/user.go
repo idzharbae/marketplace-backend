@@ -7,13 +7,20 @@ import (
 
 func UserEntityToProto(user entity.User) *authproto.User {
 	return &authproto.User{
-		Id:       user.ID,
-		Name:     user.Name,
-		UserName: user.UserName,
-		Email:    user.Email,
-		Phone:    user.Phone,
-		PhotoUrl: user.PhotoURL,
-		Type:     user.Type,
+		Id:            user.ID,
+		Name:          user.Name,
+		UserName:      user.UserName,
+		Email:         user.Email,
+		Phone:         user.Phone,
+		PhotoUrl:      user.PhotoURL,
+		Type:          user.Type,
+		City:          user.Address.City,
+		Province:      user.Address.Province,
+		AddressDetail: user.Address.DetailAddress,
+		ZipCode:       user.Address.ZipCode,
+		CreatedAt:     user.CreatedAt.Unix(),
+		UpdatedAt:     user.UpdatedAt.Unix(),
+		Description:   user.Description,
 	}
 }
 
@@ -27,6 +34,12 @@ func UserProtoToEntity(in *authproto.User) entity.User {
 		PhotoURL: in.GetPhotoUrl(),
 		Password: in.GetPassword(),
 		Type:     in.GetType(),
+		Address: entity.Address{
+			Province:      in.GetProvince(),
+			City:          in.GetCity(),
+			DetailAddress: in.GetAddressDetail(),
+			ZipCode:       in.GetZipCode(),
+		},
 	}
 }
 
@@ -39,5 +52,12 @@ func RegisterReqToEntity(in *authproto.RegisterReq) entity.User {
 		Password: in.GetPassword(),
 		Type:     in.GetType(),
 		PhotoURL: in.GetPhotoUrl(),
+		Address: entity.Address{
+			Province:      in.GetProvince(),
+			City:          in.GetCity(),
+			DetailAddress: in.GetAddressDetail(),
+			ZipCode:       in.GetZipCode(),
+		},
+		Description: in.GetDescription(),
 	}
 }

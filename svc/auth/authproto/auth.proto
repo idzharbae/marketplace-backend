@@ -29,6 +29,11 @@ message RegisterReq {
     int32 type = 5;
     string full_name = 6;
     string photo_url = 7;
+    string province = 8;
+    string city = 9;
+    string address_detail = 10;
+    int32 zip_code = 11;
+    string description = 12;
 }
 
 message RefreshTokenReq {
