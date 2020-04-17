@@ -55,10 +55,19 @@ func (u *User) Update(user entity.User) (entity.User, error) {
 	if user.ID == 0 {
 		return entity.User{}, errors.New("user id should not be empty")
 	}
-	if err := user.Validate(); err != nil {
+	if err := user.Validate(); err != nil && err.Error() != "invalid email" {
 		return entity.User{}, err
 	}
-	return u.userWriter.Update(user)
+	return u.userWriter.Update(entity.User{
+		ID:          user.ID,
+		Name:        user.Name,
+		Phone:       user.Phone,
+		PhotoURL:    user.PhotoURL,
+		Password:    user.Password,
+		NewPassword: user.NewPassword,
+		Address:     user.Address,
+		Description: user.Description,
+	})
 }
 func (u *User) Delete(user entity.User) error {
 	return nil

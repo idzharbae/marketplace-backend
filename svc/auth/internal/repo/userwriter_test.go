@@ -135,6 +135,84 @@ func TestUserWriter_Create(t *testing.T) {
 
 func TestUserWriter_Update(t *testing.T) {
 	test := newUserWriterTest()
+	t.Run("record not found, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.User{
+			ID:       1,
+			Name:     "Asdf",
+			UserName: "asdff",
+			Email:    "asdasd",
+			Phone:    "Asdasd",
+			PhotoURL: "Asdasd",
+			Password: "asdasd",
+			Type:     1,
+		}
+
+		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = model.User{
+				ID:            req.ID,
+				Name:          "asdf",
+				UserName:      "asdf",
+				Email:         "asdf",
+				Phone:         "asdf",
+				Password:      req.GetPasswordHash(),
+				Type:          1,
+				PhotoURL:      "asdf",
+				Province:      "asdf",
+				City:          "asdf",
+				ZipCode:       123123,
+				DetailAddress: "asda",
+				Description:   "asdsad",
+			}
+			return test.db
+		})
+		test.db.EXPECT().RecordNotFound().Return(true)
+
+		got, err := test.unit.Update(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.User{}, got)
+	})
+	t.Run("wrong password, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.User{
+			ID:       1,
+			Name:     "Asdf",
+			UserName: "asdff",
+			Email:    "asdasd",
+			Phone:    "Asdasd",
+			PhotoURL: "Asdasd",
+			Password: "asdasd",
+			Type:     1,
+		}
+
+		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = model.User{
+				ID:            req.ID,
+				Name:          "asdf",
+				UserName:      "asdf",
+				Email:         "asdf",
+				Phone:         "asdf",
+				Password:      "asdasfasf",
+				Type:          1,
+				PhotoURL:      "asdf",
+				Province:      "asdf",
+				City:          "asdf",
+				ZipCode:       123123,
+				DetailAddress: "asda",
+				Description:   "asdsad",
+			}
+			return test.db
+		})
+		test.db.EXPECT().RecordNotFound().Return(false)
+
+		got, err := test.unit.Update(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.User{}, got)
+	})
 	t.Run("repo returns error, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
@@ -148,6 +226,27 @@ func TestUserWriter_Update(t *testing.T) {
 			Password: "asdasd",
 			Type:     1,
 		}
+
+		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = model.User{
+				ID:            req.ID,
+				Name:          "asdf",
+				UserName:      "asdf",
+				Email:         "asdf",
+				Phone:         "asdf",
+				Password:      req.GetPasswordHash(),
+				Type:          1,
+				PhotoURL:      "asdf",
+				Province:      "asdf",
+				City:          "asdf",
+				ZipCode:       123123,
+				DetailAddress: "asda",
+				Description:   "asdsad",
+			}
+			return test.db
+		})
+		test.db.EXPECT().RecordNotFound().Return(false)
 		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(errors.New("error"))
 
@@ -168,6 +267,26 @@ func TestUserWriter_Update(t *testing.T) {
 			Password: "asdasd",
 			Type:     1,
 		}
+		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = model.User{
+				ID:            req.ID,
+				Name:          "asdf",
+				UserName:      "asdf",
+				Email:         "asdf",
+				Phone:         "asdf",
+				Password:      req.GetPasswordHash(),
+				Type:          1,
+				PhotoURL:      "asdf",
+				Province:      "asdf",
+				City:          "asdf",
+				ZipCode:       123123,
+				DetailAddress: "asda",
+				Description:   "asdsad",
+			}
+			return test.db
+		})
+		test.db.EXPECT().RecordNotFound().Return(false)
 		test.db.EXPECT().Save(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
 			*arg = model.UserFromEntity(req)
 			return test.db

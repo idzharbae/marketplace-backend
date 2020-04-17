@@ -17,6 +17,7 @@ type User struct {
 	Phone       string
 	PhotoURL    string
 	Password    string
+	NewPassword string
 	Type        int32
 	Address     Address
 	Description string
@@ -34,7 +35,9 @@ type Address struct {
 func (u User) GetPasswordHash() string {
 	return fmt.Sprintf("%x", sha256.Sum256([]byte(u.Password)))
 }
-
+func (u User) GetNewPasswordHash() string {
+	return fmt.Sprintf("%x", sha256.Sum256([]byte(u.NewPassword)))
+}
 func (u User) Validate() error {
 	if !util.IsEmail(u.Email) {
 		return errors.New("invalid email")

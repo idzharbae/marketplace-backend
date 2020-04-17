@@ -156,22 +156,6 @@ func TestUser_Get(t *testing.T) {
 
 func TestUser_Update(t *testing.T) {
 	test := newUserTest()
-	t.Run("given invalid email, should return error", func(t *testing.T) {
-		test.Begin(t)
-		defer test.Finish()
-		req := entity.User{
-			ID:       0,
-			Name:     "asdasfasfas",
-			UserName: "asdasdasdas",
-			Email:    "asadsasdadf",
-			Phone:    "123123123",
-			Password: "asdasdasdsd",
-			Type:     1,
-		}
-		got, err := test.unit.Update(req)
-		assert.NotNil(t, err)
-		assert.Equal(t, entity.User{}, got)
-	})
 	t.Run("given invalid phone number, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
@@ -201,7 +185,16 @@ func TestUser_Update(t *testing.T) {
 			Password: "asdasdasd",
 			Type:     1,
 		}
-		test.writer.EXPECT().Update(req).Return(entity.User{}, errors.New("error"))
+		test.writer.EXPECT().Update(entity.User{
+			ID:          req.ID,
+			Name:        req.Name,
+			Phone:       req.Phone,
+			PhotoURL:    req.PhotoURL,
+			Password:    req.Password,
+			NewPassword: req.NewPassword,
+			Address:     req.Address,
+			Description: req.Description,
+		}).Return(entity.User{}, errors.New("error"))
 
 		got, err := test.unit.Update(req)
 		assert.NotNil(t, err)
@@ -220,7 +213,16 @@ func TestUser_Update(t *testing.T) {
 			Password: "asdasdasd",
 			Type:     1,
 		}
-		test.writer.EXPECT().Update(req).Return(req, nil)
+		test.writer.EXPECT().Update(entity.User{
+			ID:          req.ID,
+			Name:        req.Name,
+			Phone:       req.Phone,
+			PhotoURL:    req.PhotoURL,
+			Password:    req.Password,
+			NewPassword: req.NewPassword,
+			Address:     req.Address,
+			Description: req.Description,
+		}).Return(req, nil)
 
 		got, err := test.unit.Update(req)
 		assert.Nil(t, err)
