@@ -25,60 +25,121 @@ func TestProductReader_ListAll(t *testing.T) {
 	finish := func() {
 		ctrl.Finish()
 	}
-	t.Run("No offset and limit pagination, should not invoke pagination filter", func(t *testing.T) {
+	// filter flow:
+	// 1. filter category
+	// 2. filter search
+	// 3. filter province
+	// 4. order by
+	// 5. pagination
+	t.Run("all filter empty, should only execute find and order by id desc", func(t *testing.T) {
 		begin(t)
 		defer finish()
-		req := requests.ListProduct{ShopID: 1337, Pagination: requests.Pagination{Limit: 0, Page: 0}}
+		req := requests.ListProduct{}
 
 		db.EXPECT().Order("id desc").Return(db)
 		db.EXPECT().Find(gomock.Any()).Return(db)
 		db.EXPECT().Error().Return(nil)
 
-		unit.ListAll(req.Pagination)
+		unit.ListAll(req)
 	})
-	t.Run("No page pagination, should not invoke offset filter", func(t *testing.T) {
+	t.Run("given only category, should filter category and order by id desc", func(t *testing.T) {
 		begin(t)
 		defer finish()
-		req := requests.ListProduct{ShopID: 1337, Pagination: requests.Pagination{Limit: 10, Page: 0}}
+		req := requests.ListProduct{Category: "test"}
+
+		db.EXPECT().Where("category=?", req.Category).Return(db)
+		db.EXPECT().Order("id desc").Return(db)
+		db.EXPECT().Find(gomock.Any()).Return(db)
+		db.EXPECT().Error().Return(nil)
+
+		unit.ListAll(req)
+	})
+	t.Run("given only search, should filter search and order by id desc", func(t *testing.T) {
+		begin(t)
+		defer finish()
+		req := requests.ListProduct{Search: "asdfg"}
+
+		db.EXPECT().Where("name like ?", "%"+req.Search+"%").Return(db)
+		db.EXPECT().Order("id desc").Return(db)
+		db.EXPECT().Find(gomock.Any()).Return(db)
+		db.EXPECT().Error().Return(nil)
+
+		unit.ListAll(req)
+	})
+	t.Run("given only province, should filter province and order by id desc", func(t *testing.T) {
+		begin(t)
+		defer finish()
+		req := requests.ListProduct{Province: "jabar"}
+
+		db.EXPECT().Where("province=?", req.Province).Return(db)
+		db.EXPECT().Order("id desc").Return(db)
+		db.EXPECT().Find(gomock.Any()).Return(db)
+		db.EXPECT().Error().Return(nil)
+
+		unit.ListAll(req)
+	})
+	t.Run("given order param should order by the given param", func(t *testing.T) {
+		begin(t)
+		defer finish()
+		req := requests.ListProduct{OrderBy: "created_at", OrderType: "asc"}
+
+		db.EXPECT().Order(req.OrderBy + " " + req.OrderType).Return(db)
+		db.EXPECT().Find(gomock.Any()).Return(db)
+		db.EXPECT().Error().Return(nil)
+
+		unit.ListAll(req)
+	})
+	t.Run("given invalid order param should order by id desc", func(t *testing.T) {
+		begin(t)
+		defer finish()
+		req := requests.ListProduct{OrderBy: "(case if 1=1 then created_at else updated_at end)", OrderType: "desc"}
+
+		db.EXPECT().Order("id desc").Return(db)
+		db.EXPECT().Find(gomock.Any()).Return(db)
+		db.EXPECT().Error().Return(nil)
+
+		unit.ListAll(req)
+	})
+	t.Run("given limit, should apply limit filter filter", func(t *testing.T) {
+		begin(t)
+		defer finish()
+		req := requests.ListProduct{Pagination: requests.Pagination{Limit: 10, Page: 0}}
 
 		db.EXPECT().Order("id desc").Return(db)
 		db.EXPECT().Limit(req.Pagination.Limit).Return(db)
 		db.EXPECT().Find(gomock.Any()).Return(db)
 		db.EXPECT().Error().Return(nil)
 
-		unit.ListAll(req.Pagination)
+		unit.ListAll(req)
 	})
-	t.Run("No limit pagination, should not invoke limit filter", func(t *testing.T) {
+	t.Run("given page, should apply offset filter", func(t *testing.T) {
 		begin(t)
 		defer finish()
-		req := requests.ListProduct{ShopID: 1337, Pagination: requests.Pagination{Limit: 0, Page: 10}}
+		req := requests.ListProduct{Pagination: requests.Pagination{Limit: 0, Page: 10}}
 
 		db.EXPECT().Order("id desc").Return(db)
 		db.EXPECT().Offset(req.Pagination.OffsetFromPagination()).Return(db)
 		db.EXPECT().Find(gomock.Any()).Return(db)
 		db.EXPECT().Error().Return(nil)
 
-		unit.ListAll(req.Pagination)
-	})
-	t.Run("pagination exists, should invoke pagination filter", func(t *testing.T) {
-		begin(t)
-		defer finish()
-		req := requests.ListProduct{ShopID: 1337, Pagination: requests.Pagination{Limit: 1, Page: 10}}
-
-		db.EXPECT().Order("id desc").Return(db)
-		db.EXPECT().Limit(req.Pagination.Limit).Return(db)
-		db.EXPECT().Offset(req.Pagination.OffsetFromPagination()).Return(db)
-		db.EXPECT().Find(gomock.Any()).Return(db)
-		db.EXPECT().Error().Return(nil)
-
-		unit.ListAll(req.Pagination)
+		unit.ListAll(req)
 	})
 	t.Run("db returns error, should return error", func(t *testing.T) {
 		begin(t)
 		defer finish()
-		req := requests.ListProduct{ShopID: 1337, Pagination: requests.Pagination{Limit: 10, Page: 2}}
+		req := requests.ListProduct{
+			Category:   "asdf",
+			Search:     "asldkls",
+			Province:   "sdksld",
+			OrderBy:    "stock_kg",
+			OrderType:  "asc",
+			Pagination: requests.Pagination{Limit: 10, Page: 2},
+		}
 
-		db.EXPECT().Order("id desc").Return(db)
+		db.EXPECT().Where("category=?", req.Category).Return(db)
+		db.EXPECT().Where("name like ?", "%"+req.Search+"%").Return(db)
+		db.EXPECT().Where("province=?", req.Province).Return(db)
+		db.EXPECT().Order("stock_kg asc").Return(db)
 		db.EXPECT().Limit(req.Pagination.Limit).Return(db)
 		db.EXPECT().Offset(req.Pagination.OffsetFromPagination()).Return(db)
 		db.EXPECT().Find(gomock.Any()).DoAndReturn(func(out *[]model.Product, where ...interface{}) *gormmock.MockGormw {
@@ -90,16 +151,26 @@ func TestProductReader_ListAll(t *testing.T) {
 		})
 		db.EXPECT().Error().Return(errors.New("error"))
 
-		got, err := unit.ListAll(req.Pagination)
+		got, err := unit.ListAll(req)
 		assert.NotNil(t, err)
 		assert.Nil(t, got)
 	})
 	t.Run("db returns no error, should return entity converted from model", func(t *testing.T) {
 		begin(t)
 		defer finish()
-		req := requests.ListProduct{ShopID: 1337, Pagination: requests.Pagination{Limit: 10, Page: 2}}
+		req := requests.ListProduct{
+			Category:   "asdf",
+			Search:     "asldkls",
+			Province:   "sdksld",
+			OrderBy:    "stock_kg",
+			OrderType:  "asc",
+			Pagination: requests.Pagination{Limit: 10, Page: 2},
+		}
 
-		db.EXPECT().Order("id desc").Return(db)
+		db.EXPECT().Where("category=?", req.Category).Return(db)
+		db.EXPECT().Where("name like ?", "%"+req.Search+"%").Return(db)
+		db.EXPECT().Where("province=?", req.Province).Return(db)
+		db.EXPECT().Order("stock_kg asc").Return(db)
 		db.EXPECT().Limit(req.Pagination.Limit).Return(db)
 		db.EXPECT().Offset(req.Pagination.OffsetFromPagination()).Return(db)
 		db.EXPECT().Find(gomock.Any()).DoAndReturn(func(out *[]model.Product, where ...interface{}) *gormmock.MockGormw {
@@ -111,7 +182,7 @@ func TestProductReader_ListAll(t *testing.T) {
 		})
 		db.EXPECT().Error().Return(nil)
 
-		got, err := unit.ListAll(req.Pagination)
+		got, err := unit.ListAll(req)
 		assert.Nil(t, err)
 		assert.Equal(t, 2, len(got))
 		assert.Equal(t, int32(10), got[0].ID)

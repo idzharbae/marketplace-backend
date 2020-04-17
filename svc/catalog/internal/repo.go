@@ -7,7 +7,7 @@ import (
 
 //go:generate mockgen -destination=repo/repomock/productreader_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/catalog/internal ProductReader
 type ProductReader interface {
-	ListAll(pagination requests.Pagination) ([]entity.Product, error)
+	ListAll(req requests.ListProduct) ([]entity.Product, error)
 	ListByShopID(shopID int64, pagination requests.Pagination) ([]entity.Product, error)
 
 	GetByID(productID int32) (entity.Product, error)
