@@ -47,16 +47,7 @@ func (as *AuthService) Register(ctx context.Context, in *authproto.RegisterReq) 
 	if err != nil {
 		return nil, err
 	}
-	return &authproto.User{
-		Id:       res.ID,
-		Name:     res.Name,
-		UserName: res.UserName,
-		Email:    res.Email,
-		Phone:    res.Phone,
-		PhotoUrl: res.PhotoURL,
-		Type:     res.Type,
-		Password: res.Password,
-	}, nil
+	return converter.UserEntityToProto(res), nil
 }
 
 func (as *AuthService) RefreshToken(ctx context.Context, in *authproto.RefreshTokenReq) (*authproto.RefreshTokenResp, error) {

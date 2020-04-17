@@ -1,8 +1,8 @@
 CREATE TABLE user_account(
     id serial NOT NULL PRIMARY KEY,
     name VARCHAR(200),
-	user_name VARCHAR(100),
-	email VARCHAR(100),
+	user_name VARCHAR(100) UNIQUE,
+	email VARCHAR(100) UNIQUE,
 	phone VARCHAR(50),
 	password VARCHAR(100),
 	type INTEGER,

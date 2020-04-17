@@ -4,18 +4,31 @@ import (
 	"crypto/sha256"
 	"errors"
 	"fmt"
+	"github.com/idzharbae/cabai-gqlserver/globalconstant"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/util"
+	"time"
 )
 
 type User struct {
-	ID       int64
-	Name     string
-	UserName string
-	Email    string
-	Phone    string
-	PhotoURL string
-	Password string
-	Type     int32
+	ID          int64
+	Name        string
+	UserName    string
+	Email       string
+	Phone       string
+	PhotoURL    string
+	Password    string
+	Type        int32
+	Address     Address
+	Description string
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+}
+
+type Address struct {
+	Province      string
+	City          string
+	DetailAddress string
+	ZipCode       int32
 }
 
 func (u User) GetPasswordHash() string {
@@ -43,6 +56,18 @@ func (u User) Validate() error {
 	}
 	if len(u.UserName) > 60 {
 		return errors.New("username too long")
+	}
+	if u.Type != globalconstant.BuyerType && u.Type != globalconstant.ShopType {
+		return errors.New("invalid user role")
+	}
+	if len(u.Address.City) > 200 {
+		return errors.New("city name too long")
+	}
+	if len(u.Address.Province) > 200 {
+		return errors.New("province name too long")
+	}
+	if len(u.Address.DetailAddress) > 400 {
+		return errors.New("address too long")
 	}
 	return nil
 }
