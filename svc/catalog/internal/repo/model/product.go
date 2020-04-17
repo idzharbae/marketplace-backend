@@ -14,6 +14,7 @@ type Product struct {
 	PhotoURL    string
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
+	Category    string
 }
 
 func (c Product) TableName() string {

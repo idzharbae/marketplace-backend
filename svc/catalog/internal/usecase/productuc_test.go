@@ -45,7 +45,7 @@ func TestProductUC_List(t *testing.T) {
 			Limit: 10,
 		}}
 		// expects
-		test.Reader.EXPECT().ListAll(req.Pagination).Return(nil, errors.New("error"))
+		test.Reader.EXPECT().ListAll(req).Return(nil, errors.New("error"))
 
 		// assertions
 		got, err := test.Unit.List(req)
@@ -63,7 +63,7 @@ func TestProductUC_List(t *testing.T) {
 		res := []entity.Product{
 			{ID: 1}, {ID: 2},
 		}
-		test.Reader.EXPECT().ListAll(req.Pagination).Return(res, nil)
+		test.Reader.EXPECT().ListAll(req).Return(res, nil)
 
 		got, err := test.Unit.List(req)
 		assert.Nil(t, err)

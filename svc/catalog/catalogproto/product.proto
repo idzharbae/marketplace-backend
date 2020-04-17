@@ -14,5 +14,6 @@ message Product {
     string slug = 9;
     string photo_url = 10;
     string description = 11;
+    string category = 12;
 }
 

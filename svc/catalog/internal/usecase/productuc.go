@@ -24,7 +24,7 @@ func (p *Product) List(req requests.ListProduct) ([]entity.Product, error) {
 		}
 		return got, nil
 	}
-	got, err := p.ProductReader.ListAll(req.Pagination)
+	got, err := p.ProductReader.ListAll(req)
 	if err != nil {
 		return nil, err
 	}

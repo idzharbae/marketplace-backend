@@ -17,6 +17,7 @@ type Product struct {
 	PhotoURL    string
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
+	Category    string
 }
 
 func (p Product) Validate() error {
@@ -34,6 +35,9 @@ func (p Product) Validate() error {
 	}
 	if p.Slug == "" {
 		return errors.New("slug is required")
+	}
+	if p.Category == "" {
+		return errors.New("category is required")
 	}
 	return nil
 }

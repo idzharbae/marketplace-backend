@@ -11,30 +11,30 @@ import (
 	reflect "reflect"
 )
 
-// MockProductUC is a mock of ProductUC interface
+// MockProductUC is a mock of ProductUC interface.
 type MockProductUC struct {
 	ctrl     *gomock.Controller
 	recorder *MockProductUCMockRecorder
 }
 
-// MockProductUCMockRecorder is the mock recorder for MockProductUC
+// MockProductUCMockRecorder is the mock recorder for MockProductUC.
 type MockProductUCMockRecorder struct {
 	mock *MockProductUC
 }
 
-// NewMockProductUC creates a new mock instance
+// NewMockProductUC creates a new mock instance.
 func NewMockProductUC(ctrl *gomock.Controller) *MockProductUC {
 	mock := &MockProductUC{ctrl: ctrl}
 	mock.recorder = &MockProductUCMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockProductUC) EXPECT() *MockProductUCMockRecorder {
 	return m.recorder
 }
 
-// Create mocks base method
+// Create mocks base method.
 func (m *MockProductUC) Create(arg0 entity.Product) (entity.Product, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", arg0)
@@ -43,13 +43,13 @@ func (m *MockProductUC) Create(arg0 entity.Product) (entity.Product, error) {
 	return ret0, ret1
 }
 
-// Create indicates an expected call of Create
+// Create indicates an expected call of Create.
 func (mr *MockProductUCMockRecorder) Create(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockProductUC)(nil).Create), arg0)
 }
 
-// Delete mocks base method
+// Delete mocks base method.
 func (m *MockProductUC) Delete(arg0 entity.Product) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Delete", arg0)
@@ -57,13 +57,13 @@ func (m *MockProductUC) Delete(arg0 entity.Product) error {
 	return ret0
 }
 
-// Delete indicates an expected call of Delete
+// Delete indicates an expected call of Delete.
 func (mr *MockProductUCMockRecorder) Delete(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockProductUC)(nil).Delete), arg0)
 }
 
-// Get mocks base method
+// Get mocks base method.
 func (m *MockProductUC) Get(arg0 entity.Product) (entity.Product, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", arg0)
@@ -72,13 +72,13 @@ func (m *MockProductUC) Get(arg0 entity.Product) (entity.Product, error) {
 	return ret0, ret1
 }
 
-// Get indicates an expected call of Get
+// Get indicates an expected call of Get.
 func (mr *MockProductUCMockRecorder) Get(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockProductUC)(nil).Get), arg0)
 }
 
-// List mocks base method
+// List mocks base method.
 func (m *MockProductUC) List(arg0 requests.ListProduct) ([]entity.Product, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "List", arg0)
@@ -87,13 +87,13 @@ func (m *MockProductUC) List(arg0 requests.ListProduct) ([]entity.Product, error
 	return ret0, ret1
 }
 
-// List indicates an expected call of List
+// List indicates an expected call of List.
 func (mr *MockProductUCMockRecorder) List(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockProductUC)(nil).List), arg0)
 }
 
-// Update mocks base method
+// Update mocks base method.
 func (m *MockProductUC) Update(arg0 entity.Product) (entity.Product, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", arg0)
@@ -102,7 +102,7 @@ func (m *MockProductUC) Update(arg0 entity.Product) (entity.Product, error) {
 	return ret0, ret1
 }
 
-// Update indicates an expected call of Update
+// Update indicates an expected call of Update.
 func (mr *MockProductUCMockRecorder) Update(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockProductUC)(nil).Update), arg0)
