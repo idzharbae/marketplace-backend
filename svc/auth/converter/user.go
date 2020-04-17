@@ -40,6 +40,7 @@ func UserProtoToEntity(in *authproto.User) entity.User {
 			DetailAddress: in.GetAddressDetail(),
 			ZipCode:       in.GetZipCode(),
 		},
+		Description: in.GetDescription(),
 	}
 }
 
