@@ -1,8 +1,9 @@
 package requests
 
+import "github.com/lib/pq"
+
 type ListProduct struct {
-	ShopID     int64
-	Province   string
+	ShopIDs    pq.Int64Array
 	Search     string
 	OrderBy    string
 	OrderType  string

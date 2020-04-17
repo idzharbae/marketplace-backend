@@ -26,8 +26,8 @@ func (p *ProductReader) ListAll(req requests.ListProduct) ([]entity.Product, err
 	if req.Search != "" {
 		db = db.Where("name like ?", "%"+req.Search+"%")
 	}
-	if req.Province != "" {
-		db = db.Where("province=?", req.Province)
+	if req.ShopIDs != nil {
+		db = db.Where("shop_id=ANY(?)", req.ShopIDs)
 	}
 	db = db.Order(getOrder(req.OrderBy, req.OrderType))
 	if req.Pagination.Limit > 0 {

@@ -21,8 +21,7 @@ func NewProductService(productUC internal.ProductUC) *ProductService {
 
 func (p *ProductService) ListProducts(ctx context.Context, req *catalogproto.ListProductsReq) (*catalogproto.ListProductsResp, error) {
 	ucReq := requests.ListProduct{
-		ShopID:    int64(req.GetShopID()),
-		Province:  req.GetProvince(),
+		ShopIDs:   req.GetShopIDs(),
 		Category:  req.GetCategory(),
 		Search:    req.GetSearch(),
 		OrderBy:   req.GetOrderBy(),

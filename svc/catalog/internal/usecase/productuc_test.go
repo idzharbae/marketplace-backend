@@ -5,7 +5,6 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/repo/repomock"
-	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/requests"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -30,84 +29,6 @@ func (p *ProductUCTest) Begin(t *testing.T) {
 
 func (p *ProductUCTest) Finish() {
 	p.Ctrl.Finish()
-}
-
-func TestProductUC_List(t *testing.T) {
-	test := NewProductUCTest()
-	t.Run("no shopID, reader returns error, should return error", func(t *testing.T) {
-		// preparations
-		test.Begin(t)
-		defer test.Finish()
-
-		// input and output
-		req := requests.ListProduct{Pagination: requests.Pagination{
-			Page:  1,
-			Limit: 10,
-		}}
-		// expects
-		test.Reader.EXPECT().ListAll(req).Return(nil, errors.New("error"))
-
-		// assertions
-		got, err := test.Unit.List(req)
-		assert.NotNil(t, err)
-		assert.Nil(t, got)
-	})
-	t.Run("no shopID, reader returns no error, should return entity slice", func(t *testing.T) {
-		test.Begin(t)
-		defer test.Finish()
-
-		req := requests.ListProduct{Pagination: requests.Pagination{
-			Page:  1,
-			Limit: 10,
-		}}
-		res := []entity.Product{
-			{ID: 1}, {ID: 2},
-		}
-		test.Reader.EXPECT().ListAll(req).Return(res, nil)
-
-		got, err := test.Unit.List(req)
-		assert.Nil(t, err)
-		assert.NotNil(t, got)
-	})
-	t.Run("given shopID, reader returns error, should return error", func(t *testing.T) {
-		// preparations
-		test.Begin(t)
-		defer test.Finish()
-
-		// input and output
-		req := requests.ListProduct{
-			ShopID: 1337,
-			Pagination: requests.Pagination{
-				Page:  1,
-				Limit: 10,
-			}}
-		// expects
-		test.Reader.EXPECT().ListByShopID(req.ShopID, req.Pagination).Return(nil, errors.New("error"))
-
-		// assertions
-		got, err := test.Unit.List(req)
-		assert.NotNil(t, err)
-		assert.Nil(t, got)
-	})
-	t.Run("given shopID, reader returns no error, should return entity slice", func(t *testing.T) {
-		test.Begin(t)
-		defer test.Finish()
-
-		req := requests.ListProduct{
-			ShopID: 1337,
-			Pagination: requests.Pagination{
-				Page:  1,
-				Limit: 10,
-			}}
-		res := []entity.Product{
-			{ID: 1}, {ID: 2},
-		}
-		test.Reader.EXPECT().ListByShopID(req.ShopID, req.Pagination).Return(res, nil)
-
-		got, err := test.Unit.List(req)
-		assert.Nil(t, err)
-		assert.NotNil(t, got)
-	})
 }
 
 func TestProductUC_Get(t *testing.T) {

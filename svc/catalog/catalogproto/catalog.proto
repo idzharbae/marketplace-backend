@@ -16,11 +16,10 @@ service MarketplaceCatalog {
 }
 
 message ListProductsReq {
-    int32 shopID = 1;
+    repeated int64 shopIDs = 1;
     Pagination pagination = 2;
     string search = 3;
     string category = 4;
-    string province = 5;
     string order_by = 6;
     string order_type = 7;
 }

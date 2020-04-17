@@ -17,18 +17,7 @@ func NewProduct(productReader internal.ProductReader, productWriter internal.Pro
 }
 
 func (p *Product) List(req requests.ListProduct) ([]entity.Product, error) {
-	if req.ShopID != 0 {
-		got, err := p.ProductReader.ListByShopID(req.ShopID, req.Pagination)
-		if err != nil {
-			return nil, err
-		}
-		return got, nil
-	}
-	got, err := p.ProductReader.ListAll(req)
-	if err != nil {
-		return nil, err
-	}
-	return got, nil
+	return p.ProductReader.ListAll(req)
 }
 
 func (p *Product) Get(product entity.Product) (entity.Product, error) {
