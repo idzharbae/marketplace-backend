@@ -1,0 +1,16 @@
+version: "3"
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_DB: cabai_transaction
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: secret
+
+volumes:
+  db_data:
+    driver: local
