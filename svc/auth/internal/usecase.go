@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"github.com/idzharbae/marketplace-backend/svc/auth/authproto"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/request"
 )
@@ -22,4 +23,10 @@ type TokenUC interface {
 	Get(req entity.User) (entity.AuthToken, error)
 	Refresh(req request.RefreshToken) (entity.AuthToken, error)
 	Validate(req entity.AuthToken) error
+}
+
+//go:generate mockgen -destination=usecase/ucmock/paymentuc_mock.go -package=ucmock github.com/idzharbae/marketplace-backend/svc/auth/internal PaymentUC
+type PaymentUC interface {
+	TopUp(req request.TopUp) (entity.User, error)
+	Transfer(req request.Transfer) (authproto.TransferSaldoResp, error)
 }

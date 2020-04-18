@@ -30,6 +30,7 @@ func UserEntityToProto(user entity.User) *authproto.User {
 		CreatedAt:     user.CreatedAt.Unix(),
 		UpdatedAt:     user.UpdatedAt.Unix(),
 		Description:   user.Description,
+		Saldo:         user.Saldo,
 	}
 }
 
@@ -51,6 +52,7 @@ func UserProtoToEntity(in *authproto.User) entity.User {
 		},
 		Description: in.GetDescription(),
 		NewPassword: in.GetNewPassword(),
+		Saldo:       in.GetSaldo(),
 	}
 }
 
@@ -91,6 +93,7 @@ func UserModelToEntity(u model.User) entity.User {
 		Description: u.Description,
 		CreatedAt:   u.CreatedAt,
 		UpdatedAt:   u.UpdatedAt,
+		Saldo:       u.Saldo,
 	}
 }
 

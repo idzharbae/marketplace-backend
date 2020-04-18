@@ -19,6 +19,7 @@ type User struct {
 	ZipCode       int32
 	DetailAddress string
 	Description   string
+	Saldo         int64
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 }
@@ -38,6 +39,7 @@ func UserFromEntity(user entity.User) User {
 		ZipCode:       user.Address.ZipCode,
 		DetailAddress: user.Address.DetailAddress,
 		Description:   user.Description,
+		Saldo:         user.Saldo,
 		CreatedAt:     user.CreatedAt,
 		UpdatedAt:     user.UpdatedAt,
 	}
@@ -63,6 +65,7 @@ func (u User) ToEntity() entity.User {
 			ZipCode:       u.ZipCode,
 		},
 		Description: u.Description,
+		Saldo:       u.Saldo,
 		CreatedAt:   u.CreatedAt,
 		UpdatedAt:   u.UpdatedAt,
 	}
