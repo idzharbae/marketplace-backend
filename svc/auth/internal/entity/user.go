@@ -23,6 +23,7 @@ type User struct {
 	Description string
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
+	Saldo       int64
 }
 
 type Address struct {

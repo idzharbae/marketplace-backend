@@ -3,10 +3,12 @@ package repo
 import (
 	"errors"
 	"github.com/golang/mock/gomock"
+	"github.com/idzharbae/marketplace-backend/svc/auth/authproto"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/repo/connection/gormmock"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/repo/model"
+	"github.com/idzharbae/marketplace-backend/svc/auth/internal/request"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -296,5 +298,220 @@ func TestUserWriter_Update(t *testing.T) {
 		got, err := test.unit.Update(req)
 		assert.Nil(t, err)
 		assert.Equal(t, req.Name, got.Name)
+	})
+}
+
+func TestUserWriter_UpdateSaldo(t *testing.T) {
+	test := newUserWriterTest()
+	t.Run("db return error when searching user, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := request.TopUp{
+			UserID: 123,
+			Amount: 1337,
+		}
+
+		test.db.EXPECT().Where("id=?", req.UserID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := test.unit.UpdateSaldo(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.User{}, got)
+	})
+	t.Run("db return error when saving user, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := request.TopUp{
+			UserID: 123,
+			Amount: 1337,
+		}
+		userModel := model.User{
+			ID:    req.UserID,
+			Saldo: 1337,
+		}
+
+		test.db.EXPECT().Where("id=?", req.UserID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = userModel
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("asdfg"))
+
+		got, err := test.unit.UpdateSaldo(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.User{}, got)
+	})
+	t.Run("db return error when saving user, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := request.TopUp{
+			UserID: 123,
+			Amount: 1337,
+		}
+		userModel := model.User{
+			ID:    req.UserID,
+			Saldo: 1337,
+		}
+
+		test.db.EXPECT().Where("id=?", req.UserID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = userModel
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+
+		got, err := test.unit.UpdateSaldo(req)
+		assert.Nil(t, err)
+		assert.Equal(t, req.Amount+userModel.Saldo, got.Saldo)
+	})
+}
+
+func TestUserWriter_TransferSaldo(t *testing.T) {
+	test := newUserWriterTest()
+	t.Run("db return error when searching sender user, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := request.Transfer{
+			SenderID:       12,
+			ReceiverID:     15,
+			TransferAmount: 1234,
+		}
+
+		test.db.EXPECT().Where("id=?", req.SenderID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := test.unit.TransferSaldo(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, authproto.TransferSaldoResp{}, got)
+	})
+	t.Run("db return error when searching receiver user, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := request.Transfer{
+			SenderID:       12,
+			ReceiverID:     15,
+			TransferAmount: 1234,
+		}
+		sender := model.User{ID: 12, Saldo: 1339}
+
+		test.db.EXPECT().Where("id=?", req.SenderID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = sender
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Where("id=?", req.ReceiverID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := test.unit.TransferSaldo(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, authproto.TransferSaldoResp{}, got)
+	})
+	t.Run("db return error when saving sender new saldo, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := request.Transfer{
+			SenderID:       12,
+			ReceiverID:     15,
+			TransferAmount: 1234,
+		}
+		sender := model.User{ID: 12, Saldo: 1339}
+		receiver := model.User{ID: 12, Saldo: 4567}
+
+		test.db.EXPECT().Where("id=?", req.SenderID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = sender
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Where("id=?", req.ReceiverID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = receiver
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Begin().Return(test.db)
+		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := test.unit.TransferSaldo(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, authproto.TransferSaldoResp{}, got)
+	})
+	t.Run("db return error when saving receiver new saldo, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := request.Transfer{
+			SenderID:       12,
+			ReceiverID:     15,
+			TransferAmount: 1234,
+		}
+		sender := model.User{ID: 12, Saldo: 1339}
+		receiver := model.User{ID: 12, Saldo: 4567}
+
+		test.db.EXPECT().Where("id=?", req.SenderID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = sender
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Where("id=?", req.ReceiverID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = receiver
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Begin().Return(test.db)
+		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("error"))
+		test.db.EXPECT().Rollback()
+
+		got, err := test.unit.TransferSaldo(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, authproto.TransferSaldoResp{}, got)
+	})
+	t.Run("transfer success, should not return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := request.Transfer{
+			SenderID:       12,
+			ReceiverID:     15,
+			TransferAmount: 1234,
+		}
+		sender := model.User{ID: 12, Saldo: 1339}
+		receiver := model.User{ID: 12, Saldo: 4567}
+
+		test.db.EXPECT().Where("id=?", req.SenderID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = sender
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Where("id=?", req.ReceiverID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.User) *gormmock.MockGormw {
+			*arg = receiver
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Begin().Return(test.db)
+		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Commit()
+
+		got, err := test.unit.TransferSaldo(req)
+		assert.Nil(t, err)
+		assert.Equal(t, sender.Saldo-req.TransferAmount, got.SenderSaldo)
+		assert.Equal(t, receiver.Saldo+req.TransferAmount, got.ReceiverSaldo)
 	})
 }

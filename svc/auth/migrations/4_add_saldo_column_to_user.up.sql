@@ -1,0 +1,2 @@
+ALTER TABLE user_account
+    ADD COLUMN saldo INTEGER DEFAULT 0;

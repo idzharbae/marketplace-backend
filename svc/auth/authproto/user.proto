@@ -19,4 +19,5 @@ message User {
   int32 zip_code = 14;
   string description = 15;
   string new_password = 16;
+  int64 saldo = 17;
 }

@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"github.com/idzharbae/marketplace-backend/svc/auth/authproto"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/request"
 )
@@ -22,5 +23,7 @@ type UserReader interface {
 type UserWriter interface {
 	Create(user entity.User) (entity.User, error)
 	Update(user entity.User) (entity.User, error)
+	UpdateSaldo(req request.TopUp) (entity.User, error)
+	TransferSaldo(req request.Transfer) (authproto.TransferSaldoResp, error)
 	DeleteByID(ID int64) error
 }
