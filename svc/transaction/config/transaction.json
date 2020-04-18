@@ -1,0 +1,25 @@
+{
+  "Grpc": {
+    "Port": ":1446"
+  },
+  "db": {
+    "debug": true,
+    "db_engine": "postgres",
+    "master": {
+      "address": "127.0.0.1",
+      "port": 5434,
+      "db_name": "cabai_transaction",
+      "user": "user",
+      "password": "secret",
+      "ssl_mode": "disable"
+    },
+    "slave": {
+      "address": "127.0.0.1",
+      "port": 5434,
+      "db_name": "cabai_transaction",
+      "user": "user",
+      "password": "secret",
+      "ssl_mode": "disable"
+    }
+  }
+}

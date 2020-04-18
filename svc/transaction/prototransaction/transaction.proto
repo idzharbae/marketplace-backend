@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+import "product.proto";
+import "order.proto";
+
+package prototransaction;
+
+service MarketplaceTransaction {
+    rpc AddToCart(AddToCartReq) returns (AddToCartResp) {}
+    rpc Checkout(CheckoutReq) returns (CheckoutResp) {}
+    rpc Fulfill(FulfillReq) returns (FulfillResp) {}
+}
+
+message AddToCartReq {
+    int64 product_id = 1;
+    int32 quantity_kg = 2;
+}
+
+message AddToCartResp {
+    Product product = 1;
+}
+
+message CheckoutReq {
+    repeated Product products = 1;
+}
+
+message CheckoutResp {
+    Order order = 1;
+}
+
+message FulfillReq {
+    int64 order_id = 1;
+    int64 payment_amount = 2;
+}
+
+message FulfillResp {
+    bool Success = 1;
+}

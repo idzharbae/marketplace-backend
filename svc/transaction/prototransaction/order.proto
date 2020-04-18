@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+import "product.proto";
+import "payment.proto";
+
+package prototransaction;
+
+message Order {
+    int64 id = 1;
+    int64 user_id = 2;
+    int64 total_price = 3;
+    repeated Product products = 4;
+    int32 status = 5;
+    Payment payment = 6;
+}
