@@ -6,7 +6,7 @@ package prototransaction;
 
 message Cart {
     int64 id = 1;
-    repeated Product products = 2;
-    int64 total_price = 3;
+    int64 user_id = 2;
+    Product product = 3;
 }
 

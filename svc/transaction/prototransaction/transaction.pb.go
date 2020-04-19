@@ -24,9 +24,135 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type ListCartItemsReq struct {
+	UserId               int64    `protobuf:"varint,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListCartItemsReq) Reset()         { *m = ListCartItemsReq{} }
+func (m *ListCartItemsReq) String() string { return proto.CompactTextString(m) }
+func (*ListCartItemsReq) ProtoMessage()    {}
+func (*ListCartItemsReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_2cc4e03d2c28c490, []int{0}
+}
+
+func (m *ListCartItemsReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListCartItemsReq.Unmarshal(m, b)
+}
+func (m *ListCartItemsReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListCartItemsReq.Marshal(b, m, deterministic)
+}
+func (m *ListCartItemsReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListCartItemsReq.Merge(m, src)
+}
+func (m *ListCartItemsReq) XXX_Size() int {
+	return xxx_messageInfo_ListCartItemsReq.Size(m)
+}
+func (m *ListCartItemsReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListCartItemsReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListCartItemsReq proto.InternalMessageInfo
+
+func (m *ListCartItemsReq) GetUserId() int64 {
+	if m != nil {
+		return m.UserId
+	}
+	return 0
+}
+
+type ListCartItemsResp struct {
+	Cart                 []*Cart  `protobuf:"bytes,1,rep,name=cart,proto3" json:"cart,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ListCartItemsResp) Reset()         { *m = ListCartItemsResp{} }
+func (m *ListCartItemsResp) String() string { return proto.CompactTextString(m) }
+func (*ListCartItemsResp) ProtoMessage()    {}
+func (*ListCartItemsResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_2cc4e03d2c28c490, []int{1}
+}
+
+func (m *ListCartItemsResp) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListCartItemsResp.Unmarshal(m, b)
+}
+func (m *ListCartItemsResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListCartItemsResp.Marshal(b, m, deterministic)
+}
+func (m *ListCartItemsResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListCartItemsResp.Merge(m, src)
+}
+func (m *ListCartItemsResp) XXX_Size() int {
+	return xxx_messageInfo_ListCartItemsResp.Size(m)
+}
+func (m *ListCartItemsResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListCartItemsResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListCartItemsResp proto.InternalMessageInfo
+
+func (m *ListCartItemsResp) GetCart() []*Cart {
+	if m != nil {
+		return m.Cart
+	}
+	return nil
+}
+
+type UpdateCartReq struct {
+	Id                   int64    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	QuantityKg           float64  `protobuf:"fixed64,4,opt,name=quantity_kg,json=quantityKg,proto3" json:"quantity_kg,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *UpdateCartReq) Reset()         { *m = UpdateCartReq{} }
+func (m *UpdateCartReq) String() string { return proto.CompactTextString(m) }
+func (*UpdateCartReq) ProtoMessage()    {}
+func (*UpdateCartReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_2cc4e03d2c28c490, []int{2}
+}
+
+func (m *UpdateCartReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_UpdateCartReq.Unmarshal(m, b)
+}
+func (m *UpdateCartReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_UpdateCartReq.Marshal(b, m, deterministic)
+}
+func (m *UpdateCartReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_UpdateCartReq.Merge(m, src)
+}
+func (m *UpdateCartReq) XXX_Size() int {
+	return xxx_messageInfo_UpdateCartReq.Size(m)
+}
+func (m *UpdateCartReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_UpdateCartReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_UpdateCartReq proto.InternalMessageInfo
+
+func (m *UpdateCartReq) GetId() int64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+func (m *UpdateCartReq) GetQuantityKg() float64 {
+	if m != nil {
+		return m.QuantityKg
+	}
+	return 0
+}
+
 type AddToCartReq struct {
 	ProductId            int64    `protobuf:"varint,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
-	QuantityKg           int32    `protobuf:"varint,2,opt,name=quantity_kg,json=quantityKg,proto3" json:"quantity_kg,omitempty"`
+	UserId               int64    `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	QuantityKg           float64  `protobuf:"fixed64,3,opt,name=quantity_kg,json=quantityKg,proto3" json:"quantity_kg,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -36,7 +162,7 @@ func (m *AddToCartReq) Reset()         { *m = AddToCartReq{} }
 func (m *AddToCartReq) String() string { return proto.CompactTextString(m) }
 func (*AddToCartReq) ProtoMessage()    {}
 func (*AddToCartReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_2cc4e03d2c28c490, []int{0}
+	return fileDescriptor_2cc4e03d2c28c490, []int{3}
 }
 
 func (m *AddToCartReq) XXX_Unmarshal(b []byte) error {
@@ -64,50 +190,96 @@ func (m *AddToCartReq) GetProductId() int64 {
 	return 0
 }
 
-func (m *AddToCartReq) GetQuantityKg() int32 {
+func (m *AddToCartReq) GetUserId() int64 {
+	if m != nil {
+		return m.UserId
+	}
+	return 0
+}
+
+func (m *AddToCartReq) GetQuantityKg() float64 {
 	if m != nil {
 		return m.QuantityKg
 	}
 	return 0
 }
 
-type AddToCartResp struct {
-	Product              *Product `protobuf:"bytes,1,opt,name=product,proto3" json:"product,omitempty"`
+type RemoveCartReq struct {
+	Id                   int64    `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *AddToCartResp) Reset()         { *m = AddToCartResp{} }
-func (m *AddToCartResp) String() string { return proto.CompactTextString(m) }
-func (*AddToCartResp) ProtoMessage()    {}
-func (*AddToCartResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_2cc4e03d2c28c490, []int{1}
+func (m *RemoveCartReq) Reset()         { *m = RemoveCartReq{} }
+func (m *RemoveCartReq) String() string { return proto.CompactTextString(m) }
+func (*RemoveCartReq) ProtoMessage()    {}
+func (*RemoveCartReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_2cc4e03d2c28c490, []int{4}
 }
 
-func (m *AddToCartResp) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_AddToCartResp.Unmarshal(m, b)
+func (m *RemoveCartReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RemoveCartReq.Unmarshal(m, b)
 }
-func (m *AddToCartResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_AddToCartResp.Marshal(b, m, deterministic)
+func (m *RemoveCartReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RemoveCartReq.Marshal(b, m, deterministic)
 }
-func (m *AddToCartResp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_AddToCartResp.Merge(m, src)
+func (m *RemoveCartReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RemoveCartReq.Merge(m, src)
 }
-func (m *AddToCartResp) XXX_Size() int {
-	return xxx_messageInfo_AddToCartResp.Size(m)
+func (m *RemoveCartReq) XXX_Size() int {
+	return xxx_messageInfo_RemoveCartReq.Size(m)
 }
-func (m *AddToCartResp) XXX_DiscardUnknown() {
-	xxx_messageInfo_AddToCartResp.DiscardUnknown(m)
+func (m *RemoveCartReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_RemoveCartReq.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_AddToCartResp proto.InternalMessageInfo
+var xxx_messageInfo_RemoveCartReq proto.InternalMessageInfo
 
-func (m *AddToCartResp) GetProduct() *Product {
+func (m *RemoveCartReq) GetId() int64 {
 	if m != nil {
-		return m.Product
+		return m.Id
 	}
-	return nil
+	return 0
+}
+
+type RemoveCartResp struct {
+	Success              bool     `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *RemoveCartResp) Reset()         { *m = RemoveCartResp{} }
+func (m *RemoveCartResp) String() string { return proto.CompactTextString(m) }
+func (*RemoveCartResp) ProtoMessage()    {}
+func (*RemoveCartResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_2cc4e03d2c28c490, []int{5}
+}
+
+func (m *RemoveCartResp) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_RemoveCartResp.Unmarshal(m, b)
+}
+func (m *RemoveCartResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_RemoveCartResp.Marshal(b, m, deterministic)
+}
+func (m *RemoveCartResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_RemoveCartResp.Merge(m, src)
+}
+func (m *RemoveCartResp) XXX_Size() int {
+	return xxx_messageInfo_RemoveCartResp.Size(m)
+}
+func (m *RemoveCartResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_RemoveCartResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_RemoveCartResp proto.InternalMessageInfo
+
+func (m *RemoveCartResp) GetSuccess() bool {
+	if m != nil {
+		return m.Success
+	}
+	return false
 }
 
 type CheckoutReq struct {
@@ -121,7 +293,7 @@ func (m *CheckoutReq) Reset()         { *m = CheckoutReq{} }
 func (m *CheckoutReq) String() string { return proto.CompactTextString(m) }
 func (*CheckoutReq) ProtoMessage()    {}
 func (*CheckoutReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_2cc4e03d2c28c490, []int{2}
+	return fileDescriptor_2cc4e03d2c28c490, []int{6}
 }
 
 func (m *CheckoutReq) XXX_Unmarshal(b []byte) error {
@@ -160,7 +332,7 @@ func (m *CheckoutResp) Reset()         { *m = CheckoutResp{} }
 func (m *CheckoutResp) String() string { return proto.CompactTextString(m) }
 func (*CheckoutResp) ProtoMessage()    {}
 func (*CheckoutResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_2cc4e03d2c28c490, []int{3}
+	return fileDescriptor_2cc4e03d2c28c490, []int{7}
 }
 
 func (m *CheckoutResp) XXX_Unmarshal(b []byte) error {
@@ -200,7 +372,7 @@ func (m *FulfillReq) Reset()         { *m = FulfillReq{} }
 func (m *FulfillReq) String() string { return proto.CompactTextString(m) }
 func (*FulfillReq) ProtoMessage()    {}
 func (*FulfillReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_2cc4e03d2c28c490, []int{4}
+	return fileDescriptor_2cc4e03d2c28c490, []int{8}
 }
 
 func (m *FulfillReq) XXX_Unmarshal(b []byte) error {
@@ -236,7 +408,7 @@ func (m *FulfillReq) GetPaymentAmount() int64 {
 }
 
 type FulfillResp struct {
-	Success              bool     `protobuf:"varint,1,opt,name=Success,proto3" json:"Success,omitempty"`
+	Success              bool     `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -246,7 +418,7 @@ func (m *FulfillResp) Reset()         { *m = FulfillResp{} }
 func (m *FulfillResp) String() string { return proto.CompactTextString(m) }
 func (*FulfillResp) ProtoMessage()    {}
 func (*FulfillResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_2cc4e03d2c28c490, []int{5}
+	return fileDescriptor_2cc4e03d2c28c490, []int{9}
 }
 
 func (m *FulfillResp) XXX_Unmarshal(b []byte) error {
@@ -275,8 +447,12 @@ func (m *FulfillResp) GetSuccess() bool {
 }
 
 func init() {
+	proto.RegisterType((*ListCartItemsReq)(nil), "prototransaction.ListCartItemsReq")
+	proto.RegisterType((*ListCartItemsResp)(nil), "prototransaction.ListCartItemsResp")
+	proto.RegisterType((*UpdateCartReq)(nil), "prototransaction.UpdateCartReq")
 	proto.RegisterType((*AddToCartReq)(nil), "prototransaction.AddToCartReq")
-	proto.RegisterType((*AddToCartResp)(nil), "prototransaction.AddToCartResp")
+	proto.RegisterType((*RemoveCartReq)(nil), "prototransaction.RemoveCartReq")
+	proto.RegisterType((*RemoveCartResp)(nil), "prototransaction.RemoveCartResp")
 	proto.RegisterType((*CheckoutReq)(nil), "prototransaction.CheckoutReq")
 	proto.RegisterType((*CheckoutResp)(nil), "prototransaction.CheckoutResp")
 	proto.RegisterType((*FulfillReq)(nil), "prototransaction.FulfillReq")
@@ -288,30 +464,38 @@ func init() {
 }
 
 var fileDescriptor_2cc4e03d2c28c490 = []byte{
-	// 354 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x7c, 0x91, 0x4f, 0x4f, 0xc2, 0x40,
-	0x10, 0xc5, 0xad, 0x04, 0x5b, 0xa6, 0x60, 0x74, 0x0f, 0x5a, 0x1a, 0xf9, 0x93, 0x26, 0x46, 0x2e,
-	0x72, 0x80, 0x78, 0xf4, 0x40, 0x20, 0x46, 0x42, 0x44, 0x53, 0xb9, 0x93, 0xb5, 0xad, 0xd8, 0x50,
-	0xba, 0xcb, 0xee, 0xf6, 0xc0, 0xa7, 0xd7, 0xb0, 0xdd, 0xd2, 0xc6, 0x26, 0x3d, 0x35, 0xf3, 0xde,
-	0xeb, 0x2f, 0x33, 0x6f, 0xe1, 0x5a, 0x30, 0x1c, 0x73, 0xec, 0x89, 0x90, 0xc4, 0x43, 0xca, 0x88,
-	0x20, 0xe8, 0x4a, 0x7e, 0x0a, 0xba, 0xdd, 0xa2, 0x8c, 0xf8, 0x89, 0x27, 0xd2, 0x80, 0x6d, 0x12,
-	0xe6, 0x07, 0x2c, 0x1d, 0x9c, 0x25, 0x34, 0x27, 0xbe, 0xbf, 0x22, 0x53, 0xcc, 0x84, 0x1b, 0xec,
-	0x51, 0x07, 0x40, 0xa5, 0xd7, 0xa1, 0x6f, 0x69, 0x7d, 0x6d, 0x50, 0x73, 0x1b, 0x4a, 0x99, 0xfb,
-	0xa8, 0x07, 0xe6, 0x3e, 0xc1, 0xb1, 0x08, 0xc5, 0x61, 0xbd, 0xdd, 0x58, 0xe7, 0x7d, 0x6d, 0x50,
-	0x77, 0x21, 0x93, 0x16, 0x1b, 0x67, 0x06, 0xad, 0x02, 0x8f, 0x53, 0x34, 0x06, 0x5d, 0xfd, 0x2e,
-	0x69, 0xe6, 0xa8, 0x3d, 0xfc, 0xbf, 0xe0, 0xf0, 0x23, 0x0d, 0xb8, 0x59, 0xd2, 0x99, 0x81, 0x39,
-	0xfd, 0x09, 0xbc, 0x2d, 0x49, 0xe4, 0x52, 0x4f, 0x60, 0x28, 0x87, 0x5b, 0x5a, 0xbf, 0x56, 0x0d,
-	0x39, 0x45, 0x9d, 0x67, 0x68, 0xe6, 0x14, 0x4e, 0xd1, 0x23, 0xd4, 0xe5, 0xe9, 0x6a, 0x91, 0xdb,
-	0x32, 0xe3, 0xfd, 0x68, 0xbb, 0x69, 0xca, 0x59, 0x02, 0xbc, 0x24, 0xd1, 0x77, 0x18, 0x45, 0xc7,
-	0x1d, 0xda, 0x60, 0x48, 0x39, 0xaf, 0x45, 0x97, 0xf3, 0xdc, 0x47, 0xf7, 0x70, 0x49, 0xf1, 0x61,
-	0x17, 0xc4, 0x62, 0x8d, 0x77, 0x24, 0x89, 0x85, 0xec, 0xa5, 0xe6, 0xb6, 0x94, 0x3a, 0x91, 0xa2,
-	0xf3, 0x00, 0xe6, 0x89, 0xc7, 0x29, 0xb2, 0x40, 0xff, 0x4c, 0x3c, 0x2f, 0xe0, 0x5c, 0xf2, 0x0c,
-	0x37, 0x1b, 0x47, 0xbf, 0x1a, 0xdc, 0xbc, 0x61, 0xb6, 0x0d, 0x04, 0x8d, 0xb0, 0x17, 0xac, 0xf2,
-	0x05, 0xd1, 0x12, 0x1a, 0xa7, 0x7a, 0x51, 0xb7, 0x7c, 0x40, 0xf1, 0x2d, 0xed, 0x5e, 0xa5, 0xcf,
-	0xa9, 0x73, 0x86, 0x16, 0x60, 0x64, 0x15, 0xa1, 0x4e, 0x39, 0x5e, 0x78, 0x04, 0xbb, 0x5b, 0x65,
-	0x4b, 0xd8, 0x2b, 0xe8, 0xea, 0x40, 0x74, 0x57, 0x0e, 0xe7, 0x5d, 0xda, 0x9d, 0x0a, 0xf7, 0x48,
-	0xfa, 0xba, 0x90, 0xfe, 0xf8, 0x2f, 0x00, 0x00, 0xff, 0xff, 0xb9, 0xed, 0x2e, 0x5f, 0xdf, 0x02,
-	0x00, 0x00,
+	// 485 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x92, 0x5b, 0x6f, 0xda, 0x30,
+	0x14, 0xc7, 0x1b, 0xe8, 0x0a, 0x3d, 0x69, 0x50, 0xeb, 0x87, 0x96, 0x46, 0xa3, 0x20, 0x4f, 0xd3,
+	0x50, 0xa7, 0xf1, 0xc0, 0xb4, 0xc7, 0x69, 0xab, 0xba, 0x1b, 0xea, 0xae, 0x51, 0xf7, 0xb2, 0x17,
+	0xe4, 0xc5, 0x1e, 0x8b, 0x80, 0xd8, 0xd8, 0xce, 0xa4, 0x7e, 0xe9, 0x7d, 0x86, 0x29, 0xc6, 0xe0,
+	0x40, 0x4a, 0xf6, 0x14, 0x9d, 0x73, 0x7e, 0xf9, 0x9f, 0x8b, 0xff, 0x70, 0xa2, 0x25, 0x49, 0x15,
+	0x89, 0x75, 0xc2, 0xd3, 0x81, 0x90, 0x5c, 0x73, 0x74, 0x6c, 0x3e, 0x85, 0x7c, 0x18, 0x08, 0xc9,
+	0x69, 0x16, 0xeb, 0x25, 0x10, 0xfa, 0x5c, 0x52, 0x26, 0x6d, 0x00, 0x31, 0x91, 0xb6, 0x80, 0x9f,
+	0xc2, 0xf1, 0xc7, 0x44, 0xe9, 0x6b, 0x22, 0xf5, 0x48, 0xb3, 0xb9, 0x8a, 0xd8, 0x02, 0x9d, 0x41,
+	0x23, 0x53, 0x4c, 0x8e, 0x13, 0xda, 0xf6, 0x7a, 0x5e, 0xbf, 0x1e, 0x1d, 0xe4, 0xe1, 0x88, 0xe2,
+	0x57, 0x70, 0xb2, 0x05, 0x2b, 0x81, 0x2e, 0x61, 0x3f, 0xd7, 0x6b, 0x7b, 0xbd, 0x7a, 0xdf, 0x1f,
+	0x9e, 0x0e, 0xb6, 0x47, 0x19, 0xe4, 0x78, 0x64, 0x18, 0xfc, 0x1a, 0x82, 0xef, 0x82, 0x12, 0xcd,
+	0x4c, 0x8e, 0x2d, 0x50, 0x0b, 0x6a, 0xeb, 0x2e, 0xb5, 0x84, 0xa2, 0x2e, 0xf8, 0x8b, 0x8c, 0xa4,
+	0x3a, 0xd1, 0x77, 0xe3, 0xe9, 0xa4, 0xbd, 0xdf, 0xf3, 0xfa, 0x5e, 0x04, 0xab, 0xd4, 0xcd, 0x04,
+	0x4f, 0xe0, 0xe8, 0x8a, 0xd2, 0x5b, 0xbe, 0x12, 0xe8, 0x00, 0xd8, 0x4d, 0xdd, 0xb8, 0x87, 0x36,
+	0x33, 0xa2, 0xc5, 0x55, 0x6a, 0xc5, 0x55, 0xb6, 0x1b, 0xd5, 0x4b, 0x8d, 0xba, 0x10, 0x44, 0x6c,
+	0xce, 0xff, 0xec, 0x1a, 0x15, 0x5f, 0x42, 0xab, 0x08, 0x28, 0x81, 0xda, 0xd0, 0x50, 0x59, 0x1c,
+	0x33, 0xa5, 0x0c, 0xd6, 0x8c, 0x56, 0x21, 0x7e, 0x03, 0xfe, 0xf5, 0x6f, 0x16, 0x4f, 0x79, 0x66,
+	0xa4, 0x5e, 0x40, 0xd3, 0x8e, 0xa8, 0xec, 0xd9, 0xce, 0xcb, 0x67, 0xfb, 0xba, 0x24, 0xa2, 0x35,
+	0x8a, 0x5f, 0xc2, 0x91, 0x53, 0x51, 0x02, 0x3d, 0x83, 0x07, 0xe6, 0x59, 0x4d, 0x37, 0x7f, 0x78,
+	0x56, 0xd6, 0xf8, 0x92, 0x97, 0xa3, 0x25, 0x85, 0x3f, 0x03, 0xbc, 0xcb, 0x66, 0xbf, 0x92, 0xd9,
+	0x2c, 0x9f, 0xe1, 0x1c, 0x9a, 0x26, 0xed, 0xce, 0xd6, 0x30, 0xf1, 0x88, 0xa2, 0xc7, 0xd0, 0x12,
+	0xe4, 0x6e, 0xce, 0x52, 0x3d, 0x26, 0x73, 0x9e, 0xa5, 0xda, 0xde, 0x2e, 0xb0, 0xd9, 0x2b, 0x93,
+	0xc4, 0x4f, 0xc0, 0x5f, 0xeb, 0x55, 0x6d, 0x3f, 0xfc, 0x5b, 0x87, 0xd3, 0x4f, 0x44, 0x4e, 0x99,
+	0x16, 0x33, 0x12, 0xb3, 0x5b, 0x37, 0x20, 0xfa, 0x01, 0xc1, 0x86, 0xa3, 0x10, 0x2e, 0x2f, 0xb1,
+	0xed, 0xcf, 0xf0, 0xd1, 0x7f, 0x19, 0x25, 0xf0, 0x1e, 0x7a, 0x0b, 0x87, 0x6b, 0xab, 0xa0, 0x8b,
+	0xf2, 0x3f, 0x45, 0x1f, 0x85, 0x3b, 0x7c, 0x8b, 0xf7, 0xd0, 0x7b, 0x00, 0xe7, 0x59, 0xd4, 0x2d,
+	0x73, 0x1b, 0x8e, 0xae, 0x10, 0xfa, 0x06, 0xe0, 0x0c, 0x73, 0x9f, 0xd0, 0x86, 0xdf, 0xc2, 0x5e,
+	0x35, 0x60, 0x56, 0xbc, 0x81, 0xe6, 0xca, 0x11, 0xa8, 0x73, 0x4f, 0x63, 0xe7, 0xb9, 0xf0, 0xa2,
+	0xaa, 0x6c, 0xc4, 0x3e, 0x40, 0xc3, 0xbe, 0x27, 0x7a, 0x58, 0x86, 0x9d, 0x75, 0xc2, 0x4e, 0x45,
+	0x35, 0x57, 0xfa, 0x79, 0x60, 0xea, 0xcf, 0xff, 0x05, 0x00, 0x00, 0xff, 0xff, 0xf7, 0xe2, 0xc1,
+	0x90, 0xaa, 0x04, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -326,7 +510,10 @@ const _ = grpc.SupportPackageIsVersion6
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type MarketplaceTransactionClient interface {
-	AddToCart(ctx context.Context, in *AddToCartReq, opts ...grpc.CallOption) (*AddToCartResp, error)
+	ListCartItems(ctx context.Context, in *ListCartItemsReq, opts ...grpc.CallOption) (*ListCartItemsResp, error)
+	AddToCart(ctx context.Context, in *AddToCartReq, opts ...grpc.CallOption) (*Cart, error)
+	UpdateCart(ctx context.Context, in *UpdateCartReq, opts ...grpc.CallOption) (*Cart, error)
+	RemoveCart(ctx context.Context, in *RemoveCartReq, opts ...grpc.CallOption) (*RemoveCartResp, error)
 	Checkout(ctx context.Context, in *CheckoutReq, opts ...grpc.CallOption) (*CheckoutResp, error)
 	Fulfill(ctx context.Context, in *FulfillReq, opts ...grpc.CallOption) (*FulfillResp, error)
 }
@@ -339,9 +526,36 @@ func NewMarketplaceTransactionClient(cc grpc.ClientConnInterface) MarketplaceTra
 	return &marketplaceTransactionClient{cc}
 }
 
-func (c *marketplaceTransactionClient) AddToCart(ctx context.Context, in *AddToCartReq, opts ...grpc.CallOption) (*AddToCartResp, error) {
-	out := new(AddToCartResp)
+func (c *marketplaceTransactionClient) ListCartItems(ctx context.Context, in *ListCartItemsReq, opts ...grpc.CallOption) (*ListCartItemsResp, error) {
+	out := new(ListCartItemsResp)
+	err := c.cc.Invoke(ctx, "/prototransaction.MarketplaceTransaction/ListCartItems", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketplaceTransactionClient) AddToCart(ctx context.Context, in *AddToCartReq, opts ...grpc.CallOption) (*Cart, error) {
+	out := new(Cart)
 	err := c.cc.Invoke(ctx, "/prototransaction.MarketplaceTransaction/AddToCart", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketplaceTransactionClient) UpdateCart(ctx context.Context, in *UpdateCartReq, opts ...grpc.CallOption) (*Cart, error) {
+	out := new(Cart)
+	err := c.cc.Invoke(ctx, "/prototransaction.MarketplaceTransaction/UpdateCart", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketplaceTransactionClient) RemoveCart(ctx context.Context, in *RemoveCartReq, opts ...grpc.CallOption) (*RemoveCartResp, error) {
+	out := new(RemoveCartResp)
+	err := c.cc.Invoke(ctx, "/prototransaction.MarketplaceTransaction/RemoveCart", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -368,7 +582,10 @@ func (c *marketplaceTransactionClient) Fulfill(ctx context.Context, in *FulfillR
 
 // MarketplaceTransactionServer is the server API for MarketplaceTransaction service.
 type MarketplaceTransactionServer interface {
-	AddToCart(context.Context, *AddToCartReq) (*AddToCartResp, error)
+	ListCartItems(context.Context, *ListCartItemsReq) (*ListCartItemsResp, error)
+	AddToCart(context.Context, *AddToCartReq) (*Cart, error)
+	UpdateCart(context.Context, *UpdateCartReq) (*Cart, error)
+	RemoveCart(context.Context, *RemoveCartReq) (*RemoveCartResp, error)
 	Checkout(context.Context, *CheckoutReq) (*CheckoutResp, error)
 	Fulfill(context.Context, *FulfillReq) (*FulfillResp, error)
 }
@@ -377,8 +594,17 @@ type MarketplaceTransactionServer interface {
 type UnimplementedMarketplaceTransactionServer struct {
 }
 
-func (*UnimplementedMarketplaceTransactionServer) AddToCart(ctx context.Context, req *AddToCartReq) (*AddToCartResp, error) {
+func (*UnimplementedMarketplaceTransactionServer) ListCartItems(ctx context.Context, req *ListCartItemsReq) (*ListCartItemsResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListCartItems not implemented")
+}
+func (*UnimplementedMarketplaceTransactionServer) AddToCart(ctx context.Context, req *AddToCartReq) (*Cart, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddToCart not implemented")
+}
+func (*UnimplementedMarketplaceTransactionServer) UpdateCart(ctx context.Context, req *UpdateCartReq) (*Cart, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateCart not implemented")
+}
+func (*UnimplementedMarketplaceTransactionServer) RemoveCart(ctx context.Context, req *RemoveCartReq) (*RemoveCartResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RemoveCart not implemented")
 }
 func (*UnimplementedMarketplaceTransactionServer) Checkout(ctx context.Context, req *CheckoutReq) (*CheckoutResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Checkout not implemented")
@@ -389,6 +615,24 @@ func (*UnimplementedMarketplaceTransactionServer) Fulfill(ctx context.Context, r
 
 func RegisterMarketplaceTransactionServer(s *grpc.Server, srv MarketplaceTransactionServer) {
 	s.RegisterService(&_MarketplaceTransaction_serviceDesc, srv)
+}
+
+func _MarketplaceTransaction_ListCartItems_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListCartItemsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceTransactionServer).ListCartItems(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/prototransaction.MarketplaceTransaction/ListCartItems",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceTransactionServer).ListCartItems(ctx, req.(*ListCartItemsReq))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _MarketplaceTransaction_AddToCart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -405,6 +649,42 @@ func _MarketplaceTransaction_AddToCart_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MarketplaceTransactionServer).AddToCart(ctx, req.(*AddToCartReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MarketplaceTransaction_UpdateCart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateCartReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceTransactionServer).UpdateCart(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/prototransaction.MarketplaceTransaction/UpdateCart",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceTransactionServer).UpdateCart(ctx, req.(*UpdateCartReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MarketplaceTransaction_RemoveCart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RemoveCartReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceTransactionServer).RemoveCart(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/prototransaction.MarketplaceTransaction/RemoveCart",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceTransactionServer).RemoveCart(ctx, req.(*RemoveCartReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -450,8 +730,20 @@ var _MarketplaceTransaction_serviceDesc = grpc.ServiceDesc{
 	HandlerType: (*MarketplaceTransactionServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "ListCartItems",
+			Handler:    _MarketplaceTransaction_ListCartItems_Handler,
+		},
+		{
 			MethodName: "AddToCart",
 			Handler:    _MarketplaceTransaction_AddToCart_Handler,
+		},
+		{
+			MethodName: "UpdateCart",
+			Handler:    _MarketplaceTransaction_UpdateCart_Handler,
+		},
+		{
+			MethodName: "RemoveCart",
+			Handler:    _MarketplaceTransaction_RemoveCart_Handler,
 		},
 		{
 			MethodName: "Checkout",

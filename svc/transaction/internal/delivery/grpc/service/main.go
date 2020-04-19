@@ -5,11 +5,15 @@ import (
 )
 
 type Services struct {
-	*TransactionService
+	*CartService
+	*CheckoutService
+	*FulfillmentService
 }
 
 func GetServices(a *app.Transaction) *Services {
 	return &Services{
-		TransactionService: NewTransaction(),
+		CartService:        NewCartService(a.UseCases.CartUC),
+		CheckoutService:    NewCheckoutService(),
+		FulfillmentService: NewFulfillmentService(),
 	}
 }
