@@ -55,7 +55,13 @@ func (c *Cart) Update(cart entity.Cart) (entity.Cart, error) {
 	if cart.AmountKG <= 0 {
 		return entity.Cart{}, errors.New("amount cant be <= 0")
 	}
-	return c.CartWriter.Update(cart)
+
+	res, err := c.CartWriter.Update(cart)
+	if err != nil {
+		return entity.Cart{}, err
+	}
+	res.Product.AmountKG = res.AmountKG
+	return res, nil
 }
 func (c *Cart) Remove(cartID int64) error {
 	if cartID == 0 {
