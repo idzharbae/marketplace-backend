@@ -7,4 +7,5 @@ type Product struct {
 	AmountKG   float64
 	PricePerKG int32
 	TotalPrice int64
+	PhotoURL   string
 }

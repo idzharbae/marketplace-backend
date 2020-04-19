@@ -9,5 +9,6 @@ message Product {
     double amount_kg = 4;
     int32 price_per_kg = 5;
     int64 total_price = 6;
+    string photo_url = 7;
 }
 

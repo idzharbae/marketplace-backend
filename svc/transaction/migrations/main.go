@@ -37,7 +37,7 @@ func main() {
 	flag.Usage = usage
 	flag.Parse()
 
-	dbCfg, err := readConfig(basepath + "/../config/marketplace.json")
+	dbCfg, err := readConfig(basepath + "/../config/transaction.json")
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -94,6 +94,14 @@
   version = "v1.2.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:05052fd87a6c09092637a2d379989326759b8300a92d2de4720d2d584f784e56"
+  name = "github.com/idzharbae/cabai-gqlserver"
+  packages = ["globalconstant"]
+  pruneopts = "UT"
+  revision = "81ef7bd90da5069855f8e6aa5a1455a719392185"
+
+[[projects]]
   digest = "1:e40b74b04fa9a70ff39869139c9fd15ec9a9eefde3f51ef3b65405a60ce30e0e"
   name = "github.com/jinzhu/gorm"
   packages = [
@@ -345,13 +353,15 @@
     "github.com/grpc-ecosystem/go-grpc-middleware",
     "github.com/grpc-ecosystem/go-grpc-middleware/validator",
     "github.com/grpc-ecosystem/go-grpc-prometheus",
+    "github.com/idzharbae/cabai-gqlserver/globalconstant",
     "github.com/jinzhu/gorm",
     "github.com/jinzhu/gorm/dialects/postgres",
     "github.com/pkg/errors",
     "github.com/stretchr/testify/assert",
-    "golang.org/x/net/context",
     "google.golang.org/grpc",
+    "google.golang.org/grpc/codes",
     "google.golang.org/grpc/reflection",
+    "google.golang.org/grpc/status",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

@@ -5,16 +5,18 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/gateway/gatewaymock"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/repo/repomock"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 type cartTest struct {
-	ctrl   *gomock.Controller
-	reader *repomock.MockCartReader
-	writer *repomock.MockCartWriter
-	unit   internal.CartUC
+	ctrl    *gomock.Controller
+	reader  *repomock.MockCartReader
+	writer  *repomock.MockCartWriter
+	gateway *gatewaymock.MockCatalogGateway
+	unit    internal.CartUC
 }
 
 func newCartTest() *cartTest {
@@ -25,7 +27,8 @@ func (ct *cartTest) Begin(t *testing.T) {
 	ct.ctrl = gomock.NewController(t)
 	ct.reader = repomock.NewMockCartReader(ct.ctrl)
 	ct.writer = repomock.NewMockCartWriter(ct.ctrl)
-	ct.unit = NewCart(ct.reader, ct.writer)
+	ct.gateway = gatewaymock.NewMockCatalogGateway(ct.ctrl)
+	ct.unit = NewCart(ct.reader, ct.writer, ct.gateway)
 }
 func (ct *cartTest) Finish() {
 	ct.ctrl.Finish()
@@ -49,6 +52,52 @@ func TestCart_List(t *testing.T) {
 		got, err := test.unit.List(req)
 		assert.NotNil(t, err)
 		assert.Nil(t, got)
+	})
+	t.Run("gateway returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := int64(123)
+		respReader := []entity.Cart{
+			{
+				ID:       1,
+				Product:  entity.Product{ID: 2},
+				UserID:   3,
+				AmountKG: 4,
+			},
+		}
+		test.reader.EXPECT().ListByUserID(req).Return(respReader, nil)
+		test.gateway.EXPECT().GetProductByID(respReader[0].Product.ID).Return(entity.Product{}, errors.New("error"))
+		got, err := test.unit.List(req)
+		assert.NotNil(t, err)
+		assert.Nil(t, got)
+	})
+	t.Run("gateway returns no error, should return no error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := int64(123)
+		respReader := []entity.Cart{
+			{
+				ID:       1,
+				Product:  entity.Product{ID: 2},
+				UserID:   3,
+				AmountKG: 4,
+			},
+			{
+				ID:       2,
+				Product:  entity.Product{ID: 3},
+				UserID:   3,
+				AmountKG: 4,
+			},
+		}
+		test.reader.EXPECT().ListByUserID(req).Return(respReader, nil)
+		test.gateway.EXPECT().GetProductByID(respReader[0].Product.ID).Return(entity.Product{ID: 2, Name: "product_1"}, nil)
+		test.gateway.EXPECT().GetProductByID(respReader[1].Product.ID).Return(entity.Product{ID: 3, Name: "product_1"}, nil)
+		got, err := test.unit.List(req)
+		assert.Nil(t, err)
+		assert.NotNil(t, got)
+		assert.Equal(t, 2, len(got))
+		assert.Equal(t, respReader[0].AmountKG, got[0].Product.AmountKG)
+		assert.Equal(t, int64(got[0].Product.AmountKG*float64(got[0].Product.PricePerKG)), got[0].Product.TotalPrice)
 	})
 }
 

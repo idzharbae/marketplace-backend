@@ -13,6 +13,7 @@ type Transaction struct {
 	Config   config.Config
 	UseCases *UseCases
 	Repos    *Repos
+	Gateways *Gateways
 }
 
 func NewTransaction(cfgPath string) (*Transaction, error) {
@@ -21,7 +22,11 @@ func NewTransaction(cfgPath string) (*Transaction, error) {
 		return nil, err
 	}
 	repos := NewRepos(cfg)
-	usecases := NewUseCases(repos)
+	gateways, err := NewGateways(cfg)
+	if err != nil {
+		return nil, err
+	}
+	usecases := NewUseCases(repos, gateways)
 
 	return &Transaction{
 		Config:   cfg,

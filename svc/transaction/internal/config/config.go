@@ -10,6 +10,13 @@ type Config struct {
 		Master   DbParams `json:"master"`
 		Slave    DbParams `json:"slave"`
 	}
+	Gateways struct {
+		Catalog struct {
+			Grpc struct {
+				Port string
+			}
+		}
+	}
 }
 
 type DbParams struct {

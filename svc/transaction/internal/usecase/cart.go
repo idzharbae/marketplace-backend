@@ -7,14 +7,16 @@ import (
 )
 
 type Cart struct {
-	CartReader internal.CartReader
-	CartWriter internal.CartWriter
+	CartReader     internal.CartReader
+	CartWriter     internal.CartWriter
+	CatalogGateway internal.CatalogGateway
 }
 
-func NewCart(reader internal.CartReader, writer internal.CartWriter) *Cart {
+func NewCart(reader internal.CartReader, writer internal.CartWriter, gateway internal.CatalogGateway) *Cart {
 	return &Cart{
-		CartReader: reader,
-		CartWriter: writer,
+		CartReader:     reader,
+		CartWriter:     writer,
+		CatalogGateway: gateway,
 	}
 }
 
@@ -22,7 +24,22 @@ func (c *Cart) List(userID int64) ([]entity.Cart, error) {
 	if userID == 0 {
 		return nil, errors.New("user ID is required")
 	}
-	return c.CartReader.ListByUserID(userID)
+	carts, err := c.CartReader.ListByUserID(userID)
+	if err != nil {
+		return nil, err
+	}
+
+	for i, cart := range carts {
+		res, err := c.CatalogGateway.GetProductByID(cart.Product.ID)
+		if err != nil {
+			return nil, err
+		}
+		carts[i].Product = res
+		carts[i].Product.AmountKG = carts[i].AmountKG
+		carts[i].Product.TotalPrice = int64(carts[i].AmountKG * float64(carts[i].Product.PricePerKG))
+	}
+
+	return carts, nil
 }
 func (c *Cart) Add(cart entity.Cart) (entity.Cart, error) {
 	if cart.AmountKG <= 0 {

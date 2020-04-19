@@ -86,6 +86,14 @@
   version = "v1.2.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:e385e0e7e4204945580552e1a838cc69d56a4e544eb2ff1f5a8dc5b7aa529d3e"
+  name = "github.com/idzharbae/marketplace-backend"
+  packages = ["svc/catalog/catalogproto"]
+  pruneopts = "UT"
+  revision = "b24519e22cf72c24f2fa8894d1a6f9808b6b9f59"
+
+[[projects]]
   digest = "1:e40b74b04fa9a70ff39869139c9fd15ec9a9eefde3f51ef3b65405a60ce30e0e"
   name = "github.com/jinzhu/gorm"
   packages = [
@@ -376,6 +384,7 @@
     "github.com/grpc-ecosystem/go-grpc-middleware",
     "github.com/grpc-ecosystem/go-grpc-middleware/validator",
     "github.com/grpc-ecosystem/go-grpc-prometheus",
+    "github.com/idzharbae/marketplace-backend/svc/catalog/catalogproto",
     "github.com/jinzhu/gorm",
     "github.com/jinzhu/gorm/dialects/postgres",
     "github.com/pkg/errors",

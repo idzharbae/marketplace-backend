@@ -86,17 +86,6 @@
   version = "v1.2.0"
 
 [[projects]]
-  branch = "master"
-  digest = "1:3b5e5ae4e80b4f31bcf24fb04375b450d8c924428aba018914c2827cba516ed8"
-  name = "github.com/idzharbae/marketplace-backend"
-  packages = [
-    "svc/catalog/internal/config",
-    "svc/catalog/internal/repo/connection",
-  ]
-  pruneopts = "UT"
-  revision = "1fbf929521d7d47ae6a8f46f63e5f7b955702de9"
-
-[[projects]]
   digest = "1:e40b74b04fa9a70ff39869139c9fd15ec9a9eefde3f51ef3b65405a60ce30e0e"
   name = "github.com/jinzhu/gorm"
   packages = [
@@ -347,8 +336,6 @@
     "github.com/grpc-ecosystem/go-grpc-middleware",
     "github.com/grpc-ecosystem/go-grpc-middleware/validator",
     "github.com/grpc-ecosystem/go-grpc-prometheus",
-    "github.com/idzharbae/marketplace-backend/svc/catalog/internal/config",
-    "github.com/idzharbae/marketplace-backend/svc/catalog/internal/repo/connection",
     "github.com/jinzhu/gorm",
     "github.com/jinzhu/gorm/dialects/postgres",
     "github.com/pkg/errors",

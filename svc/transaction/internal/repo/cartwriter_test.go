@@ -45,7 +45,7 @@ func TestCartWriter_Create(t *testing.T) {
 		test.db.EXPECT().Where("user_id=?", req.UserID).Return(test.db)
 		test.db.EXPECT().Where("product_id=?", req.Product.ID).Return(test.db)
 		test.db.EXPECT().First(gomock.Any()).Return(test.db)
-		test.db.EXPECT().RecordNotFound().Return(false)
+		test.db.EXPECT().Error().Return(errors.New("error"))
 		got, err := test.unit.Create(req)
 		assert.NotNil(t, err)
 		assert.Equal(t, entity.Cart{}, got)
@@ -62,8 +62,8 @@ func TestCartWriter_Create(t *testing.T) {
 		test.db.EXPECT().Where("user_id=?", req.UserID).Return(test.db)
 		test.db.EXPECT().Where("product_id=?", req.Product.ID).Return(test.db)
 		test.db.EXPECT().First(gomock.Any()).Return(test.db)
-		test.db.EXPECT().RecordNotFound().Return(true)
-		test.db.EXPECT().Error().Return(errors.New("error"))
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().RecordNotFound().Return(false)
 		got, err := test.unit.Create(req)
 		assert.NotNil(t, err)
 		assert.Equal(t, entity.Cart{}, got)
@@ -80,8 +80,8 @@ func TestCartWriter_Create(t *testing.T) {
 		test.db.EXPECT().Where("user_id=?", req.UserID).Return(test.db)
 		test.db.EXPECT().Where("product_id=?", req.Product.ID).Return(test.db)
 		test.db.EXPECT().First(gomock.Any()).Return(test.db)
-		test.db.EXPECT().RecordNotFound().Return(true)
 		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().RecordNotFound().Return(true)
 		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(errors.New("error"))
 		got, err := test.unit.Create(req)
@@ -100,8 +100,8 @@ func TestCartWriter_Create(t *testing.T) {
 		test.db.EXPECT().Where("user_id=?", req.UserID).Return(test.db)
 		test.db.EXPECT().Where("product_id=?", req.Product.ID).Return(test.db)
 		test.db.EXPECT().First(gomock.Any()).Return(test.db)
-		test.db.EXPECT().RecordNotFound().Return(true)
 		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().RecordNotFound().Return(true)
 		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(nil)
 		got, err := test.unit.Create(req)
@@ -112,24 +112,6 @@ func TestCartWriter_Create(t *testing.T) {
 
 func TestCartWriter_Update(t *testing.T) {
 	test := newCartWriterTest()
-	t.Run("cart does not exists, should return error", func(t *testing.T) {
-		test.Begin(t)
-		defer test.Finish()
-		req := entity.Cart{
-			ID:       1,
-			Product:  entity.Product{ID: 21},
-			UserID:   2,
-			AmountKG: 3,
-		}
-
-		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
-		test.db.EXPECT().First(gomock.Any()).Return(test.db)
-		test.db.EXPECT().RecordNotFound().Return(true)
-
-		got, err := test.unit.Update(req)
-		assert.Equal(t, entity.Cart{}, got)
-		assert.NotNil(t, err)
-	})
 	t.Run("error when finding cart, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
@@ -142,8 +124,26 @@ func TestCartWriter_Update(t *testing.T) {
 
 		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
 		test.db.EXPECT().First(gomock.Any()).Return(test.db)
-		test.db.EXPECT().RecordNotFound().Return(false)
 		test.db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := test.unit.Update(req)
+		assert.Equal(t, entity.Cart{}, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("cart does not exists, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Cart{
+			ID:       1,
+			Product:  entity.Product{ID: 21},
+			UserID:   2,
+			AmountKG: 3,
+		}
+
+		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().RecordNotFound().Return(true)
 
 		got, err := test.unit.Update(req)
 		assert.Equal(t, entity.Cart{}, got)
@@ -169,8 +169,8 @@ func TestCartWriter_Update(t *testing.T) {
 			}
 			return test.db
 		})
-		test.db.EXPECT().RecordNotFound().Return(false)
 		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().RecordNotFound().Return(false)
 		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(errors.New("error"))
 
@@ -198,8 +198,8 @@ func TestCartWriter_Update(t *testing.T) {
 			}
 			return test.db
 		})
-		test.db.EXPECT().RecordNotFound().Return(false)
 		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().RecordNotFound().Return(false)
 		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(nil)
 
@@ -211,18 +211,6 @@ func TestCartWriter_Update(t *testing.T) {
 
 func TestCartWriter_DeleteByID(t *testing.T) {
 	test := newCartWriterTest()
-	t.Run("record not found, should return error", func(t *testing.T) {
-		test.Begin(t)
-		defer test.Finish()
-		req := int64(123)
-
-		test.db.EXPECT().Where("id=?", req).Return(test.db)
-		test.db.EXPECT().First(gomock.Any()).Return(test.db)
-		test.db.EXPECT().RecordNotFound().Return(true)
-
-		err := test.unit.DeleteByID(req)
-		assert.NotNil(t, err)
-	})
 	t.Run("error when finding cart, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
@@ -230,8 +218,20 @@ func TestCartWriter_DeleteByID(t *testing.T) {
 
 		test.db.EXPECT().Where("id=?", req).Return(test.db)
 		test.db.EXPECT().First(gomock.Any()).Return(test.db)
-		test.db.EXPECT().RecordNotFound().Return(false)
 		test.db.EXPECT().Error().Return(errors.New("error"))
+
+		err := test.unit.DeleteByID(req)
+		assert.NotNil(t, err)
+	})
+	t.Run("record not found, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := int64(123)
+
+		test.db.EXPECT().Where("id=?", req).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().RecordNotFound().Return(true)
 
 		err := test.unit.DeleteByID(req)
 		assert.NotNil(t, err)
@@ -251,8 +251,8 @@ func TestCartWriter_DeleteByID(t *testing.T) {
 			}
 			return test.db
 		})
-		test.db.EXPECT().RecordNotFound().Return(false)
 		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().RecordNotFound().Return(false)
 		test.db.EXPECT().Delete(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(errors.New("error"))
 

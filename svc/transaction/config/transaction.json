@@ -21,5 +21,12 @@
       "password": "secret",
       "ssl_mode": "disable"
     }
+  },
+  "gateways": {
+    "catalog": {
+      "grpc": {
+        "port": ":1445"
+      }
+    }
   }
 }

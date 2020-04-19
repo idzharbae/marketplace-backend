@@ -6,6 +6,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/repo/connection"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/repo/model"
+	"github.com/jinzhu/gorm"
 )
 
 type CartWriter struct {
@@ -19,11 +20,11 @@ func NewCartWriter(db connection.Gormw) *CartWriter {
 func (cw *CartWriter) Create(cart entity.Cart) (entity.Cart, error) {
 	var cartModel model.Cart
 	queryFind := cw.db.Where("user_id=?", cart.UserID).Where("product_id=?", cart.Product.ID).First(&cartModel)
+	if err := queryFind.Error(); err != nil && err != gorm.ErrRecordNotFound {
+		return entity.Cart{}, err
+	}
 	if !queryFind.RecordNotFound() {
 		return entity.Cart{}, errors.New("record already exists")
-	}
-	if err := queryFind.Error(); err != nil {
-		return entity.Cart{}, err
 	}
 
 	cartModel = converter.CartEntityToModel(cart)
@@ -37,11 +38,11 @@ func (cw *CartWriter) Create(cart entity.Cart) (entity.Cart, error) {
 func (cw *CartWriter) Update(cart entity.Cart) (entity.Cart, error) {
 	var cartModel model.Cart
 	queryFind := cw.db.Where("id=?", cart.ID).First(&cartModel)
-	if queryFind.RecordNotFound() {
-		return entity.Cart{}, errors.New("record not found")
-	}
 	if err := queryFind.Error(); err != nil {
 		return entity.Cart{}, err
+	}
+	if queryFind.RecordNotFound() {
+		return entity.Cart{}, errors.New("record not found")
 	}
 
 	cartModel.AmountKG = cart.AmountKG
@@ -56,11 +57,11 @@ func (cw *CartWriter) Update(cart entity.Cart) (entity.Cart, error) {
 func (cw *CartWriter) DeleteByID(cartID int64) error {
 	var cartModel model.Cart
 	queryFind := cw.db.Where("id=?", cartID).First(&cartModel)
-	if queryFind.RecordNotFound() {
-		return errors.New("record not found")
-	}
 	if err := queryFind.Error(); err != nil {
 		return err
+	}
+	if queryFind.RecordNotFound() {
+		return errors.New("record not found")
 	}
 
 	err := cw.db.Delete(&cartModel).Error()
