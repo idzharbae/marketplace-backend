@@ -36,6 +36,14 @@
   version = "v8.0.6"
 
 [[projects]]
+  digest = "1:7ae311278f7ccaa724de8f2cdec0a507ba3ee6dea8c77237e8157bcf64b0f28b"
+  name = "github.com/golang/mock"
+  packages = ["gomock"]
+  pruneopts = "UT"
+  revision = "3a35fb6e3e18b9dbfee291262260dee7372d2a92"
+  version = "v1.4.3"
+
+[[projects]]
   digest = "1:2a96a3a5f92ebc3b5f03cad2b225d94816e248fa72459a8f83f7a54cc6869bbd"
   name = "github.com/golang/protobuf"
   packages = [
@@ -70,6 +78,28 @@
   version = "v1.2.0"
 
 [[projects]]
+  branch = "master"
+  digest = "1:3b5e5ae4e80b4f31bcf24fb04375b450d8c924428aba018914c2827cba516ed8"
+  name = "github.com/idzharbae/marketplace-backend"
+  packages = [
+    "svc/catalog/internal/config",
+    "svc/catalog/internal/repo/connection",
+  ]
+  pruneopts = "UT"
+  revision = "b24519e22cf72c24f2fa8894d1a6f9808b6b9f59"
+
+[[projects]]
+  digest = "1:e40b74b04fa9a70ff39869139c9fd15ec9a9eefde3f51ef3b65405a60ce30e0e"
+  name = "github.com/jinzhu/gorm"
+  packages = [
+    ".",
+    "dialects/postgres",
+  ]
+  pruneopts = "UT"
+  revision = "79a77d771dee4e4b60e9c543e8663bbc80466670"
+  version = "v1.9.12"
+
+[[projects]]
   digest = "1:01ed62f8f4f574d8aff1d88caee113700a2b44c42351943fa73cc1808f736a50"
   name = "github.com/jinzhu/inflection"
   packages = ["."]
@@ -78,12 +108,33 @@
   version = "v1.0.0"
 
 [[projects]]
+  digest = "1:707178a91d4d0a2382ac044a49cdea18959d6f3453a7ed0f8940ac2e48bfb26f"
+  name = "github.com/lib/pq"
+  packages = [
+    ".",
+    "hstore",
+    "oid",
+    "scram",
+  ]
+  pruneopts = "UT"
+  revision = "99274577be97ac9b1d95a2d61d566dc9b7cc6a54"
+  version = "v1.3.0"
+
+[[projects]]
   digest = "1:ff5ebae34cfbf047d505ee150de27e60570e8c394b3b8fdbb720ff6ac71985fc"
   name = "github.com/matttproud/golang_protobuf_extensions"
   packages = ["pbutil"]
   pruneopts = "UT"
   revision = "c12348ce28de40eed0136aa2b644d0ee0650e56c"
   version = "v1.0.1"
+
+[[projects]]
+  digest = "1:9e1d37b58d17113ec3cb5608ac0382313c5b59470b94ed97d0976e69c7022314"
+  name = "github.com/pkg/errors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "614d223910a179a466c1767a985424175c39b465"
+  version = "v0.9.1"
 
 [[projects]]
   digest = "1:7097829edd12fd7211fca0d29496b44f94ef9e6d72f88fb64f3d7b06315818ad"
@@ -299,10 +350,15 @@
   input-imports = [
     "github.com/go-pg/migrations",
     "github.com/go-pg/pg",
+    "github.com/golang/mock/gomock",
     "github.com/golang/protobuf/proto",
     "github.com/grpc-ecosystem/go-grpc-middleware",
     "github.com/grpc-ecosystem/go-grpc-middleware/validator",
     "github.com/grpc-ecosystem/go-grpc-prometheus",
+    "github.com/idzharbae/marketplace-backend/svc/catalog/internal/repo/connection",
+    "github.com/jinzhu/gorm",
+    "github.com/jinzhu/gorm/dialects/postgres",
+    "github.com/pkg/errors",
     "google.golang.org/grpc",
     "google.golang.org/grpc/codes",
     "google.golang.org/grpc/reflection",

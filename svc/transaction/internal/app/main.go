@@ -10,7 +10,9 @@ import (
 )
 
 type Transaction struct {
-	Config config.Config
+	Config   config.Config
+	UseCases *UseCases
+	Repos    *Repos
 }
 
 func NewTransaction(cfgPath string) (*Transaction, error) {
@@ -18,8 +20,13 @@ func NewTransaction(cfgPath string) (*Transaction, error) {
 	if err != nil {
 		return nil, err
 	}
+	repos := NewRepos(cfg)
+	usecases := NewUseCases(repos)
+
 	return &Transaction{
-		Config: cfg,
+		Config:   cfg,
+		Repos:    repos,
+		UseCases: usecases,
 	}, nil
 }
 
@@ -51,8 +58,8 @@ func readConfig(filepath string) (config.Config, error) {
 func (t *Transaction) Close() []error {
 	var errs []error
 
-	//errs = append(errs, t.Repos.Close()...)
-	//errs = append(errs, t.UseCases.Close()...)
+	errs = append(errs, t.Repos.Close()...)
+	errs = append(errs, t.UseCases.Close()...)
 
 	return errs
 }

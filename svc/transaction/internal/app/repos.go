@@ -1,15 +1,17 @@
 package app
 
 import (
-	"github.com/idzharbae/marketplace-backend/svc/catalog/internal"
-	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/config"
-	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/repo"
-	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/repo/connection"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/config"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/repo"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/repo/connection"
 )
 
 type Repos struct {
-	ProductReader internal.ProductReader
-	ProductWriter internal.ProductWriter
+	CartReader internal.CartReader
+	CartWriter internal.CartWriter
+	connMaster connection.Gormw
+	connSlave  connection.Gormw
 }
 
 func NewRepos(cfg config.Config) *Repos {
@@ -21,11 +23,13 @@ func NewRepos(cfg config.Config) *Repos {
 	if err != nil {
 		panic(err)
 	}
-	productReader := repo.NewProductReader(connSlave)
-	productWriter := repo.NewProductWriter(connMaster)
+	cartReader := repo.NewCartReader(connSlave)
+	cartWriter := repo.NewCartWriter(connMaster)
 	return &Repos{
-		ProductReader: productReader,
-		ProductWriter: productWriter,
+		CartWriter: cartWriter,
+		CartReader: cartReader,
+		connSlave:  connSlave,
+		connMaster: connMaster,
 	}
 }
 
@@ -53,6 +57,13 @@ func getMasterConn(cfg config.Config) (connection.Gormw, error) {
 
 func (r *Repos) Close() []error {
 	var errs []error
-
+	err := r.connMaster.Close()
+	if err != nil {
+		errs = append(errs, err)
+	}
+	err = r.connSlave.Close()
+	if err != nil {
+		errs = append(errs, err)
+	}
 	return errs
 }
