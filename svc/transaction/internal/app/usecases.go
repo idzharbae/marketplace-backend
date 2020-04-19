@@ -14,3 +14,8 @@ func NewUseCases(repos *Repos) *UseCases {
 		CartUC: usecase.NewCart(repos.CartReader, repos.CartWriter),
 	}
 }
+func (uc *UseCases) Close() []error {
+	var errs []error
+
+	return errs
+}

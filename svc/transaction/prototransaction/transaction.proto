@@ -10,7 +10,7 @@ service MarketplaceTransaction {
     rpc ListCartItems(ListCartItemsReq) returns (ListCartItemsResp) {}
     rpc AddToCart(AddToCartReq) returns (Cart) {}
     rpc UpdateCart(UpdateCartReq) returns (Cart) {}
-    rpc RemoveFromCart(RemoveFromCartReq) returns (RemoveFromCartResp) {}
+    rpc RemoveCart(RemoveCartReq) returns (RemoveCartResp) {}
 
     rpc Checkout(CheckoutReq) returns (CheckoutResp) {}
     rpc Fulfill(FulfillReq) returns (FulfillResp) {}
@@ -33,10 +33,10 @@ message AddToCartReq {
     double quantity_kg = 3;
 }
 
-message RemoveFromCartReq {
+message RemoveCartReq {
     int64 id = 1;
 }
-message RemoveFromCartResp {
+message RemoveCartResp {
     bool success = 1;
 }
 
