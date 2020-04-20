@@ -41,7 +41,7 @@ message RemoveCartResp {
 }
 
 message CheckoutReq {
-    repeated Product products = 1;
+    repeated int64 cart_id = 1;
 }
 
 message CheckoutResp {

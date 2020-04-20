@@ -13,3 +13,16 @@ type CartWriter interface {
 	Update(cart entity.Cart) (entity.Cart, error)
 	DeleteByID(cartID int64) error
 }
+
+//go:generate mockgen -destination=repo/repomock/orderreader_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/transaction/internal OrderReader
+type OrderReader interface {
+	ListByUserID(userID int64) ([]entity.Order, error)
+	GetByID(orderID int64) (entity.Order, error)
+}
+
+//go:generate mockgen -destination=repo/repomock/orderwriter_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/transaction/internal OrderWriter
+type OrderWriter interface {
+	Create(order entity.Order) (entity.Order, error)
+	Update(order entity.Order) (entity.Order, error)
+	DeleteByID(orderID int64) error
+}
