@@ -16,6 +16,9 @@ func NewOrderReader(db connection.Gormw) *OrderReader {
 func (or *OrderReader) ListByUserID(userID int64) ([]entity.Order, error) {
 	return nil, nil
 }
+func (or *OrderReader) ListByShopID(userID int64) ([]entity.Order, error) {
+	return nil, nil
+}
 func (or *OrderReader) GetByID(orderID int64) (entity.Order, error) {
 	return entity.Order{}, nil
 }

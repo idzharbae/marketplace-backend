@@ -47,3 +47,18 @@ func (mr *MockCatalogGatewayMockRecorder) GetProductByID(arg0 interface{}) *gomo
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProductByID", reflect.TypeOf((*MockCatalogGateway)(nil).GetProductByID), arg0)
 }
+
+// GetProductsByID mocks base method.
+func (m *MockCatalogGateway) GetProductsByID(arg0 []int64) ([]entity.Product, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetProductsByID", arg0)
+	ret0, _ := ret[0].([]entity.Product)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetProductsByID indicates an expected call of GetProductsByID.
+func (mr *MockCatalogGatewayMockRecorder) GetProductsByID(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetProductsByID", reflect.TypeOf((*MockCatalogGateway)(nil).GetProductsByID), arg0)
+}

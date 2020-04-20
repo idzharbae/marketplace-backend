@@ -10,6 +10,10 @@ import (
 
 type Gateways struct {
 	CatalogGateway internal.CatalogGateway
+	AuthGateway    internal.AuthGateway
+
+	catalogClient connection.Catalog
+	authClient    connection.Auth
 }
 
 func NewGateways(cfg config.Config) (*Gateways, error) {
@@ -17,7 +21,31 @@ func NewGateways(cfg config.Config) (*Gateways, error) {
 	if err != nil {
 		return nil, err
 	}
-	catalogClient := connection.NewCatalogClient(catalogConn)
+	authConn, err := grpc.Dial(cfg.Gateways.Auth.Grpc.Port, grpc.WithInsecure())
+	if err != nil {
+		return nil, err
+	}
 
-	return &Gateways{CatalogGateway: gateway.NewCatalog(catalogClient)}, nil
+	catalogClient := connection.NewCatalogClient(catalogConn)
+	authClient := connection.NewAuthClient(authConn)
+
+	return &Gateways{
+		CatalogGateway: gateway.NewCatalog(catalogClient),
+		AuthGateway:    gateway.NewAuth(authClient),
+		authClient:     authClient,
+		catalogClient:  catalogClient,
+	}, nil
+}
+
+func (g *Gateways) Close() []error {
+	var errs []error
+	err := g.catalogClient.Close()
+	if err != nil {
+		errs = append(errs, err)
+	}
+	err = g.authClient.Close()
+	if err != nil {
+		errs = append(errs, err)
+	}
+	return errs
 }

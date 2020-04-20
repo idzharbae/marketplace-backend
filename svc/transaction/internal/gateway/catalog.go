@@ -28,3 +28,20 @@ func (c *Catalog) GetProductByID(productID int64) (entity.Product, error) {
 		PhotoURL:   res.GetPhotoUrl(),
 	}, nil
 }
+func (c *Catalog) GetProductsByID(productIDs []int64) ([]entity.Product, error) {
+	res, err := c.conn.ListProducts(context.Background(), &catalogproto.ListProductsReq{ProductIds: productIDs})
+	if err != nil {
+		return nil, err
+	}
+	products := make([]entity.Product, len(res.GetProducts()))
+	for i, product := range res.GetProducts() {
+		products[i] = entity.Product{
+			ID:         int64(product.GetId()),
+			ShopID:     int64(product.GetShopId()),
+			Name:       product.GetName(),
+			PricePerKG: product.GetPricePerKg(),
+			PhotoURL:   product.GetPhotoUrl(),
+		}
+	}
+	return products, nil
+}

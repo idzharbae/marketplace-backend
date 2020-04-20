@@ -30,7 +30,7 @@ func (ot *orderTest) Begin(t *testing.T) {
 	ot.ctx = context.Background()
 }
 
-func (ot *orderTest) Finsih() {
+func (ot *orderTest) Finish() {
 	ot.ctrl.Finish()
 }
 
@@ -38,7 +38,7 @@ func TestOrderService_Checkout(t *testing.T) {
 	test := newOrderTest()
 	t.Run("given nil param should return error", func(t *testing.T) {
 		test.Begin(t)
-		defer test.Finsih()
+		defer test.Finish()
 
 		got, err := test.unit.Checkout(test.ctx, nil)
 		assert.Nil(t, got)
@@ -46,16 +46,18 @@ func TestOrderService_Checkout(t *testing.T) {
 	})
 	t.Run("uc returns error, should return error", func(t *testing.T) {
 		test.Begin(t)
-		defer test.Finsih()
+		defer test.Finish()
 		req := &prototransaction.CheckoutReq{
+			UserId:        123,
 			CartIds:       []int64{1, 2, 3},
 			PaymentAmount: 123456,
 		}
 
 		test.uc.EXPECT().CreateFromCarts(request.CheckoutReq{
+			UserID:        req.GetUserId(),
 			CartIDs:       req.GetCartIds(),
 			PaymentAmount: req.GetPaymentAmount(),
-		}).Return(entity.Order{}, errors.New("error"))
+		}).Return(nil, errors.New("error"))
 
 		got, err := test.unit.Checkout(test.ctx, req)
 		assert.Nil(t, got)
@@ -63,15 +65,18 @@ func TestOrderService_Checkout(t *testing.T) {
 	})
 	t.Run("uc returns no error, should not return error", func(t *testing.T) {
 		test.Begin(t)
-		defer test.Finsih()
+		defer test.Finish()
 		req := &prototransaction.CheckoutReq{
-			CartIds: []int64{1, 2, 3},
+			UserId:        123,
+			CartIds:       []int64{1, 2, 3},
+			PaymentAmount: 123456,
 		}
 
 		test.uc.EXPECT().CreateFromCarts(request.CheckoutReq{
 			CartIDs:       req.GetCartIds(),
 			PaymentAmount: req.GetPaymentAmount(),
-		}).Return(entity.Order{ID: 12337}, nil)
+			UserID:        req.GetUserId(),
+		}).Return([]entity.Order{{ID: 12337}}, nil)
 
 		got, err := test.unit.Checkout(test.ctx, req)
 		assert.NotNil(t, got)
@@ -83,7 +88,7 @@ func TestOrderService_Fulfill(t *testing.T) {
 	test := newOrderTest()
 	t.Run("given nil params should return error", func(t *testing.T) {
 		test.Begin(t)
-		defer test.Finsih()
+		defer test.Finish()
 
 		got, err := test.unit.Fulfill(test.ctx, nil)
 		assert.Nil(t, got)
@@ -91,7 +96,7 @@ func TestOrderService_Fulfill(t *testing.T) {
 	})
 	t.Run("uc returns error, should return error", func(t *testing.T) {
 		test.Begin(t)
-		defer test.Finsih()
+		defer test.Finish()
 		req := &prototransaction.FulfillReq{
 			OrderId:       123,
 			PaymentAmount: 1412,
@@ -105,7 +110,7 @@ func TestOrderService_Fulfill(t *testing.T) {
 	})
 	t.Run("uc returns no error, should not return error", func(t *testing.T) {
 		test.Begin(t)
-		defer test.Finsih()
+		defer test.Finish()
 		req := &prototransaction.FulfillReq{
 			OrderId:       123,
 			PaymentAmount: 1412,

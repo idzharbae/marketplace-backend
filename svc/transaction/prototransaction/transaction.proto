@@ -40,12 +40,13 @@ message RemoveCartResp {
 }
 
 message CheckoutReq {
-    repeated int64 cart_ids = 1;
-    int64 payment_amount = 2;
+    int64 user_id = 1;
+    repeated int64 cart_ids = 2;
+    int64 payment_amount = 3;
 }
 
 message CheckoutResp {
-    Order order = 1;
+    repeated Order orders = 1;
 }
 
 message FulfillReq {
