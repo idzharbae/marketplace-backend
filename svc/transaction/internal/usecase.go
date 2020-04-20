@@ -18,7 +18,6 @@ type OrderUC interface {
 	List(req request.ListOrderReq) ([]entity.Order, error)
 	Get(order entity.Order) (entity.Order, error)
 
-	Create(order entity.Order) (entity.Order, error)
-	Update(order entity.Order) (entity.Order, error)
-	Delete(order entity.Order) error
+	CreateFromCarts(cartIDs []int64) (entity.Order, error)
+	Fulfill(order entity.Order) (entity.Order, error)
 }

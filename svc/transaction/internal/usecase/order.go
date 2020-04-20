@@ -23,12 +23,9 @@ func (o *Order) Get(order entity.Order) (entity.Order, error) {
 	return entity.Order{}, nil
 }
 
-func (o *Order) Create(order entity.Order) (entity.Order, error) {
+func (o *Order) CreateFromCarts(cartIDs []int64) (entity.Order, error) {
 	return entity.Order{}, nil
 }
-func (o *Order) Update(order entity.Order) (entity.Order, error) {
+func (o *Order) Fulfill(order entity.Order) (entity.Order, error) {
 	return entity.Order{}, nil
-}
-func (o *Order) Delete(order entity.Order) error {
-	return nil
 }

@@ -13,12 +13,9 @@ func NewOrderWriter(db connection.Gormw) *OrderWriter {
 	return &OrderWriter{db: db}
 }
 
-func (ow *OrderWriter) Create(order entity.Order) (entity.Order, error) {
+func (ow *OrderWriter) CreateFromCartsAndSubstractCustomerSaldo(cartIDs []int64) (entity.Order, error) {
 	return entity.Order{}, nil
 }
-func (ow *OrderWriter) Update(order entity.Order) (entity.Order, error) {
+func (ow *OrderWriter) UpdateOrderStatusAndAddShopSaldo(order entity.Order) (entity.Order, error) {
 	return entity.Order{}, nil
-}
-func (ow *OrderWriter) DeleteByID(orderID int64) error {
-	return nil
 }

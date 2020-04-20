@@ -34,33 +34,34 @@ func (m *MockOrderUC) EXPECT() *MockOrderUCMockRecorder {
 	return m.recorder
 }
 
-// Create mocks base method.
-func (m *MockOrderUC) Create(arg0 entity.Order) (entity.Order, error) {
+// CreateFromCarts mocks base method.
+func (m *MockOrderUC) CreateFromCarts(arg0 []int64) (entity.Order, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", arg0)
+	ret := m.ctrl.Call(m, "CreateFromCarts", arg0)
 	ret0, _ := ret[0].(entity.Order)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Create indicates an expected call of Create.
-func (mr *MockOrderUCMockRecorder) Create(arg0 interface{}) *gomock.Call {
+// CreateFromCarts indicates an expected call of CreateFromCarts.
+func (mr *MockOrderUCMockRecorder) CreateFromCarts(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockOrderUC)(nil).Create), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateFromCarts", reflect.TypeOf((*MockOrderUC)(nil).CreateFromCarts), arg0)
 }
 
-// Delete mocks base method.
-func (m *MockOrderUC) Delete(arg0 entity.Order) error {
+// Fulfill mocks base method.
+func (m *MockOrderUC) Fulfill(arg0 entity.Order) (entity.Order, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Delete", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret := m.ctrl.Call(m, "Fulfill", arg0)
+	ret0, _ := ret[0].(entity.Order)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
-// Delete indicates an expected call of Delete.
-func (mr *MockOrderUCMockRecorder) Delete(arg0 interface{}) *gomock.Call {
+// Fulfill indicates an expected call of Fulfill.
+func (mr *MockOrderUCMockRecorder) Fulfill(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Delete", reflect.TypeOf((*MockOrderUC)(nil).Delete), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Fulfill", reflect.TypeOf((*MockOrderUC)(nil).Fulfill), arg0)
 }
 
 // Get mocks base method.
@@ -91,19 +92,4 @@ func (m *MockOrderUC) List(arg0 request.ListOrderReq) ([]entity.Order, error) {
 func (mr *MockOrderUCMockRecorder) List(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockOrderUC)(nil).List), arg0)
-}
-
-// Update mocks base method.
-func (m *MockOrderUC) Update(arg0 entity.Order) (entity.Order, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Update", arg0)
-	ret0, _ := ret[0].(entity.Order)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// Update indicates an expected call of Update.
-func (mr *MockOrderUCMockRecorder) Update(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockOrderUC)(nil).Update), arg0)
 }

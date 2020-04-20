@@ -22,6 +22,14 @@ func CartEntityToProto(cart entity.Cart) *prototransaction.Cart {
 	}
 }
 
+func ProductEntitiesToProtos(products []entity.Product) []*prototransaction.Product {
+	res := make([]*prototransaction.Product, len(products))
+	for i, product := range products {
+		res[i] = ProductEntityToProto(product)
+	}
+	return res
+}
+
 func ProductEntityToProto(product entity.Product) *prototransaction.Product {
 	return &prototransaction.Product{
 		Id:         product.ID,

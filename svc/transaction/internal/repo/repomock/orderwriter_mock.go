@@ -33,46 +33,32 @@ func (m *MockOrderWriter) EXPECT() *MockOrderWriterMockRecorder {
 	return m.recorder
 }
 
-// Create mocks base method.
-func (m *MockOrderWriter) Create(arg0 entity.Order) (entity.Order, error) {
+// CreateFromCartsAndSubstractCustomerSaldo mocks base method.
+func (m *MockOrderWriter) CreateFromCartsAndSubstractCustomerSaldo(arg0 []int64) (entity.Order, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Create", arg0)
+	ret := m.ctrl.Call(m, "CreateFromCartsAndSubstractCustomerSaldo", arg0)
 	ret0, _ := ret[0].(entity.Order)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Create indicates an expected call of Create.
-func (mr *MockOrderWriterMockRecorder) Create(arg0 interface{}) *gomock.Call {
+// CreateFromCartsAndSubstractCustomerSaldo indicates an expected call of CreateFromCartsAndSubstractCustomerSaldo.
+func (mr *MockOrderWriterMockRecorder) CreateFromCartsAndSubstractCustomerSaldo(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Create", reflect.TypeOf((*MockOrderWriter)(nil).Create), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateFromCartsAndSubstractCustomerSaldo", reflect.TypeOf((*MockOrderWriter)(nil).CreateFromCartsAndSubstractCustomerSaldo), arg0)
 }
 
-// DeleteByID mocks base method.
-func (m *MockOrderWriter) DeleteByID(arg0 int64) error {
+// UpdateOrderStatusAndAddShopSaldo mocks base method.
+func (m *MockOrderWriter) UpdateOrderStatusAndAddShopSaldo(arg0 entity.Order) (entity.Order, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "DeleteByID", arg0)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// DeleteByID indicates an expected call of DeleteByID.
-func (mr *MockOrderWriterMockRecorder) DeleteByID(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteByID", reflect.TypeOf((*MockOrderWriter)(nil).DeleteByID), arg0)
-}
-
-// Update mocks base method.
-func (m *MockOrderWriter) Update(arg0 entity.Order) (entity.Order, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Update", arg0)
+	ret := m.ctrl.Call(m, "UpdateOrderStatusAndAddShopSaldo", arg0)
 	ret0, _ := ret[0].(entity.Order)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// Update indicates an expected call of Update.
-func (mr *MockOrderWriterMockRecorder) Update(arg0 interface{}) *gomock.Call {
+// UpdateOrderStatusAndAddShopSaldo indicates an expected call of UpdateOrderStatusAndAddShopSaldo.
+func (mr *MockOrderWriterMockRecorder) UpdateOrderStatusAndAddShopSaldo(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockOrderWriter)(nil).Update), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateOrderStatusAndAddShopSaldo", reflect.TypeOf((*MockOrderWriter)(nil).UpdateOrderStatusAndAddShopSaldo), arg0)
 }

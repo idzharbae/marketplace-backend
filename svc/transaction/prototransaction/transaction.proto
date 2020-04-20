@@ -1,6 +1,5 @@
 syntax = "proto3";
 
-import "product.proto";
 import "order.proto";
 import "cart.proto";
 
@@ -41,7 +40,7 @@ message RemoveCartResp {
 }
 
 message CheckoutReq {
-    repeated int64 cart_id = 1;
+    repeated int64 cart_ids = 1;
 }
 
 message CheckoutResp {
