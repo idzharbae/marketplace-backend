@@ -7,6 +7,7 @@ package repomock
 import (
 	gomock "github.com/golang/mock/gomock"
 	entity "github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
+	request "github.com/idzharbae/marketplace-backend/svc/transaction/internal/request"
 	reflect "reflect"
 )
 
@@ -34,7 +35,7 @@ func (m *MockOrderWriter) EXPECT() *MockOrderWriterMockRecorder {
 }
 
 // CreateFromCartsAndSubstractCustomerSaldo mocks base method.
-func (m *MockOrderWriter) CreateFromCartsAndSubstractCustomerSaldo(arg0 []int64) (entity.Order, error) {
+func (m *MockOrderWriter) CreateFromCartsAndSubstractCustomerSaldo(arg0 request.CheckoutReq) (entity.Order, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateFromCartsAndSubstractCustomerSaldo", arg0)
 	ret0, _ := ret[0].(entity.Order)

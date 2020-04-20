@@ -35,7 +35,7 @@ func (m *MockOrderUC) EXPECT() *MockOrderUCMockRecorder {
 }
 
 // CreateFromCarts mocks base method.
-func (m *MockOrderUC) CreateFromCarts(arg0 []int64) (entity.Order, error) {
+func (m *MockOrderUC) CreateFromCarts(arg0 request.CheckoutReq) (entity.Order, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateFromCarts", arg0)
 	ret0, _ := ret[0].(entity.Order)

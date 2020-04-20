@@ -13,7 +13,7 @@ type UseCases struct {
 func NewUseCases(repos *Repos, gateways *Gateways) *UseCases {
 	return &UseCases{
 		CartUC:  usecase.NewCart(repos.CartReader, repos.CartWriter, gateways.CatalogGateway),
-		OrderUC: usecase.NewOrder(repos.OrderReader, repos.OrderWriter),
+		OrderUC: usecase.NewOrder(repos.OrderReader, repos.OrderWriter, repos.CartReader),
 	}
 }
 func (uc *UseCases) Close() []error {

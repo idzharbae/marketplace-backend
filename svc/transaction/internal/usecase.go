@@ -18,6 +18,6 @@ type OrderUC interface {
 	List(req request.ListOrderReq) ([]entity.Order, error)
 	Get(order entity.Order) (entity.Order, error)
 
-	CreateFromCarts(cartIDs []int64) (entity.Order, error)
+	CreateFromCarts(req request.CheckoutReq) (entity.Order, error)
 	Fulfill(order entity.Order) (entity.Order, error)
 }

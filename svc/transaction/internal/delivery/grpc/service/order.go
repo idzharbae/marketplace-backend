@@ -6,6 +6,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/converter"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/request"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/prototransaction"
 )
 
@@ -21,7 +22,10 @@ func (os *OrderService) Checkout(ctx context.Context, in *prototransaction.Check
 	if in == nil {
 		return nil, errors.New("parameter should not be nil")
 	}
-	order, err := os.orderUC.CreateFromCarts(in.GetCartIds())
+	order, err := os.orderUC.CreateFromCarts(request.CheckoutReq{
+		CartIDs:       in.GetCartIds(),
+		PaymentAmount: in.GetPaymentAmount(),
+	})
 	if err != nil {
 		return nil, err
 	}

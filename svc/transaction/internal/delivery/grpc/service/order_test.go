@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/golang/mock/gomock"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/request"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/usecase/ucmock"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/prototransaction"
 	"github.com/stretchr/testify/assert"
@@ -47,10 +48,14 @@ func TestOrderService_Checkout(t *testing.T) {
 		test.Begin(t)
 		defer test.Finsih()
 		req := &prototransaction.CheckoutReq{
-			CartIds: []int64{1, 2, 3},
+			CartIds:       []int64{1, 2, 3},
+			PaymentAmount: 123456,
 		}
 
-		test.uc.EXPECT().CreateFromCarts(req.GetCartIds()).Return(entity.Order{}, errors.New("error"))
+		test.uc.EXPECT().CreateFromCarts(request.CheckoutReq{
+			CartIDs:       req.GetCartIds(),
+			PaymentAmount: req.GetPaymentAmount(),
+		}).Return(entity.Order{}, errors.New("error"))
 
 		got, err := test.unit.Checkout(test.ctx, req)
 		assert.Nil(t, got)
@@ -63,7 +68,10 @@ func TestOrderService_Checkout(t *testing.T) {
 			CartIds: []int64{1, 2, 3},
 		}
 
-		test.uc.EXPECT().CreateFromCarts(req.GetCartIds()).Return(entity.Order{ID: 12337}, nil)
+		test.uc.EXPECT().CreateFromCarts(request.CheckoutReq{
+			CartIDs:       req.GetCartIds(),
+			PaymentAmount: req.GetPaymentAmount(),
+		}).Return(entity.Order{ID: 12337}, nil)
 
 		got, err := test.unit.Checkout(test.ctx, req)
 		assert.NotNil(t, got)

@@ -1,10 +1,14 @@
 package internal
 
-import "github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
+import (
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/request"
+)
 
 //go:generate mockgen -destination=repo/repomock/cartreader_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/transaction/internal CartReader
 type CartReader interface {
 	ListByUserID(userID int64) ([]entity.Cart, error)
+	GetByIDs(cartID ...int64) ([]entity.Cart, error)
 }
 
 //go:generate mockgen -destination=repo/repomock/cartwriter_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/transaction/internal CartWriter
@@ -22,6 +26,6 @@ type OrderReader interface {
 
 //go:generate mockgen -destination=repo/repomock/orderwriter_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/transaction/internal OrderWriter
 type OrderWriter interface {
-	CreateFromCartsAndSubstractCustomerSaldo(cartIDs []int64) (entity.Order, error)
+	CreateFromCartsAndSubstractCustomerSaldo(req request.CheckoutReq) (entity.Order, error)
 	UpdateOrderStatusAndAddShopSaldo(order entity.Order) (entity.Order, error)
 }
