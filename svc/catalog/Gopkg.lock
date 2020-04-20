@@ -261,7 +261,7 @@
   revision = "f447254575fde2c994d6f2d03076c476bfe61854"
 
 [[projects]]
-  digest = "1:7543f50ecb108b5bf1220a8452d35e3fd9cb2831d3fb67f42e2647ffb9501328"
+  digest = "1:6f7436b7b051b559818a281ac558316c75cc10abba5440a9b164489bcdc0f80f"
   name = "google.golang.org/grpc"
   packages = [
     ".",
@@ -306,8 +306,8 @@
     "tap",
   ]
   pruneopts = "UT"
-  revision = "142182889d38b76209f1d9f1d8e91d7608aff542"
-  version = "v1.28.0"
+  revision = "ac54eec90516cee50fc6b9b113b34628a85f976f"
+  version = "v1.28.1"
 
 [[projects]]
   digest = "1:55b110c99c5fdc4f14930747326acce56b52cfce60b24b1c03ef686ac0e46bb1"

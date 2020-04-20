@@ -8,8 +8,11 @@ import (
 )
 
 type Repos struct {
-	CartReader internal.CartReader
-	CartWriter internal.CartWriter
+	CartReader  internal.CartReader
+	CartWriter  internal.CartWriter
+	OrderReader internal.OrderReader
+	OrderWriter internal.OrderWriter
+
 	connMaster connection.Gormw
 	connSlave  connection.Gormw
 }
@@ -23,13 +26,19 @@ func NewRepos(cfg config.Config) *Repos {
 	if err != nil {
 		panic(err)
 	}
+
 	cartReader := repo.NewCartReader(connSlave)
 	cartWriter := repo.NewCartWriter(connMaster)
+	orderReader := repo.NewOrderReader(connSlave)
+	orderWriter := repo.NewOrderWriter(connMaster)
+
 	return &Repos{
-		CartWriter: cartWriter,
-		CartReader: cartReader,
-		connSlave:  connSlave,
-		connMaster: connMaster,
+		CartWriter:  cartWriter,
+		CartReader:  cartReader,
+		OrderReader: orderReader,
+		OrderWriter: orderWriter,
+		connSlave:   connSlave,
+		connMaster:  connMaster,
 	}
 }
 

@@ -87,9 +87,12 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:e385e0e7e4204945580552e1a838cc69d56a4e544eb2ff1f5a8dc5b7aa529d3e"
+  digest = "1:7cbeac87f1a3d468f819d70335ac0fae703dad5452281e7591835721a36a83c8"
   name = "github.com/idzharbae/marketplace-backend"
-  packages = ["svc/catalog/catalogproto"]
+  packages = [
+    "svc/auth/authproto",
+    "svc/catalog/catalogproto",
+  ]
   pruneopts = "UT"
   revision = "b24519e22cf72c24f2fa8894d1a6f9808b6b9f59"
 
@@ -384,9 +387,11 @@
     "github.com/grpc-ecosystem/go-grpc-middleware",
     "github.com/grpc-ecosystem/go-grpc-middleware/validator",
     "github.com/grpc-ecosystem/go-grpc-prometheus",
+    "github.com/idzharbae/marketplace-backend/svc/auth/authproto",
     "github.com/idzharbae/marketplace-backend/svc/catalog/catalogproto",
     "github.com/jinzhu/gorm",
     "github.com/jinzhu/gorm/dialects/postgres",
+    "github.com/lib/pq",
     "github.com/pkg/errors",
     "github.com/stretchr/testify/assert",
     "google.golang.org/grpc",

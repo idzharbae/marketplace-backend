@@ -6,12 +6,14 @@ import (
 )
 
 type UseCases struct {
-	CartUC internal.CartUC
+	CartUC  internal.CartUC
+	OrderUC internal.OrderUC
 }
 
 func NewUseCases(repos *Repos, gateways *Gateways) *UseCases {
 	return &UseCases{
-		CartUC: usecase.NewCart(repos.CartReader, repos.CartWriter, gateways.CatalogGateway),
+		CartUC:  usecase.NewCart(repos.CartReader, repos.CartWriter, gateways.CatalogGateway),
+		OrderUC: usecase.NewOrder(repos.OrderReader, repos.OrderWriter, repos.CartReader),
 	}
 }
 func (uc *UseCases) Close() []error {

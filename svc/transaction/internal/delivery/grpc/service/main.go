@@ -6,14 +6,12 @@ import (
 
 type Services struct {
 	*CartService
-	*CheckoutService
-	*FulfillmentService
+	*OrderService
 }
 
 func GetServices(a *app.Transaction) *Services {
 	return &Services{
-		CartService:        NewCartService(a.UseCases.CartUC),
-		CheckoutService:    NewCheckoutService(),
-		FulfillmentService: NewFulfillmentService(),
+		CartService:  NewCartService(a.UseCases.CartUC),
+		OrderService: NewOrderService(a.UseCases.OrderUC),
 	}
 }

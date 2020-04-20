@@ -2,12 +2,14 @@ package repo
 
 import (
 	"errors"
+	"testing"
+
 	"github.com/golang/mock/gomock"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/repo/connection/gormmock"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/repo/model"
+	"github.com/lib/pq"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 type cartReaderTest struct {
@@ -65,6 +67,49 @@ func TestCartReader_ListByUserID(t *testing.T) {
 		test.db.EXPECT().Error().Return(nil)
 
 		got, err := test.unit.ListByUserID(req)
+		assert.NotNil(t, got)
+		assert.Nil(t, err)
+	})
+}
+
+func TestCartReader_GetByIDs(t *testing.T) {
+	test := newCartReaderTest()
+	t.Run("error when finding, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := []int64{1, 2, 3}
+
+		test.db.EXPECT().Where("id=ANY(?)", gomock.Any()).DoAndReturn(func(query string, arg pq.Int64Array) *gormmock.MockGormw {
+			arr := pq.Int64Array(req)
+			assert.Equal(t, arr, arg)
+			return test.db
+		})
+		test.db.EXPECT().Find(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := test.unit.GetByIDs(req...)
+		assert.Nil(t, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("no error, should not return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := []int64{1, 2, 3}
+
+		test.db.EXPECT().Where("id=ANY(?)", gomock.Any()).DoAndReturn(func(query string, arg pq.Int64Array) *gormmock.MockGormw {
+			arr := pq.Int64Array(req)
+			assert.Equal(t, arr, arg)
+			return test.db
+		})
+		test.db.EXPECT().Find(gomock.Any()).DoAndReturn(func(arg *[]model.Cart) *gormmock.MockGormw {
+			*arg = []model.Cart{
+				{ID: 123},
+			}
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+
+		got, err := test.unit.GetByIDs(req...)
 		assert.NotNil(t, got)
 		assert.Nil(t, err)
 	})

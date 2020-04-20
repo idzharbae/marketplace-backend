@@ -33,6 +33,25 @@ func (m *MockCartReader) EXPECT() *MockCartReaderMockRecorder {
 	return m.recorder
 }
 
+// GetByIDs mocks base method.
+func (m *MockCartReader) GetByIDs(arg0 ...int64) ([]entity.Cart, error) {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{}
+	for _, a := range arg0 {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "GetByIDs", varargs...)
+	ret0, _ := ret[0].([]entity.Cart)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetByIDs indicates an expected call of GetByIDs.
+func (mr *MockCartReaderMockRecorder) GetByIDs(arg0 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByIDs", reflect.TypeOf((*MockCartReader)(nil).GetByIDs), arg0...)
+}
+
 // ListByUserID mocks base method.
 func (m *MockCartReader) ListByUserID(arg0 int64) ([]entity.Cart, error) {
 	m.ctrl.T.Helper()
