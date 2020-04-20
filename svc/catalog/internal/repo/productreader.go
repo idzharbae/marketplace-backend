@@ -24,7 +24,7 @@ func (p *ProductReader) ListAll(req requests.ListProduct) ([]entity.Product, err
 		db = db.Where("category=?", req.Category)
 	}
 	if req.Search != "" {
-		db = db.Where("name like ?", "%"+req.Search+"%")
+		db = db.Where("name ilike ?", "%"+req.Search+"%")
 	}
 	if req.ShopIDs != nil {
 		db = db.Where("shop_id=ANY(?)", req.ShopIDs)

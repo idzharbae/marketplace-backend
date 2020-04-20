@@ -59,7 +59,7 @@ func TestProductReader_ListAll(t *testing.T) {
 		defer finish()
 		req := requests.ListProduct{Search: "asdfg"}
 
-		db.EXPECT().Where("name like ?", "%"+req.Search+"%").Return(db)
+		db.EXPECT().Where("name ilike ?", "%"+req.Search+"%").Return(db)
 		db.EXPECT().Order("id desc").Return(db)
 		db.EXPECT().Find(gomock.Any()).Return(db)
 		db.EXPECT().Error().Return(nil)
@@ -137,7 +137,7 @@ func TestProductReader_ListAll(t *testing.T) {
 		}
 
 		db.EXPECT().Where("category=?", req.Category).Return(db)
-		db.EXPECT().Where("name like ?", "%"+req.Search+"%").Return(db)
+		db.EXPECT().Where("name ilike ?", "%"+req.Search+"%").Return(db)
 		db.EXPECT().Where("shop_id=ANY(?)", req.ShopIDs).Return(db)
 		db.EXPECT().Order("stock_kg asc").Return(db)
 		db.EXPECT().Limit(req.Pagination.Limit).Return(db)
@@ -168,7 +168,7 @@ func TestProductReader_ListAll(t *testing.T) {
 		}
 
 		db.EXPECT().Where("category=?", req.Category).Return(db)
-		db.EXPECT().Where("name like ?", "%"+req.Search+"%").Return(db)
+		db.EXPECT().Where("name ilike ?", "%"+req.Search+"%").Return(db)
 		db.EXPECT().Where("shop_id=ANY(?)", req.ShopIDs).Return(db)
 		db.EXPECT().Order("stock_kg asc").Return(db)
 		db.EXPECT().Limit(req.Pagination.Limit).Return(db)
