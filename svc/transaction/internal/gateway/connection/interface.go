@@ -10,3 +10,7 @@ type Catalog interface {
 	GetProduct(ctx context.Context, in *catalogproto.GetProductReq, opts ...grpc.CallOption) (*catalogproto.Product, error)
 	Close() error
 }
+
+type Auth interface {
+	Close() error
+}

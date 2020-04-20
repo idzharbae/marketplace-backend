@@ -28,5 +28,6 @@ type TokenUC interface {
 //go:generate mockgen -destination=usecase/ucmock/paymentuc_mock.go -package=ucmock github.com/idzharbae/marketplace-backend/svc/auth/internal PaymentUC
 type PaymentUC interface {
 	TopUp(req request.TopUp) (entity.User, error)
+	UpdateSaldo(req request.TopUp) (entity.User, error)
 	Transfer(req request.Transfer) (authproto.TransferSaldoResp, error)
 }

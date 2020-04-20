@@ -136,3 +136,49 @@ func TestPaymentService_TransferSaldo(t *testing.T) {
 		assert.Nil(t, err)
 	})
 }
+
+func TestPaymentService_UpdateSaldo(t *testing.T) {
+	test := newPaymentTest()
+	t.Run("given nil param should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		got, err := test.unit.UpdateSaldo(context.Background(), nil)
+		assert.Nil(t, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("uc returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := &authproto.TopUpReq{
+			UserId: 12,
+			Amount: 1337,
+		}
+		test.uc.EXPECT().UpdateSaldo(request.TopUp{
+			UserID: req.GetUserId(),
+			Amount: req.GetAmount(),
+		}).Return(entity.User{}, errors.New("error"))
+
+		got, err := test.unit.UpdateSaldo(context.Background(), req)
+		assert.Nil(t, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("uc returns no error, should not return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := &authproto.TopUpReq{
+			UserId: 12,
+			Amount: 1337,
+		}
+		resp := entity.User{ID: req.GetUserId(), Saldo: 1000 + req.GetAmount()}
+		test.uc.EXPECT().UpdateSaldo(request.TopUp{
+			UserID: req.GetUserId(),
+			Amount: req.GetAmount(),
+		}).Return(resp, nil)
+
+		got, err := test.unit.UpdateSaldo(context.Background(), req)
+		assert.NotNil(t, got)
+		assert.Equal(t, got.GetSaldo(), resp.Saldo)
+		assert.Nil(t, err)
+	})
+}

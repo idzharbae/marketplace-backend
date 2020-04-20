@@ -33,6 +33,23 @@ func (p *PaymentService) TopUp(ctx context.Context, in *authproto.TopUpReq) (*au
 	}, nil
 }
 
+func (p *PaymentService) UpdateSaldo(ctx context.Context, in *authproto.TopUpReq) (*authproto.TopUpResp, error) {
+	if in == nil {
+		return nil, errors.New("parameter should not be nil")
+	}
+	res, err := p.PaymentUC.UpdateSaldo(request.TopUp{
+		UserID: in.GetUserId(),
+		Amount: in.GetAmount(),
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &authproto.TopUpResp{
+		UserId: res.ID,
+		Saldo:  res.Saldo,
+	}, nil
+}
+
 func (p *PaymentService) TransferSaldo(ctx context.Context, in *authproto.TransferSaldoReq) (*authproto.TransferSaldoResp, error) {
 	if in == nil {
 		return nil, errors.New("parameter should not be nil")

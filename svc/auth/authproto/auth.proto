@@ -14,6 +14,7 @@ service MarketplaceAuth {
 
     // Payment
     rpc TopUp(TopUpReq) returns (TopUpResp) {}
+    rpc UpdateSaldo(TopUpReq) returns (TopUpResp) {}
     rpc TransferSaldo(TransferSaldoReq) returns (TransferSaldoResp) {}
 }
 
