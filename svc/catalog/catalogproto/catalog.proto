@@ -22,6 +22,7 @@ message ListProductsReq {
     string category = 4;
     string order_by = 6;
     string order_type = 7;
+    repeated int64 product_ids = 8;
 }
 
 message ListProductsResp {

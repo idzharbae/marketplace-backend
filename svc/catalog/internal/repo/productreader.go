@@ -6,6 +6,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/repo/connection"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/repo/model"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/requests"
+	"github.com/lib/pq"
 )
 
 type ProductReader struct {
@@ -47,6 +48,16 @@ func (p *ProductReader) ListByShopID(shopID int64, pagination requests.Paginatio
 	var products []model.Product
 	db := p.db.Where("shop_id=?", shopID).Order("id desc")
 	db = applyPagination(pagination, db)
+	err := db.Find(&products).Error()
+	if err != nil {
+		return nil, err
+	}
+	return converter.ProductModelsToEntities(products), nil
+}
+
+func (p *ProductReader) ListByIDs(productIDs pq.Int64Array) ([]entity.Product, error) {
+	var products []model.Product
+	db := p.db.Where("id=ANY(?)", productIDs).Order("id desc")
 	err := db.Find(&products).Error()
 	if err != nil {
 		return nil, err

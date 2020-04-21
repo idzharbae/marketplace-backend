@@ -17,6 +17,9 @@ func NewProduct(productReader internal.ProductReader, productWriter internal.Pro
 }
 
 func (p *Product) List(req requests.ListProduct) ([]entity.Product, error) {
+	if len(req.ProductIDs) > 0 {
+		return p.ProductReader.ListByIDs(req.ProductIDs)
+	}
 	return p.ProductReader.ListAll(req)
 }
 
