@@ -9,4 +9,5 @@ type ListProduct struct {
 	OrderType  string
 	Category   string
 	Pagination Pagination
+	ProductIDs pq.Int64Array
 }

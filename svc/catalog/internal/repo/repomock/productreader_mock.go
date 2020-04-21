@@ -8,6 +8,7 @@ import (
 	gomock "github.com/golang/mock/gomock"
 	entity "github.com/idzharbae/marketplace-backend/svc/catalog/internal/entity"
 	requests "github.com/idzharbae/marketplace-backend/svc/catalog/internal/requests"
+	pq "github.com/lib/pq"
 	reflect "reflect"
 )
 
@@ -77,6 +78,21 @@ func (m *MockProductReader) ListAll(arg0 requests.ListProduct) ([]entity.Product
 func (mr *MockProductReaderMockRecorder) ListAll(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListAll", reflect.TypeOf((*MockProductReader)(nil).ListAll), arg0)
+}
+
+// ListByIDs mocks base method.
+func (m *MockProductReader) ListByIDs(arg0 pq.Int64Array) ([]entity.Product, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListByIDs", arg0)
+	ret0, _ := ret[0].([]entity.Product)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListByIDs indicates an expected call of ListByIDs.
+func (mr *MockProductReaderMockRecorder) ListByIDs(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListByIDs", reflect.TypeOf((*MockProductReader)(nil).ListByIDs), arg0)
 }
 
 // ListByShopID mocks base method.

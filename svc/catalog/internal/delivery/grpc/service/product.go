@@ -21,11 +21,12 @@ func NewProductService(productUC internal.ProductUC) *ProductService {
 
 func (p *ProductService) ListProducts(ctx context.Context, req *catalogproto.ListProductsReq) (*catalogproto.ListProductsResp, error) {
 	ucReq := requests.ListProduct{
-		ShopIDs:   req.GetShopIDs(),
-		Category:  req.GetCategory(),
-		Search:    req.GetSearch(),
-		OrderBy:   req.GetOrderBy(),
-		OrderType: req.GetOrderType(),
+		ShopIDs:    req.GetShopIDs(),
+		Category:   req.GetCategory(),
+		Search:     req.GetSearch(),
+		OrderBy:    req.GetOrderBy(),
+		OrderType:  req.GetOrderType(),
+		ProductIDs: req.GetProductIds(),
 		Pagination: requests.Pagination{
 			Page:  int(req.GetPagination().GetPage()),
 			Limit: int(req.GetPagination().GetLimit()),
