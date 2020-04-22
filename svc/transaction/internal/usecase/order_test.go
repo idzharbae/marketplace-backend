@@ -37,6 +37,74 @@ func (ot *orderTest) Finish() {
 	ot.ctrl.Finish()
 }
 
+func TestOrder_Get(t *testing.T) {
+	test := newOrderTest()
+	t.Run("given no id, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		got, err := test.unit.Get(entity.Order{})
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Order{}, got)
+	})
+	t.Run("given no user_id and shop_id, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		got, err := test.unit.Get(entity.Order{ID: 123})
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Order{}, got)
+	})
+	t.Run("reader returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Order{ID: 123, UserID: 12}
+		test.reader.EXPECT().GetByID(req.ID).Return(entity.Order{}, errors.New("error"))
+
+		got, err := test.unit.Get(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Order{}, got)
+	})
+	t.Run("given user_id doesn't match returned user_id, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Order{ID: 123, UserID: 12}
+		test.reader.EXPECT().GetByID(req.ID).Return(entity.Order{ID: 123, UserID: 99}, nil)
+
+		got, err := test.unit.Get(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Order{}, got)
+	})
+	t.Run("given shop_id doesn't match returned shop_id, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Order{ID: 123, ShopID: 12}
+		test.reader.EXPECT().GetByID(req.ID).Return(entity.Order{ID: 123, ShopID: 99}, nil)
+
+		got, err := test.unit.Get(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Order{}, got)
+	})
+	t.Run("given matching user_id, should return order", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Order{ID: 123, UserID: 99}
+		test.reader.EXPECT().GetByID(req.ID).Return(entity.Order{ID: 123, UserID: 99}, nil)
+
+		got, err := test.unit.Get(req)
+		assert.Nil(t, err)
+		assert.Equal(t, entity.Order{ID: 123, UserID: 99}, got)
+	})
+	t.Run("given matching shop_id, should return order", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Order{ID: 123, ShopID: 99}
+		test.reader.EXPECT().GetByID(req.ID).Return(entity.Order{ID: 123, ShopID: 99}, nil)
+
+		got, err := test.unit.Get(req)
+		assert.Nil(t, err)
+		assert.Equal(t, entity.Order{ID: 123, ShopID: 99}, got)
+	})
+}
+
 func TestOrder_CreateFromCarts(t *testing.T) {
 	test := newOrderTest()
 	t.Run("error when finding carts, should return error", func(t *testing.T) {

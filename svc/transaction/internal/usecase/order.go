@@ -19,11 +19,30 @@ func NewOrder(reader internal.OrderReader, writer internal.OrderWriter, cartRead
 }
 
 func (o *Order) List(req request.ListOrderReq) ([]entity.Order, error) {
-	return nil, nil
+	if req.UserID != 0 {
+		return o.reader.ListByUserID(req.UserID)
+	}
+	return o.reader.ListByShopID(req.ShopID)
 }
 
 func (o *Order) Get(order entity.Order) (entity.Order, error) {
-	return entity.Order{}, nil
+	if order.ID == 0 {
+		return entity.Order{}, errors.New("orderID is required")
+	}
+	if order.ShopID == 0 && order.UserID == 0 {
+		return entity.Order{}, errors.New("either shopID or userID is required")
+	}
+	resultOrder, err := o.reader.GetByID(order.ID)
+	if err != nil {
+		return entity.Order{}, err
+	}
+	if order.UserID != 0 && order.UserID != resultOrder.UserID {
+		return entity.Order{}, errors.New("user is not authorized to get this order")
+	}
+	if order.ShopID != 0 && order.ShopID != resultOrder.ShopID {
+		return entity.Order{}, errors.New("user is not authorized to get this order")
+	}
+	return resultOrder, nil
 }
 
 func (o *Order) CreateFromCarts(req request.CheckoutReq) ([]entity.Order, error) {
