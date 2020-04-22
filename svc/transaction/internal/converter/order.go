@@ -56,7 +56,7 @@ func OrderModelToEntity(order model.Order, payment model.Payment) entity.Order {
 		Products:   products,
 		ShopID:     order.ShopID,
 		TotalPrice: order.TotalPrice,
-		Status:     0,
+		Status:     order.Status,
 		CreatedAt:  order.CreatedAt,
 		UpdatedAt:  order.UpdatedAt,
 		Payment:    PaymentModelToEntity(payment),
