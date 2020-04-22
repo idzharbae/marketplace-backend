@@ -29,7 +29,7 @@ func NewRepos(cfg config.Config, gateways *Gateways) *Repos {
 
 	cartReader := repo.NewCartReader(connSlave)
 	cartWriter := repo.NewCartWriter(connMaster)
-	orderReader := repo.NewOrderReader(connSlave)
+	orderReader := repo.NewOrderReader(connSlave, gateways.CatalogGateway)
 	orderWriter := repo.NewOrderWriter(connMaster, gateways.AuthGateway, gateways.CatalogGateway)
 
 	return &Repos{

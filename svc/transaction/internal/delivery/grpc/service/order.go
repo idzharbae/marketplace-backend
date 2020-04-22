@@ -18,6 +18,38 @@ func NewOrderService(orderUC internal.OrderUC) *OrderService {
 	return &OrderService{orderUC: orderUC}
 }
 
+func (os *OrderService) ListOrder(ctx context.Context, in *prototransaction.ListOrderReq) (*prototransaction.ListOrderResp, error) {
+	if in == nil {
+		return nil, errors.New("parameter should not be nil")
+	}
+	orders, err := os.orderUC.List(request.ListOrderReq{
+		UserID: in.GetCustomerId(),
+		ShopID: in.GetShopId(),
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &prototransaction.ListOrderResp{
+		Orders: converter.OrderEntitiesToProtos(orders),
+	}, nil
+}
+func (os *OrderService) GetOrder(ctx context.Context, in *prototransaction.GetOrderReq) (*prototransaction.GetOrderResp, error) {
+	if in == nil {
+		return nil, errors.New("parameter should not be nil")
+	}
+	order, err := os.orderUC.Get(entity.Order{
+		ID:     in.GetOrderId(),
+		UserID: in.GetCustomerId(),
+		ShopID: in.GetShopId(),
+	})
+	if err != nil {
+		return nil, err
+	}
+	return &prototransaction.GetOrderResp{
+		Order: converter.OrderEntityToProto(order),
+	}, nil
+}
+
 func (os *OrderService) Checkout(ctx context.Context, in *prototransaction.CheckoutReq) (*prototransaction.CheckoutResp, error) {
 	if in == nil {
 		return nil, errors.New("parameter should not be nil")
