@@ -171,6 +171,14 @@ func TestOrder_Fulfill(t *testing.T) {
 		assert.NotNil(t, err)
 		assert.Equal(t, entity.Order{}, got)
 	})
+	t.Run("given user_id = 0 should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		got, err := test.unit.Fulfill(entity.Order{ID: 12})
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Order{}, got)
+	})
 }
 
 func (ot *orderTest) GetProducts() []entity.Product {

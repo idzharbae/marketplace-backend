@@ -98,12 +98,10 @@ func TestOrderService_Fulfill(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		req := &prototransaction.FulfillReq{
-			OrderId:       123,
-			PaymentAmount: 1412,
+			OrderId: 123,
+			UserId:  1412,
 		}
-		test.uc.EXPECT().Fulfill(entity.Order{ID: req.GetOrderId(), Payment: entity.Payment{
-			Amount: req.GetPaymentAmount()},
-		}).Return(entity.Order{}, errors.New("error"))
+		test.uc.EXPECT().Fulfill(entity.Order{ID: req.GetOrderId(), UserID: req.GetUserId()}).Return(entity.Order{}, errors.New("error"))
 		got, err := test.unit.Fulfill(test.ctx, req)
 		assert.Nil(t, got)
 		assert.NotNil(t, err)
@@ -112,17 +110,10 @@ func TestOrderService_Fulfill(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		req := &prototransaction.FulfillReq{
-			OrderId:       123,
-			PaymentAmount: 1412,
+			OrderId: 123,
+			UserId:  1412,
 		}
-		test.uc.EXPECT().Fulfill(entity.Order{ID: req.GetOrderId(), Payment: entity.Payment{
-			Amount: req.GetPaymentAmount()},
-		}).Return(entity.Order{ID: req.GetOrderId(), Payment: entity.Payment{
-			ID:            12,
-			Amount:        req.GetPaymentAmount(),
-			PaymentMethod: 1,
-			PaymentStatus: 1,
-		}}, nil)
+		test.uc.EXPECT().Fulfill(entity.Order{ID: req.GetOrderId(), UserID: req.GetUserId()}).Return(entity.Order{ID: req.GetOrderId(), UserID: req.GetUserId()}, nil)
 		got, err := test.unit.Fulfill(test.ctx, req)
 		assert.NotNil(t, got)
 		assert.Nil(t, err)

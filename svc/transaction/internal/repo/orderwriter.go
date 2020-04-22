@@ -49,20 +49,35 @@ func (ow *OrderWriter) CreateFromCartsAndSubstractCustomerSaldo(req request.Crea
 	return resultOrders, nil
 }
 
-func (ow *OrderWriter) deleteCarts(req request.CreateOrderReq, dbTransaction connection.Gormw) error {
-	carts := converter.CartEntitiesToModels(req.Carts)
-	err := dbTransaction.Delete(&carts).Error()
+func (ow *OrderWriter) UpdateOrderStatusAndAddShopSaldo(order entity.Order) (entity.Order, error) {
+	var orderModel model.Order
+	err := ow.db.Where("id=?", order.ID).First(&orderModel).Error()
+	if err != nil {
+		return entity.Order{}, err
+	}
+	if orderModel.Status != constants.OrderStatusOnShipment {
+		return entity.Order{}, errors.New("order is not being shipped")
+	}
+	if orderModel.UserID != order.UserID {
+		return entity.Order{}, errors.New("user is not authorized to fulfill this order")
+	}
+	order = converter.OrderModelToEntity(orderModel, model.Payment{})
+	dbTransaction := ow.db.Begin()
+	err = dbTransaction.Model(&model.Order{}).Where("id=?", order.ID).Update("status", constants.OrderStatusFulfilled).Error()
+	if err != nil {
+		return entity.Order{}, err
+	}
+	order.Status = constants.OrderStatusFulfilled
+	_, err = ow.auth.UpdateUserSaldo(order.ShopID, order.TotalPrice)
 	if err != nil {
 		dbTransaction.Rollback()
-		return err
+		return entity.Order{}, err
 	}
-	return nil
+	dbTransaction.Commit()
+	return order, nil
 }
 
-func (ow *OrderWriter) UpdateOrderStatusAndAddShopSaldo(order entity.Order) (entity.Order, error) {
-	return entity.Order{}, nil
-}
-
+// CreateFromCartsAndSubstractCustomerSaldo private functions
 func (ow *OrderWriter) validateSaldo(req request.CreateOrderReq) error {
 	user, err := ow.auth.GetUserByID(req.UserID)
 	if err != nil {
@@ -112,4 +127,14 @@ func (ow *OrderWriter) createOrders(ordersMap map[int64]model.Order, dbTransacti
 		resultOrders = append(resultOrders, converter.OrderModelToEntity(order, payment))
 	}
 	return resultOrders, nil
+}
+
+func (ow *OrderWriter) deleteCarts(req request.CreateOrderReq, dbTransaction connection.Gormw) error {
+	carts := converter.CartEntitiesToModels(req.Carts)
+	err := dbTransaction.Delete(&carts).Error()
+	if err != nil {
+		dbTransaction.Rollback()
+		return err
+	}
+	return nil
 }

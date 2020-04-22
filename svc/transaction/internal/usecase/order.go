@@ -70,5 +70,8 @@ func (o *Order) Fulfill(order entity.Order) (entity.Order, error) {
 	if order.ID == 0 {
 		return entity.Order{}, errors.New("orderID should not be 0")
 	}
+	if order.UserID == 0 {
+		return entity.Order{}, errors.New("userID should not be 0")
+	}
 	return o.writer.UpdateOrderStatusAndAddShopSaldo(order)
 }

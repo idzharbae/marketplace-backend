@@ -3,6 +3,7 @@ package repo
 import (
 	"errors"
 	"github.com/golang/mock/gomock"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/constants"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/gateway/gatewaymock"
@@ -273,4 +274,185 @@ func (ow *orderWriterTest) GetReq() request.CreateOrderReq {
 		},
 		PaymentAmount: 3900,
 	}
+}
+
+func TestOrderWriter_UpdateOrderStatusAndAddShopSaldo(t *testing.T) {
+	test := newOrderWriterTest()
+	t.Run("error fetching order, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Order{
+			ID:         1,
+			UserID:     2,
+			ShopID:     3,
+			TotalPrice: 40,
+			Payment: entity.Payment{
+				PaymentStatus: constants.PaymentStatusPaid,
+			},
+		}
+
+		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
+			*arg = model.Order{
+				ID:     req.ID,
+				Status: constants.OrderStatusWaitingForSeller,
+			}
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := test.unit.UpdateOrderStatusAndAddShopSaldo(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Order{}, got)
+	})
+	t.Run("order not being shipped, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Order{
+			ID:     1,
+			UserID: 2,
+		}
+
+		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
+			*arg = model.Order{
+				ID:         req.ID,
+				ShopID:     req.ShopID,
+				Status:     constants.OrderStatusWaitingForSeller,
+				TotalPrice: 123,
+				UserID:     2,
+			}
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+
+		got, err := test.unit.UpdateOrderStatusAndAddShopSaldo(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Order{}, got)
+	})
+	t.Run("order is not owned by requesting user, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Order{
+			ID:     1,
+			UserID: 2,
+		}
+
+		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
+			*arg = model.Order{
+				ID:         req.ID,
+				ShopID:     req.ShopID,
+				UserID:     1234,
+				Status:     constants.OrderStatusOnShipment,
+				TotalPrice: 123,
+			}
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+
+		got, err := test.unit.UpdateOrderStatusAndAddShopSaldo(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Order{}, got)
+	})
+	t.Run("error when updating order status, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Order{
+			ID:     1,
+			UserID: 2,
+		}
+
+		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
+			*arg = model.Order{
+				ID:         req.ID,
+				ShopID:     req.ShopID,
+				Status:     constants.OrderStatusOnShipment,
+				TotalPrice: 123,
+				UserID:     2,
+			}
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Begin().Return(test.db)
+		test.db.EXPECT().Model(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
+		test.db.EXPECT().Update("status", constants.OrderStatusFulfilled).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := test.unit.UpdateOrderStatusAndAddShopSaldo(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Order{}, got)
+	})
+	t.Run("error when updating shop saldo, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Order{
+			ID:     1,
+			UserID: 2,
+		}
+		reqModel := model.Order{
+			ID:         req.ID,
+			ShopID:     145,
+			Status:     constants.OrderStatusOnShipment,
+			TotalPrice: 123,
+			UserID:     2,
+		}
+		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
+			*arg = reqModel
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Begin().Return(test.db)
+		test.db.EXPECT().Model(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
+		test.db.EXPECT().Update("status", constants.OrderStatusFulfilled).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+		test.auth.EXPECT().UpdateUserSaldo(reqModel.ShopID, reqModel.TotalPrice).Return(entity.User{}, errors.New("error"))
+		test.db.EXPECT().Rollback()
+
+		got, err := test.unit.UpdateOrderStatusAndAddShopSaldo(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Order{}, got)
+	})
+	t.Run("success updating order, should not return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Order{
+			ID:         1,
+			UserID:     2,
+			ShopID:     3,
+			TotalPrice: 40,
+			Payment: entity.Payment{
+				PaymentStatus: constants.PaymentStatusPaid,
+			},
+			Status: constants.OrderStatusOnShipment,
+		}
+		reqModel := model.Order{
+			ID:         req.ID,
+			ShopID:     145,
+			Status:     constants.OrderStatusOnShipment,
+			TotalPrice: 123,
+			UserID:     2,
+		}
+		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
+			*arg = reqModel
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Begin().Return(test.db)
+		test.db.EXPECT().Model(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Where("id=?", req.ID).Return(test.db)
+		test.db.EXPECT().Update("status", constants.OrderStatusFulfilled).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+		test.auth.EXPECT().UpdateUserSaldo(reqModel.ShopID, reqModel.TotalPrice).Return(entity.User{}, nil)
+		test.db.EXPECT().Commit()
+
+		got, err := test.unit.UpdateOrderStatusAndAddShopSaldo(req)
+		assert.Nil(t, err)
+		assert.Equal(t, int32(constants.OrderStatusFulfilled), got.Status)
+	})
 }

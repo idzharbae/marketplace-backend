@@ -51,7 +51,7 @@ message CheckoutResp {
 
 message FulfillReq {
     int64 order_id = 1;
-    int64 payment_amount = 2;
+    int64 user_id = 2;
 }
 
 message FulfillResp {

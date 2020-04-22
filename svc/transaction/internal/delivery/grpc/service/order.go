@@ -40,8 +40,8 @@ func (os *OrderService) Fulfill(ctx context.Context, in *prototransaction.Fulfil
 		return nil, errors.New("parameter should not be nil")
 	}
 	_, err := os.orderUC.Fulfill(entity.Order{
-		ID:      in.GetOrderId(),
-		Payment: entity.Payment{Amount: in.GetPaymentAmount()},
+		ID:     in.GetOrderId(),
+		UserID: in.GetUserId(),
 	})
 	if err != nil {
 		return nil, err
