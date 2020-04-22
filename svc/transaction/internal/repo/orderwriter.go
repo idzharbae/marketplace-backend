@@ -77,6 +77,10 @@ func (ow *OrderWriter) UpdateOrderStatusAndAddShopSaldo(order entity.Order) (ent
 	return order, nil
 }
 
+func (ow *OrderWriter) UpdateOrderStatusToOnShipment(orderID, shopID int64) (entity.Order, error) {
+	return entity.Order{}, nil
+}
+
 // CreateFromCartsAndSubstractCustomerSaldo private functions
 func (ow *OrderWriter) validateSaldo(req request.CreateOrderReq) error {
 	user, err := ow.auth.GetUserByID(req.UserID)

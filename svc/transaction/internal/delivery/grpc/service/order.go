@@ -67,6 +67,19 @@ func (os *OrderService) Checkout(ctx context.Context, in *prototransaction.Check
 	}, nil
 }
 
+func (os *OrderService) UpdateOrderStatusToOnShipment(ctx context.Context, in *prototransaction.ShipProductReq) (*prototransaction.ShipProductResp, error) {
+	if in == nil {
+		return nil, errors.New("parameter should not be nil")
+	}
+	order, err := os.orderUC.UpdateOrderStatusToOnShipment(in.GetOrderId(), in.GetShopId())
+	if err != nil {
+		return nil, err
+	}
+	return &prototransaction.ShipProductResp{
+		Order: converter.OrderEntityToProto(order),
+	}, nil
+}
+
 func (os *OrderService) Fulfill(ctx context.Context, in *prototransaction.FulfillReq) (*prototransaction.FulfillResp, error) {
 	if in == nil {
 		return nil, errors.New("parameter should not be nil")

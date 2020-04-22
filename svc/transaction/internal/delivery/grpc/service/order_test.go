@@ -34,7 +34,7 @@ func (ot *orderTest) Finish() {
 	ot.ctrl.Finish()
 }
 
-func TestOrder_List(t *testing.T) {
+func TestOrder_ListOrder(t *testing.T) {
 	test := newOrderTest()
 	t.Run("given nil param, should return error", func(t *testing.T) {
 		test.Begin(t)
@@ -214,5 +214,41 @@ func TestOrderService_Fulfill(t *testing.T) {
 		got, err := test.unit.Fulfill(test.ctx, req)
 		assert.NotNil(t, got)
 		assert.Nil(t, err)
+	})
+}
+
+func TestOrderService_UpdateOrderStatusToOnShipment(t *testing.T) {
+	test := newOrderTest()
+	t.Run("given nil param should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		got, err := test.unit.UpdateOrderStatusToOnShipment(context.Background(), nil)
+		assert.Nil(t, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("uc returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := &prototransaction.ShipProductReq{
+			OrderId: 1,
+			ShopId:  2,
+		}
+		test.uc.EXPECT().UpdateOrderStatusToOnShipment(req.GetOrderId(), req.GetShopId()).Return(entity.Order{}, errors.New("error"))
+		got, err := test.unit.UpdateOrderStatusToOnShipment(context.Background(), req)
+		assert.Nil(t, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("uc returns no error, should return order", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := &prototransaction.ShipProductReq{
+			OrderId: 1,
+			ShopId:  2,
+		}
+		test.uc.EXPECT().UpdateOrderStatusToOnShipment(req.GetOrderId(), req.GetShopId()).Return(entity.Order{}, errors.New("error"))
+		got, err := test.unit.UpdateOrderStatusToOnShipment(context.Background(), req)
+		assert.Nil(t, got)
+		assert.NotNil(t, err)
 	})
 }

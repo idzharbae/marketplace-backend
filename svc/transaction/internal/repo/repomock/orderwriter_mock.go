@@ -63,3 +63,18 @@ func (mr *MockOrderWriterMockRecorder) UpdateOrderStatusAndAddShopSaldo(arg0 int
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateOrderStatusAndAddShopSaldo", reflect.TypeOf((*MockOrderWriter)(nil).UpdateOrderStatusAndAddShopSaldo), arg0)
 }
+
+// UpdateOrderStatusToOnShipment mocks base method.
+func (m *MockOrderWriter) UpdateOrderStatusToOnShipment(arg0, arg1 int64) (entity.Order, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "UpdateOrderStatusToOnShipment", arg0, arg1)
+	ret0, _ := ret[0].(entity.Order)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// UpdateOrderStatusToOnShipment indicates an expected call of UpdateOrderStatusToOnShipment.
+func (mr *MockOrderWriterMockRecorder) UpdateOrderStatusToOnShipment(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "UpdateOrderStatusToOnShipment", reflect.TypeOf((*MockOrderWriter)(nil).UpdateOrderStatusToOnShipment), arg0, arg1)
+}

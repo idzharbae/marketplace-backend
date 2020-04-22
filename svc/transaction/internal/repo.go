@@ -28,5 +28,6 @@ type OrderReader interface {
 //go:generate mockgen -destination=repo/repomock/orderwriter_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/transaction/internal OrderWriter
 type OrderWriter interface {
 	CreateFromCartsAndSubstractCustomerSaldo(req request.CreateOrderReq) ([]entity.Order, error)
+	UpdateOrderStatusToOnShipment(orderID, shopID int64) (entity.Order, error)
 	UpdateOrderStatusAndAddShopSaldo(order entity.Order) (entity.Order, error)
 }
