@@ -78,7 +78,20 @@ func (ow *OrderWriter) UpdateOrderStatusAndAddShopSaldo(order entity.Order) (ent
 }
 
 func (ow *OrderWriter) UpdateOrderStatusToOnShipment(orderID, shopID int64) (entity.Order, error) {
-	return entity.Order{}, nil
+	var order model.Order
+	err := ow.db.Where("id=?", orderID).First(&order).Error()
+	if err != nil {
+		return entity.Order{}, err
+	}
+	if order.ShopID != shopID {
+		return entity.Order{}, errors.New("shop_id doesn't match with order data")
+	}
+	order.Status = constants.OrderStatusOnShipment
+	err = ow.db.Save(&order).Error()
+	if err != nil {
+		return entity.Order{}, err
+	}
+	return converter.OrderModelToEntity(order, model.Payment{}), nil
 }
 
 // CreateFromCartsAndSubstractCustomerSaldo private functions
