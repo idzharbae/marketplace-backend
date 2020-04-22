@@ -48,6 +48,21 @@ func (mr *MockOrderReaderMockRecorder) GetByID(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockOrderReader)(nil).GetByID), arg0)
 }
 
+// ListByShopID mocks base method.
+func (m *MockOrderReader) ListByShopID(arg0 int64) ([]entity.Order, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "ListByShopID", arg0)
+	ret0, _ := ret[0].([]entity.Order)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ListByShopID indicates an expected call of ListByShopID.
+func (mr *MockOrderReaderMockRecorder) ListByShopID(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListByShopID", reflect.TypeOf((*MockOrderReader)(nil).ListByShopID), arg0)
+}
+
 // ListByUserID mocks base method.
 func (m *MockOrderReader) ListByUserID(arg0 int64) ([]entity.Order, error) {
 	m.ctrl.T.Helper()

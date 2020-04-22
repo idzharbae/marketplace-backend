@@ -17,7 +17,7 @@ type Repos struct {
 	connSlave  connection.Gormw
 }
 
-func NewRepos(cfg config.Config) *Repos {
+func NewRepos(cfg config.Config, gateways *Gateways) *Repos {
 	connMaster, err := getMasterConn(cfg)
 	if err != nil {
 		panic(err)
@@ -30,7 +30,7 @@ func NewRepos(cfg config.Config) *Repos {
 	cartReader := repo.NewCartReader(connSlave)
 	cartWriter := repo.NewCartWriter(connMaster)
 	orderReader := repo.NewOrderReader(connSlave)
-	orderWriter := repo.NewOrderWriter(connMaster)
+	orderWriter := repo.NewOrderWriter(connMaster, gateways.AuthGateway, gateways.CatalogGateway)
 
 	return &Repos{
 		CartWriter:  cartWriter,

@@ -21,8 +21,8 @@ func NewTransaction(cfgPath string) (*Transaction, error) {
 	if err != nil {
 		return nil, err
 	}
-	repos := NewRepos(cfg)
 	gateways, err := NewGateways(cfg)
+	repos := NewRepos(cfg, gateways)
 	if err != nil {
 		return nil, err
 	}
@@ -65,6 +65,7 @@ func (t *Transaction) Close() []error {
 
 	errs = append(errs, t.Repos.Close()...)
 	errs = append(errs, t.UseCases.Close()...)
+	errs = append(errs, t.Gateways.Close()...)
 
 	return errs
 }

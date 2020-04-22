@@ -35,10 +35,10 @@ func (m *MockOrderWriter) EXPECT() *MockOrderWriterMockRecorder {
 }
 
 // CreateFromCartsAndSubstractCustomerSaldo mocks base method.
-func (m *MockOrderWriter) CreateFromCartsAndSubstractCustomerSaldo(arg0 request.CheckoutReq) (entity.Order, error) {
+func (m *MockOrderWriter) CreateFromCartsAndSubstractCustomerSaldo(arg0 request.CreateOrderReq) ([]entity.Order, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateFromCartsAndSubstractCustomerSaldo", arg0)
-	ret0, _ := ret[0].(entity.Order)
+	ret0, _ := ret[0].([]entity.Order)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

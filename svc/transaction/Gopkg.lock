@@ -87,14 +87,14 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:7cbeac87f1a3d468f819d70335ac0fae703dad5452281e7591835721a36a83c8"
+  digest = "1:fe21c344e386aa4b1779704ec632bfccd6c00d5cc704400d4b92bb961a14f819"
   name = "github.com/idzharbae/marketplace-backend"
   packages = [
     "svc/auth/authproto",
     "svc/catalog/catalogproto",
   ]
   pruneopts = "UT"
-  revision = "b24519e22cf72c24f2fa8894d1a6f9808b6b9f59"
+  revision = "1cafd6c9b81becfe2c60fcc7af2c065583f7c463"
 
 [[projects]]
   digest = "1:e40b74b04fa9a70ff39869139c9fd15ec9a9eefde3f51ef3b65405a60ce30e0e"

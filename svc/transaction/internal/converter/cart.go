@@ -66,3 +66,11 @@ func CartEntityToModel(cart entity.Cart) model.Cart {
 		AmountKG:  cart.AmountKG,
 	}
 }
+
+func CartEntitiesToModels(carts []entity.Cart) []model.Cart {
+	res := make([]model.Cart, len(carts))
+	for i, cart := range carts {
+		res[i] = CartEntityToModel(cart)
+	}
+	return res
+}

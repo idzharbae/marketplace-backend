@@ -23,6 +23,7 @@ func (os *OrderService) Checkout(ctx context.Context, in *prototransaction.Check
 		return nil, errors.New("parameter should not be nil")
 	}
 	order, err := os.orderUC.CreateFromCarts(request.CheckoutReq{
+		UserID:        in.GetUserId(),
 		CartIDs:       in.GetCartIds(),
 		PaymentAmount: in.GetPaymentAmount(),
 	})
@@ -30,7 +31,7 @@ func (os *OrderService) Checkout(ctx context.Context, in *prototransaction.Check
 		return nil, err
 	}
 	return &prototransaction.CheckoutResp{
-		Order: converter.OrderEntityToProto(order),
+		Orders: converter.OrderEntitiesToProtos(order),
 	}, nil
 }
 
@@ -39,8 +40,8 @@ func (os *OrderService) Fulfill(ctx context.Context, in *prototransaction.Fulfil
 		return nil, errors.New("parameter should not be nil")
 	}
 	_, err := os.orderUC.Fulfill(entity.Order{
-		ID:      in.GetOrderId(),
-		Payment: entity.Payment{Amount: in.GetPaymentAmount()},
+		ID:     in.GetOrderId(),
+		UserID: in.GetUserId(),
 	})
 	if err != nil {
 		return nil, err

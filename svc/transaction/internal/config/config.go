@@ -16,6 +16,11 @@ type Config struct {
 				Port string
 			}
 		}
+		Auth struct {
+			Grpc struct {
+				Port string
+			}
+		}
 	}
 }
 
