@@ -489,6 +489,31 @@ func TestOrderWriter_UpdateOrderStatusToOnShipment(t *testing.T) {
 				ID:        123,
 				ProductID: nil,
 				UserID:    322,
+				Status:    constants.OrderStatusWaitingForSeller,
+			}
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+
+		got, err := test.unit.UpdateOrderStatusToOnShipment(req.OrderID, req.ShopID)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Order{}, got)
+	})
+	t.Run("order status is not waiting for shop, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := struct {
+			OrderID int64
+			ShopID  int64
+		}{123, 321}
+
+		test.db.EXPECT().Where("id=?", req.OrderID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
+			*arg = model.Order{
+				ID:        123,
+				ProductID: nil,
+				UserID:    321,
+				Status:    constants.OrderStatusFulfilled,
 			}
 			return test.db
 		})
@@ -512,6 +537,7 @@ func TestOrderWriter_UpdateOrderStatusToOnShipment(t *testing.T) {
 				ID:        123,
 				ProductID: nil,
 				ShopID:    321,
+				Status:    constants.OrderStatusWaitingForSeller,
 			}
 			return test.db
 		})
@@ -537,6 +563,7 @@ func TestOrderWriter_UpdateOrderStatusToOnShipment(t *testing.T) {
 				ID:        123,
 				ProductID: nil,
 				ShopID:    321,
+				Status:    constants.OrderStatusWaitingForSeller,
 			}
 			return test.db
 		})

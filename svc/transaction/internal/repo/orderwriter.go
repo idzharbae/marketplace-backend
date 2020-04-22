@@ -86,6 +86,9 @@ func (ow *OrderWriter) UpdateOrderStatusToOnShipment(orderID, shopID int64) (ent
 	if order.ShopID != shopID {
 		return entity.Order{}, errors.New("shop_id doesn't match with order data")
 	}
+	if order.Status != constants.OrderStatusWaitingForSeller {
+		return entity.Order{}, errors.New("order already shipped")
+	}
 	order.Status = constants.OrderStatusOnShipment
 	err = ow.db.Save(&order).Error()
 	if err != nil {
