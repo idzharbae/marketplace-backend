@@ -209,6 +209,7 @@ func (ot *orderTest) GetOrderReq() request.CreateOrderReq {
 				Name:       "asdf",
 				PricePerKG: 1000,
 				PhotoURL:   "asdf",
+				AmountKG:   1,
 			}, AmountKG: 1, UserID: 69},
 			{ID: 23, Product: entity.Product{
 				ID:         3,
@@ -216,6 +217,7 @@ func (ot *orderTest) GetOrderReq() request.CreateOrderReq {
 				Name:       "asdf",
 				PricePerKG: 1000,
 				PhotoURL:   "asdf",
+				AmountKG:   1,
 			}, AmountKG: 1, UserID: 69},
 			{ID: 4, Product: entity.Product{
 				ID:         4,
@@ -223,6 +225,7 @@ func (ot *orderTest) GetOrderReq() request.CreateOrderReq {
 				Name:       "asdf",
 				PricePerKG: 2000,
 				PhotoURL:   "asdf",
+				AmountKG:   1,
 			}, AmountKG: 1, UserID: 69},
 		},
 		PaymentAmount: 4000,

@@ -48,6 +48,7 @@ func (o *Order) CreateFromCarts(req request.CheckoutReq) ([]entity.Order, error)
 	}
 	for _, product := range products {
 		productsTotalPrice += int64(cartMap[product.ID].AmountKG * float64(product.PricePerKG))
+		product.AmountKG = cartMap[product.ID].AmountKG
 		cartMap[product.ID].Product = product
 	}
 

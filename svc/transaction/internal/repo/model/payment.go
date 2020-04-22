@@ -11,3 +11,7 @@ type Payment struct {
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
 }
+
+func (p Payment) TableName() string {
+	return "payment"
+}

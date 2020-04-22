@@ -78,7 +78,7 @@ func (ow *OrderWriter) groupOrderByShopID(req request.CreateOrderReq) map[int64]
 	ordersMap := make(map[int64]model.Order)
 	for _, cart := range req.Carts {
 		shopID := cart.Product.ShopID
-		productPrice := int64(float64(cart.Product.PricePerKG) * cart.Product.AmountKG)
+		productPrice := int64(float64(cart.Product.PricePerKG) * cart.AmountKG)
 		ordersMap[cart.Product.ShopID] = model.Order{
 			ProductID:  append(ordersMap[shopID].ProductID, cart.Product.ID),
 			UserID:     cart.UserID,
@@ -109,7 +109,7 @@ func (ow *OrderWriter) createOrders(ordersMap map[int64]model.Order, dbTransacti
 			dbTransaction.Rollback()
 			return nil, err
 		}
-		resultOrders = append(resultOrders, converter.OrderModelToEntity(order))
+		resultOrders = append(resultOrders, converter.OrderModelToEntity(order, payment))
 	}
 	return resultOrders, nil
 }
