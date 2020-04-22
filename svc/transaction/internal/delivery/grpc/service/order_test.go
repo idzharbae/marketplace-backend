@@ -34,6 +34,103 @@ func (ot *orderTest) Finish() {
 	ot.ctrl.Finish()
 }
 
+func TestOrder_List(t *testing.T) {
+	test := newOrderTest()
+	t.Run("given nil param, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		got, err := test.unit.ListOrder(context.Background(), nil)
+		assert.Nil(t, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("uc returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := &prototransaction.ListOrderReq{
+			CustomerId: 1,
+			ShopId:     2,
+		}
+		test.uc.EXPECT().List(request.ListOrderReq{UserID: req.GetCustomerId(), ShopID: req.GetShopId()}).Return(nil, errors.New("error"))
+
+		got, err := test.unit.ListOrder(context.Background(), req)
+		assert.Nil(t, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("uc returns no error, should not return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := &prototransaction.ListOrderReq{
+			CustomerId: 1,
+			ShopId:     2,
+		}
+		test.uc.EXPECT().List(request.ListOrderReq{UserID: req.GetCustomerId(), ShopID: req.GetShopId()}).Return([]entity.Order{
+			{
+				ID:     1,
+				UserID: 1,
+				ShopID: 2,
+			},
+			{
+				ID:     2,
+				UserID: 1,
+				ShopID: 2,
+			},
+		}, nil)
+
+		got, err := test.unit.ListOrder(context.Background(), req)
+		assert.NotNil(t, got)
+		assert.Nil(t, err)
+	})
+}
+
+func TestOrderService_GetOrder(t *testing.T) {
+	test := newOrderTest()
+	t.Run("given nil param should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		got, err := test.unit.GetOrder(context.Background(), nil)
+		assert.Nil(t, got)
+		assert.NotNil(t, err)
+	})
+	t.Run("uc returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := &prototransaction.GetOrderReq{
+			OrderId:    1,
+			CustomerId: 2,
+			ShopId:     3,
+		}
+		test.uc.EXPECT().Get(entity.Order{
+			ID:     1,
+			UserID: 2,
+			ShopID: 3,
+		}).Return(entity.Order{}, errors.New("error"))
+
+		got, err := test.unit.GetOrder(context.Background(), req)
+		assert.NotNil(t, err)
+		assert.Nil(t, got)
+	})
+	t.Run("uc returns no error, should not return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := &prototransaction.GetOrderReq{
+			OrderId:    1,
+			CustomerId: 2,
+			ShopId:     3,
+		}
+		test.uc.EXPECT().Get(entity.Order{
+			ID:     1,
+			UserID: 2,
+			ShopID: 3,
+		}).Return(entity.Order{ID: 1}, nil)
+
+		got, err := test.unit.GetOrder(context.Background(), req)
+		assert.Nil(t, err)
+		assert.NotNil(t, got)
+	})
+}
+
 func TestOrderService_Checkout(t *testing.T) {
 	test := newOrderTest()
 	t.Run("given nil param should return error", func(t *testing.T) {
