@@ -8,7 +8,6 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/gateway/gatewaymock"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/repo/connection/gormmock"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/repo/model"
-	"github.com/lib/pq"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -113,7 +112,7 @@ func testList(arg string, t *testing.T) {
 			return test.db
 		})
 		test.db.EXPECT().Error().Return(nil)
-		test.catalog.EXPECT().GetProductsByID([]int64(orderModelList[0].ProductID)).Return(nil, errors.New("error"))
+		test.catalog.EXPECT().GetProductsByID([]int64(orderModelList[0].GetProductIDs())).Return(nil, errors.New("error"))
 
 		var got []entity.Order
 		var err error
@@ -149,7 +148,7 @@ func testList(arg string, t *testing.T) {
 			return test.db
 		})
 		test.db.EXPECT().Error().Return(nil)
-		test.catalog.EXPECT().GetProductsByID([]int64(orderModelList[0].ProductID)).Return([]entity.Product{
+		test.catalog.EXPECT().GetProductsByID([]int64(orderModelList[0].GetProductIDs())).Return([]entity.Product{
 			{ID: 1},
 			{ID: 2},
 			{ID: 3},
@@ -189,12 +188,12 @@ func TestOrderReader_GetByID(t *testing.T) {
 		test.db.EXPECT().Where("id=?", req).Return(test.db)
 		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
 			*arg = model.Order{
-				ID:         req,
-				ProductID:  []int64{1, 2, 3},
-				UserID:     1,
-				ShopID:     2,
-				TotalPrice: 3,
-				Status:     4,
+				ID:            req,
+				OrderProducts: []model.OrderProduct{{ID: 1}, {ID: 2}, {ID: 3}},
+				UserID:        1,
+				ShopID:        2,
+				TotalPrice:    3,
+				Status:        4,
 			}
 			return test.db
 		})
@@ -214,12 +213,12 @@ func TestOrderReader_GetByID(t *testing.T) {
 		test.db.EXPECT().Where("id=?", req).Return(test.db)
 		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
 			*arg = model.Order{
-				ID:         req,
-				ProductID:  []int64{1, 2, 3},
-				UserID:     1,
-				ShopID:     2,
-				TotalPrice: 3,
-				Status:     4,
+				ID:            req,
+				OrderProducts: []model.OrderProduct{{ID: 1}, {ID: 2}, {ID: 3}},
+				UserID:        1,
+				ShopID:        2,
+				TotalPrice:    3,
+				Status:        4,
 			}
 			return test.db
 		})
@@ -249,12 +248,12 @@ func TestOrderReader_GetByID(t *testing.T) {
 		test.db.EXPECT().Where("id=?", req).Return(test.db)
 		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
 			*arg = model.Order{
-				ID:         req,
-				ProductID:  []int64{1, 2, 3},
-				UserID:     1,
-				ShopID:     2,
-				TotalPrice: 3,
-				Status:     4,
+				ID:            req,
+				OrderProducts: []model.OrderProduct{{ID: 1}, {ID: 2}, {ID: 3}},
+				UserID:        1,
+				ShopID:        2,
+				TotalPrice:    3,
+				Status:        4,
 			}
 			return test.db
 		})
@@ -303,12 +302,12 @@ func TestOrderReader_GetByID(t *testing.T) {
 func (ct *orderReaderTest) GetOrderList() []model.Order {
 	return []model.Order{
 		{
-			ID:         1,
-			ProductID:  pq.Int64Array{1, 2, 3},
-			UserID:     2,
-			ShopID:     3,
-			TotalPrice: 4,
-			Status:     5,
+			ID:            1,
+			OrderProducts: []model.OrderProduct{{ID: 1}, {ID: 2}, {ID: 3}},
+			UserID:        2,
+			ShopID:        3,
+			TotalPrice:    4,
+			Status:        5,
 		},
 	}
 }

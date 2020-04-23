@@ -115,7 +115,10 @@ func (ow *OrderWriter) groupOrderByShopID(req request.CreateOrderReq) map[int64]
 		shopID := cart.Product.ShopID
 		productPrice := int64(float64(cart.Product.PricePerKG) * cart.AmountKG)
 		ordersMap[cart.Product.ShopID] = model.Order{
-			ProductID:  append(ordersMap[shopID].ProductID, cart.Product.ID),
+			OrderProducts: append(ordersMap[shopID].OrderProducts, model.OrderProduct{
+				ProductID: cart.Product.ID,
+				AmountKG:  cart.AmountKG,
+			}),
 			UserID:     cart.UserID,
 			ShopID:     cart.Product.ShopID,
 			TotalPrice: ordersMap[shopID].TotalPrice + productPrice,
@@ -128,6 +131,7 @@ func (ow *OrderWriter) groupOrderByShopID(req request.CreateOrderReq) map[int64]
 func (ow *OrderWriter) createOrders(ordersMap map[int64]model.Order, dbTransaction connection.Gormw) ([]entity.Order, error) {
 	resultOrders := make([]entity.Order, 0, len(ordersMap))
 	for _, order := range ordersMap {
+
 		err := dbTransaction.Save(&order).Error()
 		if err != nil {
 			dbTransaction.Rollback()
