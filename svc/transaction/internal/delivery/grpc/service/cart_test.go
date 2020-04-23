@@ -127,11 +127,13 @@ func TestCartService_UpdateCart(t *testing.T) {
 		test.uc.EXPECT().Update(entity.Cart{
 			ID:       req.GetId(),
 			AmountKG: req.GetProduct().GetAmountKg(),
+			UserID:   req.GetUserId(),
 		}).Return(entity.Cart{}, errors.New("error"))
 
 		got, err := test.unit.UpdateCart(test.ctx, &prototransaction.UpdateCartReq{
 			Id:         req.GetId(),
 			QuantityKg: req.GetProduct().GetAmountKg(),
+			UserId:     req.GetUserId(),
 		})
 		assert.Nil(t, got)
 		assert.NotNil(t, err)
@@ -144,11 +146,13 @@ func TestCartService_UpdateCart(t *testing.T) {
 		test.uc.EXPECT().Update(entity.Cart{
 			ID:       req.GetId(),
 			AmountKG: req.GetProduct().GetAmountKg(),
+			UserID:   req.GetUserId(),
 		}).Return(test.GetCart(), nil)
 
 		got, err := test.unit.UpdateCart(test.ctx, &prototransaction.UpdateCartReq{
 			Id:         req.GetId(),
 			QuantityKg: req.GetProduct().GetAmountKg(),
+			UserId:     req.GetUserId(),
 		})
 		assert.NotNil(t, got)
 		assert.Nil(t, err)
@@ -169,7 +173,7 @@ func TestCartService_RemoveCart(t *testing.T) {
 		defer test.Finish()
 		req := test.GetCartProto()
 
-		test.uc.EXPECT().Remove(req.GetId()).Return(errors.New("error"))
+		test.uc.EXPECT().Remove(req.GetId(), req.GetUserId()).Return(errors.New("error"))
 
 		got, err := test.unit.RemoveCart(test.ctx, &prototransaction.RemoveCartReq{
 			Id: req.GetId(),
@@ -182,7 +186,7 @@ func TestCartService_RemoveCart(t *testing.T) {
 		defer test.Finish()
 		req := test.GetCartProto()
 
-		test.uc.EXPECT().Remove(req.GetId()).Return(nil)
+		test.uc.EXPECT().Remove(req.GetId(), req.GetUserId()).Return(nil)
 
 		got, err := test.unit.RemoveCart(test.ctx, &prototransaction.RemoveCartReq{
 			Id: req.GetId(),

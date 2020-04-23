@@ -45,6 +45,10 @@ func (c *Cart) Add(cart entity.Cart) (entity.Cart, error) {
 	if cart.AmountKG <= 0 {
 		return entity.Cart{}, errors.New("amount cant be <= 0")
 	}
+	_, err := c.CatalogGateway.GetProductByID(cart.Product.ID)
+	if err != nil {
+		return entity.Cart{}, errors.New("error fetching product: " + err.Error())
+	}
 	cart.ID = 0
 	return c.CartWriter.Create(cart)
 }
@@ -55,6 +59,9 @@ func (c *Cart) Update(cart entity.Cart) (entity.Cart, error) {
 	if cart.AmountKG <= 0 {
 		return entity.Cart{}, errors.New("amount cant be <= 0")
 	}
+	if cart.UserID == 0 {
+		return entity.Cart{}, errors.New("userID is required")
+	}
 
 	res, err := c.CartWriter.Update(cart)
 	if err != nil {
@@ -63,9 +70,12 @@ func (c *Cart) Update(cart entity.Cart) (entity.Cart, error) {
 	res.Product.AmountKG = res.AmountKG
 	return res, nil
 }
-func (c *Cart) Remove(cartID int64) error {
+func (c *Cart) Remove(cartID, userID int64) error {
 	if cartID == 0 {
 		return errors.New("cart ID is required")
 	}
-	return c.CartWriter.DeleteByID(cartID)
+	if userID == 0 {
+		return errors.New("userID is required")
+	}
+	return c.CartWriter.DeleteByID(cartID, userID)
 }

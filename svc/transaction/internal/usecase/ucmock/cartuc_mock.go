@@ -64,17 +64,17 @@ func (mr *MockCartUCMockRecorder) List(arg0 interface{}) *gomock.Call {
 }
 
 // Remove mocks base method.
-func (m *MockCartUC) Remove(arg0 int64) error {
+func (m *MockCartUC) Remove(arg0, arg1 int64) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Remove", arg0)
+	ret := m.ctrl.Call(m, "Remove", arg0, arg1)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // Remove indicates an expected call of Remove.
-func (mr *MockCartUCMockRecorder) Remove(arg0 interface{}) *gomock.Call {
+func (mr *MockCartUCMockRecorder) Remove(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Remove", reflect.TypeOf((*MockCartUC)(nil).Remove), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Remove", reflect.TypeOf((*MockCartUC)(nil).Remove), arg0, arg1)
 }
 
 // Update mocks base method.

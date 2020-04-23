@@ -44,6 +44,9 @@ func (cw *CartWriter) Update(cart entity.Cart) (entity.Cart, error) {
 	if queryFind.RecordNotFound() {
 		return entity.Cart{}, errors.New("record not found")
 	}
+	if cart.UserID != cartModel.UserID {
+		return entity.Cart{}, errors.New("user doesn't own this cart data")
+	}
 
 	cartModel.AmountKG = cart.AmountKG
 	err := cw.db.Save(&cartModel).Error()
@@ -54,7 +57,7 @@ func (cw *CartWriter) Update(cart entity.Cart) (entity.Cart, error) {
 	return converter.CartModelToEntity(cartModel), nil
 }
 
-func (cw *CartWriter) DeleteByID(cartID int64) error {
+func (cw *CartWriter) DeleteByID(cartID, userID int64) error {
 	var cartModel model.Cart
 	queryFind := cw.db.Where("id=?", cartID).First(&cartModel)
 	if err := queryFind.Error(); err != nil {
@@ -63,7 +66,9 @@ func (cw *CartWriter) DeleteByID(cartID int64) error {
 	if queryFind.RecordNotFound() {
 		return errors.New("record not found")
 	}
-
+	if cartModel.UserID != userID {
+		return errors.New("user doesn't own this cart data")
+	}
 	err := cw.db.Delete(&cartModel).Error()
 
 	return err

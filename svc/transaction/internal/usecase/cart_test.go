@@ -125,6 +125,7 @@ func TestCart_Add(t *testing.T) {
 			UserID:   124,
 			AmountKG: 124,
 		}
+		test.gateway.EXPECT().GetProductByID(req.Product.ID).Return(entity.Product{}, nil)
 		test.writer.EXPECT().Create(entity.Cart{
 			ID:       0,
 			Product:  req.Product,
@@ -186,15 +187,15 @@ func TestCart_Remove(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		req := int64(0)
-		err := test.unit.Remove(req)
+		err := test.unit.Remove(req, req)
 		assert.NotNil(t, err)
 	})
 	t.Run("repo returns error, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		req := int64(123)
-		test.writer.EXPECT().DeleteByID(req).Return(errors.New("error"))
-		err := test.unit.Remove(req)
+		test.writer.EXPECT().DeleteByID(req, req).Return(errors.New("error"))
+		err := test.unit.Remove(req, req)
 		assert.NotNil(t, err)
 	})
 }

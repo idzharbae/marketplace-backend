@@ -54,6 +54,7 @@ func (cs *CartService) UpdateCart(ctx context.Context, in *prototransaction.Upda
 	res, err := cs.cartUC.Update(entity.Cart{
 		ID:       in.GetId(),
 		AmountKG: in.GetQuantityKg(),
+		UserID:   in.GetUserId(),
 	})
 	if err != nil {
 		return nil, err
@@ -65,7 +66,7 @@ func (cs *CartService) RemoveCart(ctx context.Context, in *prototransaction.Remo
 	if in == nil {
 		return nil, errors.New("param should not be nil")
 	}
-	err := cs.cartUC.Remove(in.GetId())
+	err := cs.cartUC.Remove(in.GetId(), in.GetUserId())
 	if err != nil {
 		return nil, err
 	}

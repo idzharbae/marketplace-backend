@@ -58,7 +58,8 @@ message ListCartItemsResp {
 
 message UpdateCartReq {
     int64 id = 1;
-    double quantity_kg = 4;
+    int64 user_id = 2;
+    double quantity_kg = 3;
 }
 message AddToCartReq {
     int64 product_id = 1;
@@ -68,6 +69,7 @@ message AddToCartReq {
 
 message RemoveCartReq {
     int64 id = 1;
+    int64 user_id = 2;
 }
 message RemoveCartResp {
     bool success = 1;

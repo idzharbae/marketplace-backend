@@ -220,7 +220,7 @@ func TestCartWriter_DeleteByID(t *testing.T) {
 		test.db.EXPECT().First(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(errors.New("error"))
 
-		err := test.unit.DeleteByID(req)
+		err := test.unit.DeleteByID(req, req)
 		assert.NotNil(t, err)
 	})
 	t.Run("record not found, should return error", func(t *testing.T) {
@@ -233,7 +233,28 @@ func TestCartWriter_DeleteByID(t *testing.T) {
 		test.db.EXPECT().Error().Return(nil)
 		test.db.EXPECT().RecordNotFound().Return(true)
 
-		err := test.unit.DeleteByID(req)
+		err := test.unit.DeleteByID(req, req)
+		assert.NotNil(t, err)
+	})
+	t.Run("user id doesnt match, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := int64(123)
+
+		test.db.EXPECT().Where("id=?", req).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Cart) *gormmock.MockGormw {
+			*arg = model.Cart{
+				ID:        123,
+				ProductID: 32,
+				UserID:    12,
+				AmountKG:  1440,
+			}
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().RecordNotFound().Return(false)
+
+		err := test.unit.DeleteByID(req, req)
 		assert.NotNil(t, err)
 	})
 	t.Run("error when deleting cart, should return error", func(t *testing.T) {
@@ -256,7 +277,7 @@ func TestCartWriter_DeleteByID(t *testing.T) {
 		test.db.EXPECT().Delete(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(errors.New("error"))
 
-		err := test.unit.DeleteByID(req)
+		err := test.unit.DeleteByID(req, 12)
 		assert.NotNil(t, err)
 	})
 }

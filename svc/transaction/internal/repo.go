@@ -15,7 +15,7 @@ type CartReader interface {
 type CartWriter interface {
 	Create(cart entity.Cart) (entity.Cart, error)
 	Update(cart entity.Cart) (entity.Cart, error)
-	DeleteByID(cartID int64) error
+	DeleteByID(cartID, userID int64) error
 }
 
 //go:generate mockgen -destination=repo/repomock/orderreader_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/transaction/internal OrderReader
