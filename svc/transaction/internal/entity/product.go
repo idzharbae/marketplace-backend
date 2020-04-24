@@ -8,4 +8,5 @@ type Product struct {
 	PricePerKG int32
 	TotalPrice int64
 	PhotoURL   string
+	Slug       string
 }

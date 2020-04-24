@@ -39,6 +39,7 @@ func ProductEntityToProto(product entity.Product) *prototransaction.Product {
 		PricePerKg: product.PricePerKG,
 		TotalPrice: product.TotalPrice,
 		PhotoUrl:   product.PhotoURL,
+		Slug:       product.Slug,
 	}
 }
 

@@ -26,6 +26,7 @@ func (c *Catalog) GetProductByID(productID int64) (entity.Product, error) {
 		Name:       res.GetName(),
 		PricePerKG: res.GetPricePerKg(),
 		PhotoURL:   res.GetPhotoUrl(),
+		Slug:       res.GetSlug(),
 	}, nil
 }
 func (c *Catalog) GetProductsByID(productIDs []int64) ([]entity.Product, error) {
@@ -41,6 +42,7 @@ func (c *Catalog) GetProductsByID(productIDs []int64) ([]entity.Product, error) 
 			Name:       product.GetName(),
 			PricePerKG: product.GetPricePerKg(),
 			PhotoURL:   product.GetPhotoUrl(),
+			Slug:       product.GetSlug(),
 		}
 	}
 	return products, nil
