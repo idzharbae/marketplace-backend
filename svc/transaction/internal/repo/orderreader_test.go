@@ -47,6 +47,7 @@ func testList(arg string, t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		req := int64(123)
+		test.db.EXPECT().Preload("OrderProducts").Return(test.db)
 		test.db.EXPECT().Where(arg+"=?", req).Return(test.db)
 		test.db.EXPECT().Find(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(errors.New("error"))
@@ -67,7 +68,7 @@ func testList(arg string, t *testing.T) {
 		defer test.Finish()
 		req := int64(123)
 		orderModelList := test.GetOrderList()
-
+		test.db.EXPECT().Preload("OrderProducts").Return(test.db)
 		test.db.EXPECT().Where(arg+"=?", req).Return(test.db)
 		test.db.EXPECT().Find(gomock.Any()).DoAndReturn(func(arg *[]model.Order) *gormmock.MockGormw {
 			*arg = orderModelList
@@ -93,7 +94,7 @@ func testList(arg string, t *testing.T) {
 		defer test.Finish()
 		req := int64(123)
 		orderModelList := test.GetOrderList()
-
+		test.db.EXPECT().Preload("OrderProducts").Return(test.db)
 		test.db.EXPECT().Where(arg+"=?", req).Return(test.db)
 		test.db.EXPECT().Find(gomock.Any()).DoAndReturn(func(arg *[]model.Order) *gormmock.MockGormw {
 			*arg = orderModelList
@@ -129,7 +130,7 @@ func testList(arg string, t *testing.T) {
 		defer test.Finish()
 		req := int64(123)
 		orderModelList := test.GetOrderList()
-
+		test.db.EXPECT().Preload("OrderProducts").Return(test.db)
 		test.db.EXPECT().Where(arg+"=?", req).Return(test.db)
 		test.db.EXPECT().Find(gomock.Any()).DoAndReturn(func(arg *[]model.Order) *gormmock.MockGormw {
 			*arg = orderModelList

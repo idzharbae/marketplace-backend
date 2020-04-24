@@ -34,7 +34,7 @@ func (or *OrderReader) ListByUserID(userID int64) ([]entity.Order, error) {
 
 func (or *OrderReader) ListByShopID(shopID int64) ([]entity.Order, error) {
 	var orders []model.Order
-	err := or.db.Where("shop_id=?", shopID).Find(&orders).Error()
+	err := or.db.Preload("OrderProducts").Where("shop_id=?", shopID).Find(&orders).Error()
 	if err != nil {
 		return nil, errors.WithPrefix(err, "error fetching order")
 	}
