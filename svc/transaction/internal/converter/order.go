@@ -46,9 +46,9 @@ func PaymentEntityToProto(payment entity.Payment) *prototransaction.Payment {
 }
 
 func OrderModelToEntity(order model.Order, payment model.Payment) entity.Order {
-	products := make([]entity.Product, len(order.ProductID))
-	for i := range order.ProductID {
-		products[i] = entity.Product{ID: order.ProductID[i]}
+	products := make([]entity.Product, len(order.OrderProducts))
+	for i := range order.OrderProducts {
+		products[i] = entity.Product{ID: order.OrderProducts[i].ID}
 	}
 	return entity.Order{
 		ID:         order.ID,

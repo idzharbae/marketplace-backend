@@ -486,10 +486,9 @@ func TestOrderWriter_UpdateOrderStatusToOnShipment(t *testing.T) {
 		test.db.EXPECT().Where("id=?", req.OrderID).Return(test.db)
 		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
 			*arg = model.Order{
-				ID:        123,
-				ProductID: nil,
-				UserID:    322,
-				Status:    constants.OrderStatusWaitingForSeller,
+				ID:     123,
+				UserID: 322,
+				Status: constants.OrderStatusWaitingForSeller,
 			}
 			return test.db
 		})
@@ -510,10 +509,9 @@ func TestOrderWriter_UpdateOrderStatusToOnShipment(t *testing.T) {
 		test.db.EXPECT().Where("id=?", req.OrderID).Return(test.db)
 		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
 			*arg = model.Order{
-				ID:        123,
-				ProductID: nil,
-				UserID:    321,
-				Status:    constants.OrderStatusFulfilled,
+				ID:     123,
+				UserID: 321,
+				Status: constants.OrderStatusFulfilled,
 			}
 			return test.db
 		})
@@ -534,10 +532,9 @@ func TestOrderWriter_UpdateOrderStatusToOnShipment(t *testing.T) {
 		test.db.EXPECT().Where("id=?", req.OrderID).Return(test.db)
 		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
 			*arg = model.Order{
-				ID:        123,
-				ProductID: nil,
-				ShopID:    321,
-				Status:    constants.OrderStatusWaitingForSeller,
+				ID:     123,
+				ShopID: 321,
+				Status: constants.OrderStatusWaitingForSeller,
 			}
 			return test.db
 		})
@@ -560,10 +557,9 @@ func TestOrderWriter_UpdateOrderStatusToOnShipment(t *testing.T) {
 		test.db.EXPECT().Where("id=?", req.OrderID).Return(test.db)
 		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
 			*arg = model.Order{
-				ID:        123,
-				ProductID: nil,
-				ShopID:    321,
-				Status:    constants.OrderStatusWaitingForSeller,
+				ID:     123,
+				ShopID: 321,
+				Status: constants.OrderStatusWaitingForSeller,
 			}
 			return test.db
 		})

@@ -20,7 +20,7 @@ func NewOrderReader(db connection.Gormw, catalog internal.CatalogGateway) *Order
 
 func (or *OrderReader) ListByUserID(userID int64) ([]entity.Order, error) {
 	var orders []model.Order
-	err := or.db.Where("user_id=?", userID).Find(&orders).Error()
+	err := or.db.Preload("OrderProducts").Where("user_id=?", userID).Find(&orders).Error()
 	if err != nil {
 		return nil, errors.WithPrefix(err, "error fetching order")
 	}
@@ -34,7 +34,7 @@ func (or *OrderReader) ListByUserID(userID int64) ([]entity.Order, error) {
 
 func (or *OrderReader) ListByShopID(shopID int64) ([]entity.Order, error) {
 	var orders []model.Order
-	err := or.db.Where("shop_id=?", shopID).Find(&orders).Error()
+	err := or.db.Preload("OrderProducts").Where("shop_id=?", shopID).Find(&orders).Error()
 	if err != nil {
 		return nil, errors.WithPrefix(err, "error fetching order")
 	}
@@ -57,7 +57,7 @@ func (or *OrderReader) GetByID(orderID int64) (entity.Order, error) {
 		return entity.Order{}, err
 	}
 
-	products, err := or.catalog.GetProductsByID(order.ProductID)
+	products, err := or.catalog.GetProductsByID(order.GetProductIDs())
 	if err != nil {
 		return entity.Order{}, errors.WithPrefix(err, "error fetching order products")
 	}
@@ -69,14 +69,23 @@ func (or *OrderReader) GetByID(orderID int64) (entity.Order, error) {
 
 func (or *OrderReader) addPaymentAndProductsToOrders(orders []model.Order) ([]entity.Order, error) {
 	resultOrders := make([]entity.Order, len(orders))
+
 	for i, order := range orders {
 		payment, err := or.getPaymentByOrderID(order.ID)
 		if err != nil {
 			return nil, errors.WithPrefix(err, "error fetching payment")
 		}
-		products, err := or.catalog.GetProductsByID(order.ProductID)
+		products, err := or.catalog.GetProductsByID(order.GetProductIDs())
 		if err != nil {
 			return nil, errors.WithPrefix(err, "error fetching products")
+		}
+
+		orderProductMap := make(map[int64]model.OrderProduct, len(order.OrderProducts))
+		for _, product := range order.OrderProducts {
+			orderProductMap[product.ID] = product
+		}
+		for i := range products {
+			products[i].AmountKG = orderProductMap[products[i].ID].AmountKG
 		}
 
 		orderEntity := converter.OrderModelToEntity(order, payment)

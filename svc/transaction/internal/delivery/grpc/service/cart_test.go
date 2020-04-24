@@ -176,7 +176,8 @@ func TestCartService_RemoveCart(t *testing.T) {
 		test.uc.EXPECT().Remove(req.GetId(), req.GetUserId()).Return(errors.New("error"))
 
 		got, err := test.unit.RemoveCart(test.ctx, &prototransaction.RemoveCartReq{
-			Id: req.GetId(),
+			Id:     req.GetId(),
+			UserId: req.GetUserId(),
 		})
 		assert.Nil(t, got)
 		assert.NotNil(t, err)
@@ -189,7 +190,8 @@ func TestCartService_RemoveCart(t *testing.T) {
 		test.uc.EXPECT().Remove(req.GetId(), req.GetUserId()).Return(nil)
 
 		got, err := test.unit.RemoveCart(test.ctx, &prototransaction.RemoveCartReq{
-			Id: req.GetId(),
+			Id:     req.GetId(),
+			UserId: req.GetUserId(),
 		})
 		assert.NotNil(t, got)
 		assert.Nil(t, err)
@@ -213,6 +215,7 @@ func (ct *cartTest) GetListReq() *prototransaction.ListCartItemsReq {
 }
 func (ct *cartTest) GetCartProto() *prototransaction.Cart {
 	return &prototransaction.Cart{
+		Id:     123,
 		UserId: 34,
 		Product: &prototransaction.Product{
 			Id:         1,
