@@ -50,6 +50,9 @@ func (o *Order) CreateFromCarts(req request.CheckoutReq) ([]entity.Order, error)
 	if err != nil {
 		return nil, err
 	}
+	if len(carts) == 0 {
+		return nil, errors.New("carts not found")
+	}
 	productsTotalPrice := int64(0)
 	cartMap := make(map[int64]*entity.Cart, len(carts))
 	productIDs := make([]int64, len(carts))
