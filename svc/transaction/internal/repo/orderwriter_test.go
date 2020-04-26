@@ -167,6 +167,10 @@ func TestOrderWriter_CreateFromCartsAndSubstractCustomerSaldo(t *testing.T) {
 		test.db.EXPECT().Error().Return(nil)
 		test.db.EXPECT().Delete(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Delete(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Delete(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
 		test.auth.EXPECT().UpdateUserSaldo(req.UserID, -req.PaymentAmount).Return(entity.User{}, errors.New("error"))
 		test.db.EXPECT().Rollback()
 
@@ -200,6 +204,10 @@ func TestOrderWriter_CreateFromCartsAndSubstractCustomerSaldo(t *testing.T) {
 			assert.Equal(t, int64(1338), (*arg).OrderID)
 			return test.db
 		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Delete(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Delete(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(nil)
 		test.db.EXPECT().Delete(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(nil)

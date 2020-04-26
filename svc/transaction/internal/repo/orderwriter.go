@@ -155,10 +155,12 @@ func (ow *OrderWriter) createOrders(ordersMap map[int64]model.Order, dbTransacti
 
 func (ow *OrderWriter) deleteCarts(req request.CreateOrderReq, dbTransaction connection.Gormw) error {
 	carts := converter.CartEntitiesToModels(req.Carts)
-	err := dbTransaction.Delete(&carts).Error()
-	if err != nil {
-		dbTransaction.Rollback()
-		return err
+	for _, cart := range carts {
+		err := dbTransaction.Delete(&cart).Error()
+		if err != nil {
+			dbTransaction.Rollback()
+			return err
+		}
 	}
 	return nil
 }
