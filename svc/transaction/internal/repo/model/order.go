@@ -22,7 +22,7 @@ func (o Order) TableName() string {
 func (o Order) GetProductIDs() []int64 {
 	res := make([]int64, len(o.OrderProducts))
 	for i, product := range o.OrderProducts {
-		res[i] = product.ID
+		res[i] = product.ProductID
 	}
 	return res
 }
