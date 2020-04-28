@@ -215,7 +215,7 @@ func TestOrderReader_GetByID(t *testing.T) {
 		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
 			*arg = model.Order{
 				ID:            req,
-				OrderProducts: []model.OrderProduct{{ID: 1}, {ID: 2}, {ID: 3}},
+				OrderProducts: []model.OrderProduct{{ID: 1, ProductID: 1}, {ID: 2, ProductID: 2}, {ID: 3, ProductID: 3}},
 				UserID:        1,
 				ShopID:        2,
 				TotalPrice:    3,
@@ -250,7 +250,7 @@ func TestOrderReader_GetByID(t *testing.T) {
 		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
 			*arg = model.Order{
 				ID:            req,
-				OrderProducts: []model.OrderProduct{{ID: 1}, {ID: 2}, {ID: 3}},
+				OrderProducts: []model.OrderProduct{{ID: 1, ProductID: 1}, {ID: 2, ProductID: 2}, {ID: 3, ProductID: 3}},
 				UserID:        1,
 				ShopID:        2,
 				TotalPrice:    3,

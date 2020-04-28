@@ -81,8 +81,8 @@ func (or *OrderReader) addPaymentAndProductsToOrders(orders []model.Order) ([]en
 		}
 
 		orderProductMap := make(map[int64]model.OrderProduct, len(order.OrderProducts))
-		for _, product := range order.OrderProducts {
-			orderProductMap[product.ID] = product
+		for _, orderProduct := range order.OrderProducts {
+			orderProductMap[orderProduct.ProductID] = orderProduct
 		}
 		for i := range products {
 			products[i].AmountKG = orderProductMap[products[i].ID].AmountKG
