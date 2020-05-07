@@ -3,6 +3,7 @@ package repo
 import (
 	"errors"
 	"github.com/golang/mock/gomock"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/constants"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/gateway/gatewaymock"
@@ -55,9 +56,9 @@ func testList(arg string, t *testing.T) {
 		var got []entity.Order
 		var err error
 		if arg == "shop_id" {
-			got, err = test.unit.ListByShopID(req)
+			got, err = test.unit.ListByShopID(req, 0)
 		} else {
-			got, err = test.unit.ListByUserID(req)
+			got, err = test.unit.ListByUserID(req, 0)
 		}
 
 		assert.NotNil(t, err)
@@ -82,9 +83,9 @@ func testList(arg string, t *testing.T) {
 		var got []entity.Order
 		var err error
 		if arg == "shop_id" {
-			got, err = test.unit.ListByShopID(req)
+			got, err = test.unit.ListByShopID(req, 0)
 		} else {
-			got, err = test.unit.ListByUserID(req)
+			got, err = test.unit.ListByUserID(req, 0)
 		}
 		assert.NotNil(t, err)
 		assert.Nil(t, got)
@@ -118,9 +119,9 @@ func testList(arg string, t *testing.T) {
 		var got []entity.Order
 		var err error
 		if arg == "shop_id" {
-			got, err = test.unit.ListByShopID(req)
+			got, err = test.unit.ListByShopID(req, 0)
 		} else {
-			got, err = test.unit.ListByUserID(req)
+			got, err = test.unit.ListByUserID(req, 0)
 		}
 		assert.NotNil(t, err)
 		assert.Nil(t, got)
@@ -158,9 +159,51 @@ func testList(arg string, t *testing.T) {
 		var got []entity.Order
 		var err error
 		if arg == "shop_id" {
-			got, err = test.unit.ListByShopID(req)
+			got, err = test.unit.ListByShopID(req, 0)
 		} else {
-			got, err = test.unit.ListByUserID(req)
+			got, err = test.unit.ListByUserID(req, 0)
+		}
+		assert.Nil(t, err)
+		assert.NotNil(t, got)
+		assert.Equal(t, 1, len(got))
+	})
+	t.Run("given status param should filter by status", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := int64(123)
+		orderModelList := test.GetOrderList()
+		test.db.EXPECT().Preload("OrderProducts").Return(test.db)
+		test.db.EXPECT().Where(arg+"=?", req).Return(test.db)
+		test.db.EXPECT().Where("status=?", int32(constants.OrderStatusOnShipment)).Return(test.db)
+		test.db.EXPECT().Find(gomock.Any()).DoAndReturn(func(arg *[]model.Order) *gormmock.MockGormw {
+			*arg = orderModelList
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Where("order_id=?", orderModelList[0].ID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Payment) *gormmock.MockGormw {
+			*arg = model.Payment{
+				ID:            1,
+				OrderID:       req,
+				Amount:        123,
+				PaymentMethod: 1,
+				PaymentStatus: 2,
+			}
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.catalog.EXPECT().GetProductsByID([]int64(orderModelList[0].GetProductIDs())).Return([]entity.Product{
+			{ID: 1},
+			{ID: 2},
+			{ID: 3},
+		}, nil)
+
+		var got []entity.Order
+		var err error
+		if arg == "shop_id" {
+			got, err = test.unit.ListByShopID(req, constants.OrderStatusOnShipment)
+		} else {
+			got, err = test.unit.ListByUserID(req, constants.OrderStatusOnShipment)
 		}
 		assert.Nil(t, err)
 		assert.NotNil(t, got)

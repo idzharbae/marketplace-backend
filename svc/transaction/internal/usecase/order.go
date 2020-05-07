@@ -20,9 +20,9 @@ func NewOrder(reader internal.OrderReader, writer internal.OrderWriter, cartRead
 
 func (o *Order) List(req request.ListOrderReq) ([]entity.Order, error) {
 	if req.UserID != 0 {
-		return o.reader.ListByUserID(req.UserID)
+		return o.reader.ListByUserID(req.UserID, req.Status)
 	}
-	return o.reader.ListByShopID(req.ShopID)
+	return o.reader.ListByShopID(req.ShopID, req.Status)
 }
 
 func (o *Order) Get(order entity.Order) (entity.Order, error) {

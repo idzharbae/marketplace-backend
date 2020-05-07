@@ -20,8 +20,8 @@ type CartWriter interface {
 
 //go:generate mockgen -destination=repo/repomock/orderreader_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/transaction/internal OrderReader
 type OrderReader interface {
-	ListByUserID(userID int64) ([]entity.Order, error)
-	ListByShopID(shopID int64) ([]entity.Order, error)
+	ListByUserID(userID int64, orderStatus int32) ([]entity.Order, error)
+	ListByShopID(shopID int64, orderStatus int32) ([]entity.Order, error)
 	GetByID(orderID int64) (entity.Order, error)
 }
 

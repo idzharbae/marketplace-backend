@@ -18,9 +18,13 @@ func NewOrderReader(db connection.Gormw, catalog internal.CatalogGateway) *Order
 	return &OrderReader{db: db, catalog: catalog}
 }
 
-func (or *OrderReader) ListByUserID(userID int64) ([]entity.Order, error) {
+func (or *OrderReader) ListByUserID(userID int64, orderStatus int32) ([]entity.Order, error) {
 	var orders []model.Order
-	err := or.db.Preload("OrderProducts").Where("user_id=?", userID).Find(&orders).Error()
+	db := or.db.Preload("OrderProducts").Where("user_id=?", userID)
+	if orderStatus != 0 {
+		db = db.Where("status=?", orderStatus)
+	}
+	err := db.Find(&orders).Error()
 	if err != nil {
 		return nil, errors.WithPrefix(err, "error fetching order")
 	}
@@ -32,9 +36,13 @@ func (or *OrderReader) ListByUserID(userID int64) ([]entity.Order, error) {
 	return resultOrders, nil
 }
 
-func (or *OrderReader) ListByShopID(shopID int64) ([]entity.Order, error) {
+func (or *OrderReader) ListByShopID(shopID int64, orderStatus int32) ([]entity.Order, error) {
 	var orders []model.Order
-	err := or.db.Preload("OrderProducts").Where("shop_id=?", shopID).Find(&orders).Error()
+	db := or.db.Preload("OrderProducts").Where("shop_id=?", shopID)
+	if orderStatus != 0 {
+		db = db.Where("status=?", orderStatus)
+	}
+	err := db.Find(&orders).Error()
 	if err != nil {
 		return nil, errors.WithPrefix(err, "error fetching order")
 	}

@@ -25,6 +25,7 @@ func (os *OrderService) ListOrder(ctx context.Context, in *prototransaction.List
 	orders, err := os.orderUC.List(request.ListOrderReq{
 		UserID: in.GetCustomerId(),
 		ShopID: in.GetShopId(),
+		Status: in.GetStatus(),
 	})
 	if err != nil {
 		return nil, err
