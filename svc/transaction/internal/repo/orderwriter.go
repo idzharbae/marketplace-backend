@@ -97,6 +97,26 @@ func (ow *OrderWriter) UpdateOrderStatusToOnShipment(orderID, shopID int64) (ent
 	return converter.OrderModelToEntity(order, model.Payment{}), nil
 }
 
+func (ow *OrderWriter) UpdateOrderStatusToRejected(orderID, shopID int64) (entity.Order, error) {
+	var order model.Order
+	err := ow.db.Where("id=?", orderID).First(&order).Error()
+	if err != nil {
+		return entity.Order{}, err
+	}
+	if order.ShopID != shopID {
+		return entity.Order{}, errors.New("shop_id doesn't match with order data")
+	}
+	if order.Status != constants.OrderStatusWaitingForSeller {
+		return entity.Order{}, errors.New("order already shipped")
+	}
+	order.Status = constants.OrderStatusRejectedByShop
+	err = ow.db.Save(&order).Error()
+	if err != nil {
+		return entity.Order{}, err
+	}
+	return converter.OrderModelToEntity(order, model.Payment{}), nil
+}
+
 // CreateFromCartsAndSubstractCustomerSaldo private functions
 func (ow *OrderWriter) validateSaldo(req request.CreateOrderReq) error {
 	user, err := ow.auth.GetUserByID(req.UserID)

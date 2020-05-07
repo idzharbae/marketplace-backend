@@ -94,6 +94,21 @@ func (mr *MockOrderUCMockRecorder) List(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "List", reflect.TypeOf((*MockOrderUC)(nil).List), arg0)
 }
 
+// RejectOrder mocks base method.
+func (m *MockOrderUC) RejectOrder(arg0, arg1 int64) (entity.Order, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "RejectOrder", arg0, arg1)
+	ret0, _ := ret[0].(entity.Order)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// RejectOrder indicates an expected call of RejectOrder.
+func (mr *MockOrderUCMockRecorder) RejectOrder(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RejectOrder", reflect.TypeOf((*MockOrderUC)(nil).RejectOrder), arg0, arg1)
+}
+
 // UpdateOrderStatusToOnShipment mocks base method.
 func (m *MockOrderUC) UpdateOrderStatusToOnShipment(arg0, arg1 int64) (entity.Order, error) {
 	m.ctrl.T.Helper()

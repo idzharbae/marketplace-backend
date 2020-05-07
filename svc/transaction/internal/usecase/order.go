@@ -101,3 +101,6 @@ func (o *Order) Fulfill(order entity.Order) (entity.Order, error) {
 func (o *Order) UpdateOrderStatusToOnShipment(orderID, shopID int64) (entity.Order, error) {
 	return o.writer.UpdateOrderStatusToOnShipment(orderID, shopID)
 }
+func (o *Order) RejectOrder(orderID, shopID int64) (entity.Order, error) {
+	return o.writer.UpdateOrderStatusToRejected(orderID, shopID)
+}

@@ -29,5 +29,6 @@ type OrderReader interface {
 type OrderWriter interface {
 	CreateFromCartsAndSubstractCustomerSaldo(req request.CreateOrderReq) ([]entity.Order, error)
 	UpdateOrderStatusToOnShipment(orderID, shopID int64) (entity.Order, error)
+	UpdateOrderStatusToRejected(orderID, shopID int64) (entity.Order, error)
 	UpdateOrderStatusAndAddShopSaldo(order entity.Order) (entity.Order, error)
 }
