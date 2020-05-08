@@ -20,5 +20,6 @@ type OrderUC interface {
 
 	CreateFromCarts(req request.CheckoutReq) ([]entity.Order, error)
 	UpdateOrderStatusToOnShipment(orderID, shopID int64) (entity.Order, error)
+	RejectOrder(orderID, shopID int64) (entity.Order, error)
 	Fulfill(order entity.Order) (entity.Order, error)
 }

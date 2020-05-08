@@ -18,11 +18,12 @@ service MarketplaceTransaction {
     rpc GetOrder(GetOrderReq) returns (GetOrderResp) {}
 
     rpc Checkout(CheckoutReq) returns (CheckoutResp) {}
-    rpc UpdateOrderStatusToOnShipment(ShipProductReq) returns (ShipProductResp) {}
+    rpc UpdateOrderStatusToOnShipment(ChangeProductStatusReq) returns (ShipProductResp) {}
+    rpc RejectOrder(ChangeProductStatusReq) returns (Order) {}
     rpc Fulfill(FulfillReq) returns (FulfillResp) {}
 }
 
-message ShipProductReq {
+message ChangeProductStatusReq {
     int64 order_id = 1;
     int64 shop_id = 2;
 }
@@ -33,6 +34,7 @@ message ShipProductResp {
 message ListOrderReq {
     int64 customer_id = 1;
     int64 shop_id = 2;
+    int32 status = 3;
 }
 
 message ListOrderResp {

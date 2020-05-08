@@ -25,6 +25,7 @@ func (os *OrderService) ListOrder(ctx context.Context, in *prototransaction.List
 	orders, err := os.orderUC.List(request.ListOrderReq{
 		UserID: in.GetCustomerId(),
 		ShopID: in.GetShopId(),
+		Status: in.GetStatus(),
 	})
 	if err != nil {
 		return nil, err
@@ -67,7 +68,7 @@ func (os *OrderService) Checkout(ctx context.Context, in *prototransaction.Check
 	}, nil
 }
 
-func (os *OrderService) UpdateOrderStatusToOnShipment(ctx context.Context, in *prototransaction.ShipProductReq) (*prototransaction.ShipProductResp, error) {
+func (os *OrderService) UpdateOrderStatusToOnShipment(ctx context.Context, in *prototransaction.ChangeProductStatusReq) (*prototransaction.ShipProductResp, error) {
 	if in == nil {
 		return nil, errors.New("parameter should not be nil")
 	}
@@ -78,6 +79,17 @@ func (os *OrderService) UpdateOrderStatusToOnShipment(ctx context.Context, in *p
 	return &prototransaction.ShipProductResp{
 		Order: converter.OrderEntityToProto(order),
 	}, nil
+}
+
+func (os *OrderService) RejectOrder(ctx context.Context, in *prototransaction.ChangeProductStatusReq) (*prototransaction.Order, error) {
+	if in == nil {
+		return nil, errors.New("parameter should not be nil")
+	}
+	order, err := os.orderUC.RejectOrder(in.GetOrderId(), in.GetShopId())
+	if err != nil {
+		return nil, err
+	}
+	return converter.OrderEntityToProto(order), nil
 }
 
 func (os *OrderService) Fulfill(ctx context.Context, in *prototransaction.FulfillReq) (*prototransaction.FulfillResp, error) {

@@ -5,6 +5,7 @@ import "github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity
 type ListOrderReq struct {
 	UserID int64
 	ShopID int64
+	Status int32
 }
 
 type CheckoutReq struct {
