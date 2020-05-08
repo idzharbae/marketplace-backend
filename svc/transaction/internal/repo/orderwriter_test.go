@@ -663,6 +663,7 @@ func TestOrderWriter_UpdateOrderStatusToRejected(t *testing.T) {
 			return test.db
 		})
 		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Begin().Return(test.db)
 		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(errors.New("error"))
 
@@ -670,7 +671,7 @@ func TestOrderWriter_UpdateOrderStatusToRejected(t *testing.T) {
 		assert.NotNil(t, err)
 		assert.Equal(t, entity.Order{}, got)
 	})
-	t.Run("error when updating data, should return error", func(t *testing.T) {
+	t.Run("error when finding payment, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		req := struct {
@@ -688,11 +689,122 @@ func TestOrderWriter_UpdateOrderStatusToRejected(t *testing.T) {
 			return test.db
 		})
 		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Begin().Return(test.db)
 		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Where("order_id=?", int64(123)).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("error"))
+		test.db.EXPECT().Rollback()
+
+		got, err := test.unit.UpdateOrderStatusToRejected(req.OrderID, req.ShopID)
+		assert.NotNil(t, err)
+		assert.Equal(t, got, entity.Order{})
+	})
+	t.Run("error when saving payment, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := struct {
+			OrderID int64
+			ShopID  int64
+		}{123, 321}
+
+		test.db.EXPECT().Where("id=?", req.OrderID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
+			*arg = model.Order{
+				ID:     123,
+				ShopID: 321,
+				Status: constants.OrderStatusWaitingForSeller,
+			}
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Begin().Return(test.db)
+		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Where("order_id=?", int64(123)).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("error"))
+		test.db.EXPECT().Rollback()
 
 		got, err := test.unit.UpdateOrderStatusToRejected(req.OrderID, req.ShopID)
 		assert.Nil(t, err)
-		assert.Equal(t, int32(constants.OrderStatusRejectedByShop), got.Status)
+		assert.Equal(t, got, entity.Order{})
+	})
+	t.Run("error when saving payment, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := struct {
+			OrderID int64
+			ShopID  int64
+		}{123, 321}
+
+		test.db.EXPECT().Where("id=?", req.OrderID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
+			*arg = model.Order{
+				ID:     123,
+				ShopID: 321,
+				UserID: 132,
+				Status: constants.OrderStatusWaitingForSeller,
+			}
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Begin().Return(test.db)
+		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Where("order_id=?", int64(123)).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Save(gomock.Any()).DoAndReturn(func(arg *model.Payment) *gormmock.MockGormw {
+			*arg = model.Payment{Amount: 1337}
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.auth.EXPECT().UpdateUserSaldo(int64(132), int64(1337)).Return(entity.User{}, errors.New("error"))
+		test.db.EXPECT().Rollback()
+
+		got, err := test.unit.UpdateOrderStatusToRejected(req.OrderID, req.ShopID)
+		assert.NotNil(t, err)
+		assert.Equal(t, got, entity.Order{})
+	})
+	t.Run("no error, should return order entity", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := struct {
+			OrderID int64
+			ShopID  int64
+		}{123, 321}
+
+		test.db.EXPECT().Where("id=?", req.OrderID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Order) *gormmock.MockGormw {
+			*arg = model.Order{
+				ID:     123,
+				ShopID: 321,
+				UserID: 132,
+				Status: constants.OrderStatusWaitingForSeller,
+			}
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Begin().Return(test.db)
+		test.db.EXPECT().Save(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Where("order_id=?", int64(123)).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(nil)
+		test.db.EXPECT().Save(gomock.Any()).DoAndReturn(func(arg *model.Payment) *gormmock.MockGormw {
+			*arg = model.Payment{Amount: 1337}
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+		test.auth.EXPECT().UpdateUserSaldo(int64(132), int64(1337)).Return(entity.User{}, nil)
+		test.db.EXPECT().Commit()
+
+		got, err := test.unit.UpdateOrderStatusToRejected(req.OrderID, req.ShopID)
+		assert.Nil(t, err)
+		assert.NotEqual(t, got, entity.Order{})
 	})
 }

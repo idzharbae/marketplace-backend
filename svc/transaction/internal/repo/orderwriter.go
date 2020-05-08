@@ -98,7 +98,10 @@ func (ow *OrderWriter) UpdateOrderStatusToOnShipment(orderID, shopID int64) (ent
 }
 
 func (ow *OrderWriter) UpdateOrderStatusToRejected(orderID, shopID int64) (entity.Order, error) {
-	var order model.Order
+	var (
+		order   model.Order
+		payment model.Payment
+	)
 	err := ow.db.Where("id=?", orderID).First(&order).Error()
 	if err != nil {
 		return entity.Order{}, err
@@ -110,10 +113,31 @@ func (ow *OrderWriter) UpdateOrderStatusToRejected(orderID, shopID int64) (entit
 		return entity.Order{}, errors.New("order already shipped")
 	}
 	order.Status = constants.OrderStatusRejectedByShop
-	err = ow.db.Save(&order).Error()
+	dbTransaction := ow.db.Begin()
+	err = dbTransaction.Save(&order).Error()
 	if err != nil {
 		return entity.Order{}, err
 	}
+
+	err = ow.db.Where("order_id=?", order.ID).First(&payment).Error()
+	if err != nil {
+		dbTransaction.Rollback()
+		return entity.Order{}, err
+	}
+	payment.PaymentStatus = constants.PaymentStatusRefunded
+	err = dbTransaction.Save(&payment).Error()
+	if err != nil {
+		dbTransaction.Rollback()
+		return entity.Order{}, nil
+	}
+
+	_, err = ow.auth.UpdateUserSaldo(order.UserID, payment.Amount)
+	if err != nil {
+		dbTransaction.Rollback()
+		return entity.Order{}, err
+	}
+
+	dbTransaction.Commit()
 	return converter.OrderModelToEntity(order, model.Payment{}), nil
 }
 
