@@ -54,3 +54,12 @@ func SaldoHistoryModelsToEntities(req []model.SaldoHistory) []entity.SaldoHistor
 	}
 	return histories
 }
+func SaldoHistoryEntityToModel(req entity.SaldoHistory) model.SaldoHistory {
+	return model.SaldoHistory{
+		ID:           req.ID,
+		UserID:       req.UserID,
+		SourceID:     req.SourceID,
+		Description:  req.Description,
+		ChangeAmount: req.ChangeAmount,
+	}
+}
