@@ -18,9 +18,9 @@ func NewSaldoHistory(saldoReader internal.SaldoHistoryReader, saldoWriter intern
 }
 
 func (sh *SaldoHistory) Create(req entity.SaldoHistory) (entity.SaldoHistory, error) {
-	return entity.SaldoHistory{}, nil
+	return sh.saldoWriter.Create(req)
 }
 
 func (sh *SaldoHistory) List(userID int64) ([]entity.SaldoHistory, error) {
-	return nil, nil
+	return sh.saldoReader.ListByUserID(userID)
 }
