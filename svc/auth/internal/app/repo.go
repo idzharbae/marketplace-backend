@@ -8,8 +8,10 @@ import (
 )
 
 type Repos struct {
-	UserReader internal.UserReader
-	UserWriter internal.UserWriter
+	UserReader         internal.UserReader
+	UserWriter         internal.UserWriter
+	SaldoHistoryReader internal.SaldoHistoryReader
+	SaldoHistoryWriter internal.SaldoHistoryWriter
 }
 
 func NewRepos(cfg config.Config) *Repos {
@@ -24,9 +26,13 @@ func NewRepos(cfg config.Config) *Repos {
 
 	userReader := repo.NewUserReader(connSlave)
 	userWriter := repo.NewUserWriter(connMaster)
+	saldoHistoryReader := repo.NewSaldoHistoryReader(connSlave)
+	saldoHistoryWriter := repo.NewSaldoHistoryWriter(connMaster)
 	return &Repos{
-		UserWriter: userWriter,
-		UserReader: userReader,
+		UserWriter:         userWriter,
+		UserReader:         userReader,
+		SaldoHistoryWriter: saldoHistoryWriter,
+		SaldoHistoryReader: saldoHistoryReader,
 	}
 }
 

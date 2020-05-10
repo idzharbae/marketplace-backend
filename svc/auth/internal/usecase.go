@@ -31,3 +31,9 @@ type PaymentUC interface {
 	UpdateSaldo(req request.TopUp) (entity.User, error)
 	Transfer(req request.Transfer) (authproto.TransferSaldoResp, error)
 }
+
+//go:generate mockgen -destination=usecase/ucmock/saldohistory_uc.go -package=ucmock github.com/idzharbae/marketplace-backend/svc/auth/internal SaldoHistoryUC
+type SaldoHistoryUC interface {
+	List(userID int64) ([]entity.SaldoHistory, error)
+	Create(req entity.SaldoHistory) (entity.SaldoHistory, error)
+}

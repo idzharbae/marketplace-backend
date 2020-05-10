@@ -7,6 +7,7 @@ type Transfer struct {
 }
 
 type TopUp struct {
-	UserID int64
-	Amount int64
+	UserID   int64
+	UserType int32
+	Amount   int64
 }

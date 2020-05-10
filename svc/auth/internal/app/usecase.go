@@ -7,16 +7,18 @@ import (
 )
 
 type UseCases struct {
-	UserUC    internal.UserUC
-	TokenUC   internal.TokenUC
-	PaymentUC internal.PaymentUC
+	UserUC         internal.UserUC
+	TokenUC        internal.TokenUC
+	PaymentUC      internal.PaymentUC
+	SaldoHistoryUC internal.SaldoHistoryUC
 }
 
 func NewUsecases(cfg config.Config, repos *Repos) *UseCases {
 	return &UseCases{
-		UserUC:    usecase.NewUser(repos.UserReader, repos.UserWriter),
-		TokenUC:   usecase.NewToken(cfg),
-		PaymentUC: usecase.NewPaymentUC(repos.UserWriter),
+		UserUC:         usecase.NewUser(repos.UserReader, repos.UserWriter),
+		TokenUC:        usecase.NewToken(cfg),
+		PaymentUC:      usecase.NewPaymentUC(repos.UserReader, repos.UserWriter, repos.SaldoHistoryWriter),
+		SaldoHistoryUC: usecase.NewSaldoHistory(repos.SaldoHistoryReader, repos.SaldoHistoryWriter),
 	}
 }
 

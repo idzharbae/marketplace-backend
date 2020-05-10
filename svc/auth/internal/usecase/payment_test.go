@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"errors"
 	"github.com/golang/mock/gomock"
 	"github.com/idzharbae/marketplace-backend/svc/auth/authproto"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal"
@@ -12,9 +13,11 @@ import (
 )
 
 type paymentTest struct {
-	ctrl *gomock.Controller
-	repo *repomock.MockUserWriter
-	unit internal.PaymentUC
+	ctrl   *gomock.Controller
+	repo   *repomock.MockUserWriter
+	reader *repomock.MockUserReader
+	shw    *repomock.MockSaldoHistoryWriter
+	unit   internal.PaymentUC
 }
 
 func newPaymentTest() *paymentTest {
@@ -23,7 +26,9 @@ func newPaymentTest() *paymentTest {
 func (pt *paymentTest) Begin(t *testing.T) {
 	pt.ctrl = gomock.NewController(t)
 	pt.repo = repomock.NewMockUserWriter(pt.ctrl)
-	pt.unit = NewPaymentUC(pt.repo)
+	pt.shw = repomock.NewMockSaldoHistoryWriter(pt.ctrl)
+	pt.reader = repomock.NewMockUserReader(pt.ctrl)
+	pt.unit = NewPaymentUC(pt.reader, pt.repo, pt.shw)
 }
 
 func (pt *paymentTest) Finish() {
@@ -42,6 +47,39 @@ func TestPayment_TopUp(t *testing.T) {
 		got, err := test.unit.TopUp(req)
 		assert.NotNil(t, err)
 		assert.Equal(t, entity.User{}, got)
+	})
+	t.Run("error when updating saldo, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		req := request.TopUp{
+			UserID: 123,
+			Amount: 1337,
+		}
+		test.repo.EXPECT().UpdateSaldo(req).Return(entity.User{}, errors.New("error"))
+
+		got, err := test.unit.TopUp(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.User{}, got)
+	})
+	t.Run("no error, save history saldo and return user entity", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		req := request.TopUp{
+			UserID: 123,
+			Amount: 1337,
+		}
+		test.repo.EXPECT().UpdateSaldo(req).Return(entity.User{ID: req.UserID, Saldo: req.Amount}, nil)
+		test.shw.EXPECT().Create(entity.SaldoHistory{
+			UserID:       req.UserID,
+			ChangeAmount: req.Amount,
+			Description:  "topup",
+		}).Return(entity.SaldoHistory{}, nil)
+
+		got, err := test.unit.TopUp(req)
+		assert.Nil(t, err)
+		assert.NotEqual(t, entity.User{}, got)
 	})
 }
 

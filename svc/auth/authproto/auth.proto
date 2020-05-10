@@ -3,6 +3,7 @@ syntax = "proto3";
 package authproto;
 
 import "user.proto";
+import "saldohistory.proto";
 
 service MarketplaceAuth {
     rpc Login(LoginReq) returns (LoginResp) {}
@@ -16,6 +17,17 @@ service MarketplaceAuth {
     rpc TopUp(TopUpReq) returns (TopUpResp) {}
     rpc UpdateSaldo(TopUpReq) returns (TopUpResp) {}
     rpc TransferSaldo(TransferSaldoReq) returns (TransferSaldoResp) {}
+
+    // Saldo History
+    rpc ListSaldoHistory(ListSaldoHistoryReq) returns (ListSaldoHistoryResp) {}
+    rpc CreateSaldoHistory(SaldoHistory) returns (SaldoHistory) {}
+}
+
+message ListSaldoHistoryReq {
+    int64 user_id = 1;
+}
+message ListSaldoHistoryResp {
+    repeated SaldoHistory saldo_histories = 1;
 }
 
 message TransferSaldoReq {
