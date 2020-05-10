@@ -30,7 +30,7 @@ type UserWriter interface {
 
 //go:generate mockgen -destination=repo/repomock/saldohistoryreader_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/auth/internal SaldoHistoryReader
 type SaldoHistoryReader interface {
-	ListByUserID(userID int64) ([]entity.SaldoHistory, error)
+	ListByUserID(req request.ListSaldoHistory) ([]entity.SaldoHistory, error)
 }
 
 //go:generate mockgen -destination=repo/repomock/saldohistorywriter_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/auth/internal SaldoHistoryWriter

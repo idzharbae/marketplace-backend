@@ -6,6 +6,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/auth/authproto"
 	"github.com/idzharbae/marketplace-backend/svc/auth/converter"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal"
+	"github.com/idzharbae/marketplace-backend/svc/auth/internal/request"
 )
 
 type SaldoHistoryService struct {
@@ -20,7 +21,13 @@ func (sh *SaldoHistoryService) ListSaldoHistory(ctx context.Context, in *authpro
 	if in == nil {
 		return nil, errors.New("parameter should not be nil")
 	}
-	res, err := sh.uc.List(in.GetUserId())
+	res, err := sh.uc.List(request.ListSaldoHistory{
+		UserID: in.GetUserId(),
+		Pagination: request.Pagination{
+			Page:  int(in.GetPagination().GetPage()),
+			Limit: int(in.GetPagination().GetLimit()),
+		},
+	})
 	if err != nil {
 		return nil, err
 	}

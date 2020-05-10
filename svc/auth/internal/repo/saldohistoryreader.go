@@ -5,6 +5,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/repo/connection"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/repo/model"
+	"github.com/idzharbae/marketplace-backend/svc/auth/internal/request"
 	"github.com/jinzhu/gorm"
 )
 
@@ -16,9 +17,16 @@ func NewSaldoHistoryReader(db connection.Gormw) *SaldoHistoryReader {
 	return &SaldoHistoryReader{db: db}
 }
 
-func (shr *SaldoHistoryReader) ListByUserID(userID int64) ([]entity.SaldoHistory, error) {
+func (shr *SaldoHistoryReader) ListByUserID(req request.ListSaldoHistory) ([]entity.SaldoHistory, error) {
 	var saldoHistories []model.SaldoHistory
-	err := shr.db.Where("user_id=?", userID).Find(&saldoHistories).Error()
+	db := shr.db.Where("user_id=?", req.UserID)
+	if req.Pagination.Limit > 0 {
+		db = db.Limit(req.Pagination.Limit)
+	}
+	if req.Pagination.Page > 0 {
+		db = db.Offset(req.Pagination.OffsetFromPagination())
+	}
+	err := db.Find(&saldoHistories).Error()
 	if err == gorm.ErrRecordNotFound {
 		return nil, nil
 	}

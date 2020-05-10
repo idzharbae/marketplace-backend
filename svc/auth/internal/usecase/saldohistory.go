@@ -3,6 +3,7 @@ package usecase
 import (
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/entity"
+	"github.com/idzharbae/marketplace-backend/svc/auth/internal/request"
 )
 
 type SaldoHistory struct {
@@ -21,6 +22,6 @@ func (sh *SaldoHistory) Create(req entity.SaldoHistory) (entity.SaldoHistory, er
 	return sh.saldoWriter.Create(req)
 }
 
-func (sh *SaldoHistory) List(userID int64) ([]entity.SaldoHistory, error) {
-	return sh.saldoReader.ListByUserID(userID)
+func (sh *SaldoHistory) List(req request.ListSaldoHistory) ([]entity.SaldoHistory, error) {
+	return sh.saldoReader.ListByUserID(req)
 }

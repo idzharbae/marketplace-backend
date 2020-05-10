@@ -2,6 +2,7 @@ syntax = "proto3";
 
 import "order.proto";
 import "cart.proto";
+import "base.proto";
 
 package prototransaction;
 
@@ -35,6 +36,7 @@ message ListOrderReq {
     int64 customer_id = 1;
     int64 shop_id = 2;
     int32 status = 3;
+    Pagination pagination = 4;
 }
 
 message ListOrderResp {
@@ -53,6 +55,7 @@ message GetOrderResp {
 
 message ListCartItemsReq {
     int64 user_id = 1;
+    Pagination pagination = 2;
 }
 message ListCartItemsResp {
     repeated Cart cart = 1;
