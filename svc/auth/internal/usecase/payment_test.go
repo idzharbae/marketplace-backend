@@ -13,10 +13,11 @@ import (
 )
 
 type paymentTest struct {
-	ctrl *gomock.Controller
-	repo *repomock.MockUserWriter
-	shw  *repomock.MockSaldoHistoryWriter
-	unit internal.PaymentUC
+	ctrl   *gomock.Controller
+	repo   *repomock.MockUserWriter
+	reader *repomock.MockUserReader
+	shw    *repomock.MockSaldoHistoryWriter
+	unit   internal.PaymentUC
 }
 
 func newPaymentTest() *paymentTest {
@@ -26,7 +27,8 @@ func (pt *paymentTest) Begin(t *testing.T) {
 	pt.ctrl = gomock.NewController(t)
 	pt.repo = repomock.NewMockUserWriter(pt.ctrl)
 	pt.shw = repomock.NewMockSaldoHistoryWriter(pt.ctrl)
-	pt.unit = NewPaymentUC(pt.repo, pt.shw)
+	pt.reader = repomock.NewMockUserReader(pt.ctrl)
+	pt.unit = NewPaymentUC(pt.reader, pt.repo, pt.shw)
 }
 
 func (pt *paymentTest) Finish() {

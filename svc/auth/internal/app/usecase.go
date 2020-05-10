@@ -17,7 +17,7 @@ func NewUsecases(cfg config.Config, repos *Repos) *UseCases {
 	return &UseCases{
 		UserUC:         usecase.NewUser(repos.UserReader, repos.UserWriter),
 		TokenUC:        usecase.NewToken(cfg),
-		PaymentUC:      usecase.NewPaymentUC(repos.UserWriter),
+		PaymentUC:      usecase.NewPaymentUC(repos.UserReader, repos.UserWriter, repos.SaldoHistoryWriter),
 		SaldoHistoryUC: usecase.NewSaldoHistory(repos.SaldoHistoryReader, repos.SaldoHistoryWriter),
 	}
 }

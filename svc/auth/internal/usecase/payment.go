@@ -3,6 +3,7 @@ package usecase
 import (
 	"errors"
 	"github.com/idzharbae/marketplace-backend/svc/auth/authproto"
+	"github.com/idzharbae/marketplace-backend/svc/auth/constant"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/request"
@@ -10,11 +11,12 @@ import (
 
 type Payment struct {
 	userWriter         internal.UserWriter
+	userReader         internal.UserReader
 	saldoHistoryWriter internal.SaldoHistoryWriter
 }
 
-func NewPaymentUC(writer internal.UserWriter, shw internal.SaldoHistoryWriter) *Payment {
-	return &Payment{userWriter: writer, saldoHistoryWriter: shw}
+func NewPaymentUC(reader internal.UserReader, writer internal.UserWriter, shw internal.SaldoHistoryWriter) *Payment {
+	return &Payment{userWriter: writer, saldoHistoryWriter: shw, userReader: reader}
 }
 
 // exposed to graphql so need validation
@@ -35,9 +37,16 @@ func (p *Payment) TopUp(req request.TopUp) (entity.User, error) {
 }
 
 func (p *Payment) UpdateSaldo(req request.TopUp) (entity.User, error) {
+	user, err := p.userReader.GetByID(req.UserID)
+	if err != nil {
+		return entity.User{}, err
+	}
+	req.UserType = user.Type
+	desc := p.getPaymentDescription(req)
+
 	p.saldoHistoryWriter.Create(entity.SaldoHistory{
 		UserID:       req.UserID,
-		Description:  "payment",
+		Description:  desc,
 		ChangeAmount: req.Amount,
 	})
 	return p.userWriter.UpdateSaldo(req)
@@ -57,4 +66,22 @@ func (p *Payment) saveSaldoHistory(userID, amount int64) error {
 		ChangeAmount: amount,
 	})
 	return err
+}
+
+func (p *Payment) getPaymentDescription(req request.TopUp) string {
+	desc := ""
+	if req.UserType == constant.UserBuyerType {
+		if req.Amount > 0 {
+			desc = "payment_refund"
+		} else {
+			desc = "payment"
+		}
+	} else {
+		if req.Amount > 0 {
+			desc = "received_payment"
+		} else {
+			desc = "payment_refund"
+		}
+	}
+	return desc
 }
