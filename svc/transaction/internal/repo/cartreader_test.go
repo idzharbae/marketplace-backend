@@ -2,6 +2,7 @@ package repo
 
 import (
 	"errors"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/request"
 	"testing"
 
 	"github.com/golang/mock/gomock"
@@ -43,7 +44,7 @@ func TestCartReader_ListByUserID(t *testing.T) {
 		test.db.EXPECT().Find(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(errors.New("error"))
 
-		got, err := test.unit.ListByUserID(req)
+		got, err := test.unit.ListByUserID(req, request.Pagination{})
 		assert.Nil(t, got)
 		assert.NotNil(t, err)
 	})
@@ -66,7 +67,7 @@ func TestCartReader_ListByUserID(t *testing.T) {
 		})
 		test.db.EXPECT().Error().Return(nil)
 
-		got, err := test.unit.ListByUserID(req)
+		got, err := test.unit.ListByUserID(req, request.Pagination{})
 		assert.NotNil(t, got)
 		assert.Nil(t, err)
 	})
@@ -87,7 +88,7 @@ func TestCartReader_GetByIDs(t *testing.T) {
 		test.db.EXPECT().Find(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(errors.New("error"))
 
-		got, err := test.unit.GetByIDs(req...)
+		got, err := test.unit.GetByIDs(request.Pagination{}, req...)
 		assert.Nil(t, got)
 		assert.NotNil(t, err)
 	})
@@ -109,7 +110,7 @@ func TestCartReader_GetByIDs(t *testing.T) {
 		})
 		test.db.EXPECT().Error().Return(nil)
 
-		got, err := test.unit.GetByIDs(req...)
+		got, err := test.unit.GetByIDs(request.Pagination{}, req...)
 		assert.NotNil(t, got)
 		assert.Nil(t, err)
 	})

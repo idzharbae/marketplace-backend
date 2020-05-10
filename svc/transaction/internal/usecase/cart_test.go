@@ -7,6 +7,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/gateway/gatewaymock"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/repo/repomock"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/request"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -40,15 +41,15 @@ func TestCart_List(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 
-		got, err := test.unit.List(0)
+		got, err := test.unit.List(request.ListCartReq{})
 		assert.NotNil(t, err)
 		assert.Nil(t, got)
 	})
 	t.Run("repo returns error, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		req := int64(123)
-		test.reader.EXPECT().ListByUserID(req).Return(nil, errors.New("error"))
+		req := request.ListCartReq{UserID: 123}
+		test.reader.EXPECT().ListByUserID(req.UserID, req.Pagination).Return(nil, errors.New("error"))
 		got, err := test.unit.List(req)
 		assert.NotNil(t, err)
 		assert.Nil(t, got)
@@ -56,7 +57,7 @@ func TestCart_List(t *testing.T) {
 	t.Run("gateway returns error, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		req := int64(123)
+		req := request.ListCartReq{UserID: 123}
 		respReader := []entity.Cart{
 			{
 				ID:       1,
@@ -65,7 +66,7 @@ func TestCart_List(t *testing.T) {
 				AmountKG: 4,
 			},
 		}
-		test.reader.EXPECT().ListByUserID(req).Return(respReader, nil)
+		test.reader.EXPECT().ListByUserID(req.UserID, req.Pagination).Return(respReader, nil)
 		test.gateway.EXPECT().GetProductByID(respReader[0].Product.ID).Return(entity.Product{}, errors.New("error"))
 		got, err := test.unit.List(req)
 		assert.NotNil(t, err)
@@ -74,7 +75,7 @@ func TestCart_List(t *testing.T) {
 	t.Run("gateway returns no error, should return no error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		req := int64(123)
+		req := request.ListCartReq{UserID: 123}
 		respReader := []entity.Cart{
 			{
 				ID:       1,
@@ -89,7 +90,7 @@ func TestCart_List(t *testing.T) {
 				AmountKG: 4,
 			},
 		}
-		test.reader.EXPECT().ListByUserID(req).Return(respReader, nil)
+		test.reader.EXPECT().ListByUserID(req.UserID, req.Pagination).Return(respReader, nil)
 		test.gateway.EXPECT().GetProductByID(respReader[0].Product.ID).Return(entity.Product{ID: 2, Name: "product_1"}, nil)
 		test.gateway.EXPECT().GetProductByID(respReader[1].Product.ID).Return(entity.Product{ID: 3, Name: "product_1"}, nil)
 		got, err := test.unit.List(req)

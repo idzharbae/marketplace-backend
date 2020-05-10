@@ -7,6 +7,7 @@ package ucmock
 import (
 	gomock "github.com/golang/mock/gomock"
 	entity "github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
+	request "github.com/idzharbae/marketplace-backend/svc/transaction/internal/request"
 	reflect "reflect"
 )
 
@@ -49,7 +50,7 @@ func (mr *MockCartUCMockRecorder) Add(arg0 interface{}) *gomock.Call {
 }
 
 // List mocks base method.
-func (m *MockCartUC) List(arg0 int64) ([]entity.Cart, error) {
+func (m *MockCartUC) List(arg0 request.ListCartReq) ([]entity.Cart, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "List", arg0)
 	ret0, _ := ret[0].([]entity.Cart)

@@ -20,9 +20,9 @@ func NewOrder(reader internal.OrderReader, writer internal.OrderWriter, cartRead
 
 func (o *Order) List(req request.ListOrderReq) ([]entity.Order, error) {
 	if req.UserID != 0 {
-		return o.reader.ListByUserID(req.UserID, req.Status)
+		return o.reader.ListByUserID(req.UserID, req.Status, req.Pagination)
 	}
-	return o.reader.ListByShopID(req.ShopID, req.Status)
+	return o.reader.ListByShopID(req.ShopID, req.Status, req.Pagination)
 }
 
 func (o *Order) Get(order entity.Order) (entity.Order, error) {
@@ -46,7 +46,7 @@ func (o *Order) Get(order entity.Order) (entity.Order, error) {
 }
 
 func (o *Order) CreateFromCarts(req request.CheckoutReq) ([]entity.Order, error) {
-	carts, err := o.cartReader.GetByIDs(req.CartIDs...)
+	carts, err := o.cartReader.GetByIDs(request.Pagination{}, req.CartIDs...)
 	if err != nil {
 		return nil, err
 	}

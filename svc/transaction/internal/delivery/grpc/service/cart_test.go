@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/request"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/prototransaction"
 	"testing"
 
@@ -38,7 +39,13 @@ func TestCartService_ListCartItems(t *testing.T) {
 		defer test.Finish()
 		req := test.GetListReq()
 
-		test.uc.EXPECT().List(req.GetUserId()).Return(nil, errors.New("error"))
+		test.uc.EXPECT().List(request.ListCartReq{
+			UserID: req.GetUserId(),
+			Pagination: request.Pagination{
+				Page:  int(req.GetPagination().GetPage()),
+				Limit: int(req.GetPagination().GetLimit()),
+			},
+		}).Return(nil, errors.New("error"))
 
 		got, err := test.unit.ListCartItems(test.ctx, req)
 		assert.Nil(t, got)
@@ -49,7 +56,13 @@ func TestCartService_ListCartItems(t *testing.T) {
 		defer test.Finish()
 		req := test.GetListReq()
 
-		test.uc.EXPECT().List(req.GetUserId()).Return(test.GetCarts(), nil)
+		test.uc.EXPECT().List(request.ListCartReq{
+			UserID: req.GetUserId(),
+			Pagination: request.Pagination{
+				Page:  int(req.GetPagination().GetPage()),
+				Limit: int(req.GetPagination().GetLimit()),
+			},
+		}).Return(test.GetCarts(), nil)
 
 		got, err := test.unit.ListCartItems(test.ctx, req)
 		assert.NotNil(t, got)

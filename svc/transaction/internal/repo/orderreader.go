@@ -7,6 +7,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/repo/connection"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/repo/model"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/request"
 )
 
 type OrderReader struct {
@@ -18,11 +19,17 @@ func NewOrderReader(db connection.Gormw, catalog internal.CatalogGateway) *Order
 	return &OrderReader{db: db, catalog: catalog}
 }
 
-func (or *OrderReader) ListByUserID(userID int64, orderStatus int32) ([]entity.Order, error) {
+func (or *OrderReader) ListByUserID(userID int64, orderStatus int32, pagination request.Pagination) ([]entity.Order, error) {
 	var orders []model.Order
 	db := or.db.Preload("OrderProducts").Where("user_id=?", userID)
 	if orderStatus != 0 {
 		db = db.Where("status=?", orderStatus)
+	}
+	if pagination.Limit > 0 {
+		db = db.Limit(pagination.Limit)
+	}
+	if pagination.Page > 0 {
+		db = db.Offset(pagination.OffsetFromPagination())
 	}
 	err := db.Find(&orders).Error()
 	if err != nil {
@@ -36,11 +43,17 @@ func (or *OrderReader) ListByUserID(userID int64, orderStatus int32) ([]entity.O
 	return resultOrders, nil
 }
 
-func (or *OrderReader) ListByShopID(shopID int64, orderStatus int32) ([]entity.Order, error) {
+func (or *OrderReader) ListByShopID(shopID int64, orderStatus int32, pagination request.Pagination) ([]entity.Order, error) {
 	var orders []model.Order
 	db := or.db.Preload("OrderProducts").Where("shop_id=?", shopID)
 	if orderStatus != 0 {
 		db = db.Where("status=?", orderStatus)
+	}
+	if pagination.Limit > 0 {
+		db = db.Limit(pagination.Limit)
+	}
+	if pagination.Page > 0 {
+		db = db.Offset(pagination.OffsetFromPagination())
 	}
 	err := db.Find(&orders).Error()
 	if err != nil {

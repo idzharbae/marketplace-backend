@@ -7,6 +7,7 @@ package repomock
 import (
 	gomock "github.com/golang/mock/gomock"
 	entity "github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
+	request "github.com/idzharbae/marketplace-backend/svc/transaction/internal/request"
 	reflect "reflect"
 )
 
@@ -34,10 +35,10 @@ func (m *MockCartReader) EXPECT() *MockCartReaderMockRecorder {
 }
 
 // GetByIDs mocks base method.
-func (m *MockCartReader) GetByIDs(arg0 ...int64) ([]entity.Cart, error) {
+func (m *MockCartReader) GetByIDs(arg0 request.Pagination, arg1 ...int64) ([]entity.Cart, error) {
 	m.ctrl.T.Helper()
-	varargs := []interface{}{}
-	for _, a := range arg0 {
+	varargs := []interface{}{arg0}
+	for _, a := range arg1 {
 		varargs = append(varargs, a)
 	}
 	ret := m.ctrl.Call(m, "GetByIDs", varargs...)
@@ -47,22 +48,23 @@ func (m *MockCartReader) GetByIDs(arg0 ...int64) ([]entity.Cart, error) {
 }
 
 // GetByIDs indicates an expected call of GetByIDs.
-func (mr *MockCartReaderMockRecorder) GetByIDs(arg0 ...interface{}) *gomock.Call {
+func (mr *MockCartReaderMockRecorder) GetByIDs(arg0 interface{}, arg1 ...interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByIDs", reflect.TypeOf((*MockCartReader)(nil).GetByIDs), arg0...)
+	varargs := append([]interface{}{arg0}, arg1...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByIDs", reflect.TypeOf((*MockCartReader)(nil).GetByIDs), varargs...)
 }
 
 // ListByUserID mocks base method.
-func (m *MockCartReader) ListByUserID(arg0 int64) ([]entity.Cart, error) {
+func (m *MockCartReader) ListByUserID(arg0 int64, arg1 request.Pagination) ([]entity.Cart, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListByUserID", arg0)
+	ret := m.ctrl.Call(m, "ListByUserID", arg0, arg1)
 	ret0, _ := ret[0].([]entity.Cart)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // ListByUserID indicates an expected call of ListByUserID.
-func (mr *MockCartReaderMockRecorder) ListByUserID(arg0 interface{}) *gomock.Call {
+func (mr *MockCartReaderMockRecorder) ListByUserID(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListByUserID", reflect.TypeOf((*MockCartReader)(nil).ListByUserID), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListByUserID", reflect.TypeOf((*MockCartReader)(nil).ListByUserID), arg0, arg1)
 }
