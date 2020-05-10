@@ -34,6 +34,6 @@ type PaymentUC interface {
 
 //go:generate mockgen -destination=usecase/ucmock/saldohistory_uc.go -package=ucmock github.com/idzharbae/marketplace-backend/svc/auth/internal SaldoHistoryUC
 type SaldoHistoryUC interface {
-	List(userID int64) ([]entity.SaldoHistory, error)
+	List(req request.ListSaldoHistory) ([]entity.SaldoHistory, error)
 	Create(req entity.SaldoHistory) (entity.SaldoHistory, error)
 }

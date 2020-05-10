@@ -11,3 +11,8 @@ type TopUp struct {
 	UserType int32
 	Amount   int64
 }
+
+type ListSaldoHistory struct {
+	UserID     int64
+	Pagination Pagination
+}

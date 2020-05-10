@@ -7,6 +7,7 @@ package ucmock
 import (
 	gomock "github.com/golang/mock/gomock"
 	entity "github.com/idzharbae/marketplace-backend/svc/auth/internal/entity"
+	request "github.com/idzharbae/marketplace-backend/svc/auth/internal/request"
 	reflect "reflect"
 )
 
@@ -49,7 +50,7 @@ func (mr *MockSaldoHistoryUCMockRecorder) Create(arg0 interface{}) *gomock.Call 
 }
 
 // List mocks base method.
-func (m *MockSaldoHistoryUC) List(arg0 int64) ([]entity.SaldoHistory, error) {
+func (m *MockSaldoHistoryUC) List(arg0 request.ListSaldoHistory) ([]entity.SaldoHistory, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "List", arg0)
 	ret0, _ := ret[0].([]entity.SaldoHistory)

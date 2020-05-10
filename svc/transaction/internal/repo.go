@@ -7,8 +7,8 @@ import (
 
 //go:generate mockgen -destination=repo/repomock/cartreader_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/transaction/internal CartReader
 type CartReader interface {
-	ListByUserID(userID int64) ([]entity.Cart, error)
-	GetByIDs(cartID ...int64) ([]entity.Cart, error)
+	ListByUserID(userID int64, pagination request.Pagination) ([]entity.Cart, error)
+	GetByIDs(pagination request.Pagination, cartID ...int64) ([]entity.Cart, error)
 }
 
 //go:generate mockgen -destination=repo/repomock/cartwriter_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/transaction/internal CartWriter
@@ -20,8 +20,8 @@ type CartWriter interface {
 
 //go:generate mockgen -destination=repo/repomock/orderreader_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/transaction/internal OrderReader
 type OrderReader interface {
-	ListByUserID(userID int64, orderStatus int32) ([]entity.Order, error)
-	ListByShopID(shopID int64, orderStatus int32) ([]entity.Order, error)
+	ListByUserID(userID int64, orderStatus int32, pagination request.Pagination) ([]entity.Order, error)
+	ListByShopID(shopID int64, orderStatus int32, pagination request.Pagination) ([]entity.Order, error)
 	GetByID(orderID int64) (entity.Order, error)
 }
 

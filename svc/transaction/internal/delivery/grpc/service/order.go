@@ -26,6 +26,10 @@ func (os *OrderService) ListOrder(ctx context.Context, in *prototransaction.List
 		UserID: in.GetCustomerId(),
 		ShopID: in.GetShopId(),
 		Status: in.GetStatus(),
+		Pagination: request.Pagination{
+			Page:  int(in.GetPagination().GetPage()),
+			Limit: int(in.GetPagination().GetLimit()),
+		},
 	})
 	if err != nil {
 		return nil, err

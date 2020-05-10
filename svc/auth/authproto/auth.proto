@@ -4,6 +4,7 @@ package authproto;
 
 import "user.proto";
 import "saldohistory.proto";
+import "base.proto";
 
 service MarketplaceAuth {
     rpc Login(LoginReq) returns (LoginResp) {}
@@ -25,6 +26,7 @@ service MarketplaceAuth {
 
 message ListSaldoHistoryReq {
     int64 user_id = 1;
+    Pagination pagination = 2;
 }
 message ListSaldoHistoryResp {
     repeated SaldoHistory saldo_histories = 1;

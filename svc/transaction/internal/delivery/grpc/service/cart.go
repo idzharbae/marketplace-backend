@@ -6,6 +6,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/converter"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/request"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/prototransaction"
 )
 
@@ -21,7 +22,13 @@ func (cs *CartService) ListCartItems(ctx context.Context, in *prototransaction.L
 	if in == nil {
 		return nil, errors.New("param should not be nil")
 	}
-	res, err := cs.cartUC.List(in.GetUserId())
+	res, err := cs.cartUC.List(request.ListCartReq{
+		UserID: in.GetUserId(),
+		Pagination: request.Pagination{
+			Page:  int(in.GetPagination().GetPage()),
+			Limit: int(in.GetPagination().GetLimit()),
+		},
+	})
 	if err != nil {
 		return nil, err
 	}

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/entity"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/request"
 )
 
 type Cart struct {
@@ -20,11 +21,11 @@ func NewCart(reader internal.CartReader, writer internal.CartWriter, gateway int
 	}
 }
 
-func (c *Cart) List(userID int64) ([]entity.Cart, error) {
-	if userID == 0 {
+func (c *Cart) List(req request.ListCartReq) ([]entity.Cart, error) {
+	if req.UserID == 0 {
 		return nil, errors.New("user ID is required")
 	}
-	carts, err := c.CartReader.ListByUserID(userID)
+	carts, err := c.CartReader.ListByUserID(req.UserID, req.Pagination)
 	if err != nil {
 		return nil, err
 	}

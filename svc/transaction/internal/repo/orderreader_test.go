@@ -9,6 +9,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/gateway/gatewaymock"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/repo/connection/gormmock"
 	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/repo/model"
+	"github.com/idzharbae/marketplace-backend/svc/transaction/internal/request"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -56,9 +57,9 @@ func testList(arg string, t *testing.T) {
 		var got []entity.Order
 		var err error
 		if arg == "shop_id" {
-			got, err = test.unit.ListByShopID(req, 0)
+			got, err = test.unit.ListByShopID(req, 0, request.Pagination{})
 		} else {
-			got, err = test.unit.ListByUserID(req, 0)
+			got, err = test.unit.ListByUserID(req, 0, request.Pagination{})
 		}
 
 		assert.NotNil(t, err)
@@ -83,9 +84,9 @@ func testList(arg string, t *testing.T) {
 		var got []entity.Order
 		var err error
 		if arg == "shop_id" {
-			got, err = test.unit.ListByShopID(req, 0)
+			got, err = test.unit.ListByShopID(req, 0, request.Pagination{})
 		} else {
-			got, err = test.unit.ListByUserID(req, 0)
+			got, err = test.unit.ListByUserID(req, 0, request.Pagination{})
 		}
 		assert.NotNil(t, err)
 		assert.Nil(t, got)
@@ -119,9 +120,9 @@ func testList(arg string, t *testing.T) {
 		var got []entity.Order
 		var err error
 		if arg == "shop_id" {
-			got, err = test.unit.ListByShopID(req, 0)
+			got, err = test.unit.ListByShopID(req, 0, request.Pagination{})
 		} else {
-			got, err = test.unit.ListByUserID(req, 0)
+			got, err = test.unit.ListByUserID(req, 0, request.Pagination{})
 		}
 		assert.NotNil(t, err)
 		assert.Nil(t, got)
@@ -159,9 +160,9 @@ func testList(arg string, t *testing.T) {
 		var got []entity.Order
 		var err error
 		if arg == "shop_id" {
-			got, err = test.unit.ListByShopID(req, 0)
+			got, err = test.unit.ListByShopID(req, 0, request.Pagination{})
 		} else {
-			got, err = test.unit.ListByUserID(req, 0)
+			got, err = test.unit.ListByUserID(req, 0, request.Pagination{})
 		}
 		assert.Nil(t, err)
 		assert.NotNil(t, got)
@@ -201,9 +202,9 @@ func testList(arg string, t *testing.T) {
 		var got []entity.Order
 		var err error
 		if arg == "shop_id" {
-			got, err = test.unit.ListByShopID(req, constants.OrderStatusOnShipment)
+			got, err = test.unit.ListByShopID(req, constants.OrderStatusOnShipment, request.Pagination{})
 		} else {
-			got, err = test.unit.ListByUserID(req, constants.OrderStatusOnShipment)
+			got, err = test.unit.ListByUserID(req, constants.OrderStatusOnShipment, request.Pagination{})
 		}
 		assert.Nil(t, err)
 		assert.NotNil(t, got)

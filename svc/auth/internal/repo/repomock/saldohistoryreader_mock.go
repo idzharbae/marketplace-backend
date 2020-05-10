@@ -7,6 +7,7 @@ package repomock
 import (
 	gomock "github.com/golang/mock/gomock"
 	entity "github.com/idzharbae/marketplace-backend/svc/auth/internal/entity"
+	request "github.com/idzharbae/marketplace-backend/svc/auth/internal/request"
 	reflect "reflect"
 )
 
@@ -34,7 +35,7 @@ func (m *MockSaldoHistoryReader) EXPECT() *MockSaldoHistoryReaderMockRecorder {
 }
 
 // ListByUserID mocks base method.
-func (m *MockSaldoHistoryReader) ListByUserID(arg0 int64) ([]entity.SaldoHistory, error) {
+func (m *MockSaldoHistoryReader) ListByUserID(arg0 request.ListSaldoHistory) ([]entity.SaldoHistory, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "ListByUserID", arg0)
 	ret0, _ := ret[0].([]entity.SaldoHistory)
