@@ -7,11 +7,13 @@ import (
 
 type UseCases struct {
 	ProductUC internal.ProductUC
+	ReviewUC  internal.ReviewUC
 }
 
 func NewUsecase(repos *Repos) *UseCases {
 	return &UseCases{
 		ProductUC: usecase.NewProduct(repos.ProductReader, repos.ProductWriter),
+		ReviewUC:  usecase.NewReview(repos.ReviewReader, repos.ReviewWriter),
 	}
 }
 

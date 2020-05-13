@@ -14,3 +14,13 @@ type ProductUC interface {
 	Update(product entity.Product) (entity.Product, error)
 	Delete(product entity.Product) error
 }
+
+//go:generate mockgen -destination=usecase/ucmock/reviewuc_mock.go -package=ucmock github.com/idzharbae/marketplace-backend/svc/catalog/internal ReviewUC
+type ReviewUC interface {
+	Get(reveiwID int64) (entity.Review, error)
+	List(req requests.ListReview) ([]entity.Review, error)
+
+	Create(review entity.Review) (entity.Review, error)
+	Update(review entity.Review) (entity.Review, error)
+	Delete(review entity.Review) error
+}
