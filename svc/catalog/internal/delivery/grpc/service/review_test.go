@@ -254,10 +254,10 @@ func TestReviewService_DeleteReview(t *testing.T) {
 	t.Run("uc returns error, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		req := &catalogproto.Review{
-			Id: 123,
+		req := &catalogproto.GetReviewReq{
+			ReviewId: 123,
 		}
-		test.uc.EXPECT().Delete(converter.ReviewProtoToEntity(req)).Return(errors.New("error"))
+		test.uc.EXPECT().Delete(entity.Review{ID: req.GetReviewId()}).Return(errors.New("error"))
 		got, err := test.unit.DeleteReview(test.ctx, req)
 		assert.Nil(t, got)
 		assert.NotNil(t, err)
@@ -265,10 +265,10 @@ func TestReviewService_DeleteReview(t *testing.T) {
 	t.Run("uc returns no error, should no return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		req := &catalogproto.Review{
-			Id: 123,
+		req := &catalogproto.GetReviewReq{
+			ReviewId: 123,
 		}
-		test.uc.EXPECT().Delete(converter.ReviewProtoToEntity(req)).Return(nil)
+		test.uc.EXPECT().Delete(entity.Review{ID: req.GetReviewId()}).Return(nil)
 		got, err := test.unit.DeleteReview(test.ctx, req)
 		assert.Nil(t, err)
 		assert.NotNil(t, got)

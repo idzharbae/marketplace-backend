@@ -6,6 +6,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/catalog/catalogproto"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/converter"
+	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/requests"
 )
 
@@ -66,11 +67,11 @@ func (r *ReviewService) UpdateReview(ctx context.Context, in *catalogproto.Revie
 	}
 	return converter.ReviewEntityToProto(res), nil
 }
-func (r *ReviewService) DeleteReview(ctx context.Context, in *catalogproto.Review) (*catalogproto.Empty, error) {
+func (r *ReviewService) DeleteReview(ctx context.Context, in *catalogproto.GetReviewReq) (*catalogproto.Empty, error) {
 	if in == nil {
 		return nil, errors.New("parameter should not be nil")
 	}
-	err := r.ReviewUC.Delete(converter.ReviewProtoToEntity(in))
+	err := r.ReviewUC.Delete(entity.Review{ID: in.GetReviewId()})
 	if err != nil {
 		return nil, err
 	}
