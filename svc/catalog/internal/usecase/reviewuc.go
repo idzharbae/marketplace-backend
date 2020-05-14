@@ -21,11 +21,14 @@ func NewReview(reviewReader internal.ReviewReader, reviewWriter internal.ReviewW
 	}
 }
 
-func (r *Review) Get(reveiwID int64) (entity.Review, error) {
-	return entity.Review{}, nil
+func (r *Review) Get(reviewID int64) (entity.Review, error) {
+	return r.reviewReader.GetByID(reviewID)
 }
 func (r *Review) List(req requests.ListReview) ([]entity.Review, error) {
-	return nil, nil
+	if req.ProductID != 0 {
+		return r.reviewReader.ListByProductID(req.ProductID, req.Pagination)
+	}
+	return r.reviewReader.ListByShopID(req.ShopID, req.Pagination)
 }
 
 func (r *Review) Create(review entity.Review) (entity.Review, error) {

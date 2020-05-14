@@ -26,8 +26,8 @@ type ProductWriter interface {
 
 //go:generate mockgen -destination=repo/repomock/reviewreader_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/catalog/internal ReviewReader
 type ReviewReader interface {
-	ListByProductID(productID int64) ([]entity.Review, error)
-	ListByShopID(shopID int64) ([]entity.Review, error)
+	ListByProductID(productID int64, pagination requests.Pagination) ([]entity.Review, error)
+	ListByShopID(shopID int64, pagination requests.Pagination) ([]entity.Review, error)
 
 	GetByID(reviewID int64) (entity.Review, error)
 }

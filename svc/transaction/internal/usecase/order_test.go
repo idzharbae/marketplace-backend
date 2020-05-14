@@ -116,7 +116,7 @@ func TestOrder_CreateFromCarts(t *testing.T) {
 			PaymentAmount: 3000,
 		}
 
-		test.cartReader.EXPECT().GetByIDs(req.CartIDs).Return(nil, errors.New("error"))
+		test.cartReader.EXPECT().GetByIDs(request.Pagination{}, req.CartIDs).Return(nil, errors.New("error"))
 
 		got, err := test.unit.CreateFromCarts(req)
 		assert.NotNil(t, err)
@@ -131,7 +131,7 @@ func TestOrder_CreateFromCarts(t *testing.T) {
 			PaymentAmount: 3000,
 		}
 
-		test.cartReader.EXPECT().GetByIDs(req.CartIDs).Return([]entity.Cart{
+		test.cartReader.EXPECT().GetByIDs(request.Pagination{}, req.CartIDs).Return([]entity.Cart{
 			{ID: 1, Product: entity.Product{ID: 2}, AmountKG: 1, UserID: 69},
 			{ID: 23, Product: entity.Product{ID: 3}, AmountKG: 1, UserID: 1},
 			{ID: 4, Product: entity.Product{ID: 4}, AmountKG: 1, UserID: 69},
@@ -150,7 +150,7 @@ func TestOrder_CreateFromCarts(t *testing.T) {
 			PaymentAmount: 3000,
 		}
 
-		test.cartReader.EXPECT().GetByIDs(req.CartIDs).Return([]entity.Cart{
+		test.cartReader.EXPECT().GetByIDs(request.Pagination{}, req.CartIDs).Return([]entity.Cart{
 			{ID: 1, Product: entity.Product{ID: 2}, AmountKG: 1, UserID: 69},
 			{ID: 23, Product: entity.Product{ID: 3}, AmountKG: 1, UserID: 69},
 			{ID: 4, Product: entity.Product{ID: 4}, AmountKG: 1, UserID: 69},
@@ -170,7 +170,7 @@ func TestOrder_CreateFromCarts(t *testing.T) {
 			PaymentAmount: 3000,
 		}
 
-		test.cartReader.EXPECT().GetByIDs(req.CartIDs).Return([]entity.Cart{
+		test.cartReader.EXPECT().GetByIDs(request.Pagination{}, req.CartIDs).Return([]entity.Cart{
 			{ID: 1, Product: entity.Product{ID: 2}, AmountKG: 1, UserID: 69},
 			{ID: 23, Product: entity.Product{ID: 3}, AmountKG: 1, UserID: 69},
 			{ID: 4, Product: entity.Product{ID: 4}, AmountKG: 1, UserID: 69},
@@ -190,7 +190,7 @@ func TestOrder_CreateFromCarts(t *testing.T) {
 			PaymentAmount: 4000,
 		}
 
-		test.cartReader.EXPECT().GetByIDs(req.CartIDs).Return([]entity.Cart{
+		test.cartReader.EXPECT().GetByIDs(request.Pagination{}, req.CartIDs).Return([]entity.Cart{
 			{ID: 1, Product: entity.Product{ID: 2}, AmountKG: 1, UserID: 69},
 			{ID: 23, Product: entity.Product{ID: 3}, AmountKG: 1, UserID: 69},
 			{ID: 4, Product: entity.Product{ID: 4}, AmountKG: 1, UserID: 69},
@@ -211,7 +211,7 @@ func TestOrder_CreateFromCarts(t *testing.T) {
 			PaymentAmount: 4000,
 		}
 
-		test.cartReader.EXPECT().GetByIDs(req.CartIDs).Return([]entity.Cart{
+		test.cartReader.EXPECT().GetByIDs(request.Pagination{}, req.CartIDs).Return([]entity.Cart{
 			{ID: 1, Product: entity.Product{ID: 2}, AmountKG: 1, UserID: 69},
 			{ID: 23, Product: entity.Product{ID: 3}, AmountKG: 1, UserID: 69},
 			{ID: 4, Product: entity.Product{ID: 4}, AmountKG: 1, UserID: 69},

@@ -6,6 +6,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/constant"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/repo/repomock"
+	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/requests"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
@@ -201,5 +202,27 @@ func TestReview_Update(t *testing.T) {
 		got, err := test.unit.Update(req)
 		assert.Nil(t, err)
 		assert.Equal(t, int64(321), got.ID)
+	})
+}
+
+func TestReview_List(t *testing.T) {
+	test := newReviewTest()
+	t.Run("given product id, list by product id", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := requests.ListReview{
+			ProductID: 123,
+		}
+		test.reader.EXPECT().ListByProductID(req.ProductID, req.Pagination)
+		test.unit.List(req)
+	})
+	t.Run("given shop id, list by shop id", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := requests.ListReview{
+			ShopID: 123,
+		}
+		test.reader.EXPECT().ListByShopID(req.ShopID, req.Pagination)
+		test.unit.List(req)
 	})
 }

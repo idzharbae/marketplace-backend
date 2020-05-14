@@ -5,6 +5,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/repo/connection/gormmock"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/repo/model"
+	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/requests"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/util/errors"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -83,10 +84,11 @@ func TestReviewReader_ListByProductID(t *testing.T) {
 		defer test.Finish()
 		req := int64(123)
 		test.db.EXPECT().Where("product_id=?", req).Return(test.db)
+		test.db.EXPECT().Order("created_at DESC").Return(test.db)
 		test.db.EXPECT().Find(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(errors.New("error"))
 
-		got, err := test.unit.ListByProductID(req)
+		got, err := test.unit.ListByProductID(req, requests.Pagination{})
 		assert.NotNil(t, err)
 		assert.Nil(t, got)
 	})
@@ -95,6 +97,7 @@ func TestReviewReader_ListByProductID(t *testing.T) {
 		defer test.Finish()
 		req := int64(123)
 		test.db.EXPECT().Where("product_id=?", req).Return(test.db)
+		test.db.EXPECT().Order("created_at DESC").Return(test.db)
 		test.db.EXPECT().Find(gomock.Any()).DoAndReturn(func(arg *[]model.Review) *gormmock.MockGormw {
 			*arg = []model.Review{
 				{ID: 123},
@@ -104,7 +107,7 @@ func TestReviewReader_ListByProductID(t *testing.T) {
 		})
 		test.db.EXPECT().Error().Return(nil)
 
-		got, err := test.unit.ListByProductID(req)
+		got, err := test.unit.ListByProductID(req, requests.Pagination{})
 		assert.Nil(t, err)
 		assert.Equal(t, 2, len(got))
 	})
@@ -117,10 +120,11 @@ func TestReviewReader_ListByShopID(t *testing.T) {
 		defer test.Finish()
 		req := int64(123)
 		test.db.EXPECT().Where("shop_id=?", req).Return(test.db)
+		test.db.EXPECT().Order("created_at DESC").Return(test.db)
 		test.db.EXPECT().Find(gomock.Any()).Return(test.db)
 		test.db.EXPECT().Error().Return(errors.New("error"))
 
-		got, err := test.unit.ListByShopID(req)
+		got, err := test.unit.ListByShopID(req, requests.Pagination{})
 		assert.NotNil(t, err)
 		assert.Nil(t, got)
 	})
@@ -129,6 +133,7 @@ func TestReviewReader_ListByShopID(t *testing.T) {
 		defer test.Finish()
 		req := int64(123)
 		test.db.EXPECT().Where("shop_id=?", req).Return(test.db)
+		test.db.EXPECT().Order("created_at DESC").Return(test.db)
 		test.db.EXPECT().Find(gomock.Any()).DoAndReturn(func(arg *[]model.Review) *gormmock.MockGormw {
 			*arg = []model.Review{
 				{ID: 123},
@@ -138,7 +143,7 @@ func TestReviewReader_ListByShopID(t *testing.T) {
 		})
 		test.db.EXPECT().Error().Return(nil)
 
-		got, err := test.unit.ListByShopID(req)
+		got, err := test.unit.ListByShopID(req, requests.Pagination{})
 		assert.Nil(t, err)
 		assert.Equal(t, 2, len(got))
 	})

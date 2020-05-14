@@ -7,6 +7,7 @@ package repomock
 import (
 	gomock "github.com/golang/mock/gomock"
 	entity "github.com/idzharbae/marketplace-backend/svc/catalog/internal/entity"
+	requests "github.com/idzharbae/marketplace-backend/svc/catalog/internal/requests"
 	reflect "reflect"
 )
 
@@ -49,31 +50,31 @@ func (mr *MockReviewReaderMockRecorder) GetByID(arg0 interface{}) *gomock.Call {
 }
 
 // ListByProductID mocks base method.
-func (m *MockReviewReader) ListByProductID(arg0 int64) ([]entity.Review, error) {
+func (m *MockReviewReader) ListByProductID(arg0 int64, arg1 requests.Pagination) ([]entity.Review, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListByProductID", arg0)
+	ret := m.ctrl.Call(m, "ListByProductID", arg0, arg1)
 	ret0, _ := ret[0].([]entity.Review)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // ListByProductID indicates an expected call of ListByProductID.
-func (mr *MockReviewReaderMockRecorder) ListByProductID(arg0 interface{}) *gomock.Call {
+func (mr *MockReviewReaderMockRecorder) ListByProductID(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListByProductID", reflect.TypeOf((*MockReviewReader)(nil).ListByProductID), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListByProductID", reflect.TypeOf((*MockReviewReader)(nil).ListByProductID), arg0, arg1)
 }
 
 // ListByShopID mocks base method.
-func (m *MockReviewReader) ListByShopID(arg0 int64) ([]entity.Review, error) {
+func (m *MockReviewReader) ListByShopID(arg0 int64, arg1 requests.Pagination) ([]entity.Review, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "ListByShopID", arg0)
+	ret := m.ctrl.Call(m, "ListByShopID", arg0, arg1)
 	ret0, _ := ret[0].([]entity.Review)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // ListByShopID indicates an expected call of ListByShopID.
-func (mr *MockReviewReaderMockRecorder) ListByShopID(arg0 interface{}) *gomock.Call {
+func (mr *MockReviewReaderMockRecorder) ListByShopID(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListByShopID", reflect.TypeOf((*MockReviewReader)(nil).ListByShopID), arg0)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ListByShopID", reflect.TypeOf((*MockReviewReader)(nil).ListByShopID), arg0, arg1)
 }
