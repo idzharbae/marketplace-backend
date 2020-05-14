@@ -66,3 +66,16 @@ func ReviewModelsToEntities(mods []model.Review) []entity.Review {
 	}
 	return reviews
 }
+
+func ReviewEntityToModel(review entity.Review) model.Review {
+	return model.Review{
+		ID:        review.ID,
+		UserID:    review.UserID,
+		ProductID: review.ProductID,
+		ShopID:    review.ShopID,
+		Title:     review.Title,
+		Content:   review.Content,
+		PhotoURL:  review.PhotoURL,
+		Rating:    review.Rating,
+	}
+}
