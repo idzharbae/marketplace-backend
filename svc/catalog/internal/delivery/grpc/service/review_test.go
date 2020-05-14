@@ -3,6 +3,9 @@ package service
 import (
 	"context"
 	"errors"
+	"testing"
+	"time"
+
 	"github.com/golang/mock/gomock"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/catalogproto"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/converter"
@@ -10,8 +13,6 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/requests"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/usecase/ucmock"
 	"github.com/stretchr/testify/assert"
-	"testing"
-	"time"
 )
 
 type reviewTest struct {
