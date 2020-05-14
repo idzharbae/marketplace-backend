@@ -6,6 +6,7 @@ import (
 	"github.com/golang/mock/gomock"
 	"github.com/idzharbae/marketplace-backend/svc/auth/authproto"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/entity"
+	"github.com/idzharbae/marketplace-backend/svc/auth/internal/request"
 	"github.com/idzharbae/marketplace-backend/svc/auth/internal/usecase/ucmock"
 	"github.com/stretchr/testify/assert"
 	"testing"
@@ -125,7 +126,9 @@ func TestSaldoHistoryService_ListSaldoHistory(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		req := test.GetListReq()
-		test.uc.EXPECT().List(req.GetUserId()).Return(nil, errors.New("error"))
+		test.uc.EXPECT().List(request.ListSaldoHistory{
+			UserID: req.GetUserId(),
+		}).Return(nil, errors.New("error"))
 
 		got, err := test.unit.ListSaldoHistory(test.ctx, req)
 		assert.Nil(t, got)
@@ -136,7 +139,9 @@ func TestSaldoHistoryService_ListSaldoHistory(t *testing.T) {
 		defer test.Finish()
 		req := test.GetListReq()
 		resp := test.GetListResp()
-		test.uc.EXPECT().List(req.GetUserId()).Return(resp, nil)
+		test.uc.EXPECT().List(request.ListSaldoHistory{
+			UserID: req.GetUserId(),
+		}).Return(resp, nil)
 
 		got, err := test.unit.ListSaldoHistory(test.ctx, req)
 		assert.Nil(t, err)

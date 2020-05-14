@@ -24,6 +24,139 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type ListReviewsReq struct {
+	ProductId            int64       `protobuf:"varint,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
+	ShopId               int64       `protobuf:"varint,2,opt,name=shop_id,json=shopId,proto3" json:"shop_id,omitempty"`
+	Pagination           *Pagination `protobuf:"bytes,3,opt,name=pagination,proto3" json:"pagination,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}    `json:"-"`
+	XXX_unrecognized     []byte      `json:"-"`
+	XXX_sizecache        int32       `json:"-"`
+}
+
+func (m *ListReviewsReq) Reset()         { *m = ListReviewsReq{} }
+func (m *ListReviewsReq) String() string { return proto.CompactTextString(m) }
+func (*ListReviewsReq) ProtoMessage()    {}
+func (*ListReviewsReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0abbfcf058acdf89, []int{0}
+}
+
+func (m *ListReviewsReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListReviewsReq.Unmarshal(m, b)
+}
+func (m *ListReviewsReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListReviewsReq.Marshal(b, m, deterministic)
+}
+func (m *ListReviewsReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListReviewsReq.Merge(m, src)
+}
+func (m *ListReviewsReq) XXX_Size() int {
+	return xxx_messageInfo_ListReviewsReq.Size(m)
+}
+func (m *ListReviewsReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListReviewsReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListReviewsReq proto.InternalMessageInfo
+
+func (m *ListReviewsReq) GetProductId() int64 {
+	if m != nil {
+		return m.ProductId
+	}
+	return 0
+}
+
+func (m *ListReviewsReq) GetShopId() int64 {
+	if m != nil {
+		return m.ShopId
+	}
+	return 0
+}
+
+func (m *ListReviewsReq) GetPagination() *Pagination {
+	if m != nil {
+		return m.Pagination
+	}
+	return nil
+}
+
+type ListReviewsResp struct {
+	Reviews              []*Review `protobuf:"bytes,1,rep,name=reviews,proto3" json:"reviews,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *ListReviewsResp) Reset()         { *m = ListReviewsResp{} }
+func (m *ListReviewsResp) String() string { return proto.CompactTextString(m) }
+func (*ListReviewsResp) ProtoMessage()    {}
+func (*ListReviewsResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0abbfcf058acdf89, []int{1}
+}
+
+func (m *ListReviewsResp) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ListReviewsResp.Unmarshal(m, b)
+}
+func (m *ListReviewsResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ListReviewsResp.Marshal(b, m, deterministic)
+}
+func (m *ListReviewsResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ListReviewsResp.Merge(m, src)
+}
+func (m *ListReviewsResp) XXX_Size() int {
+	return xxx_messageInfo_ListReviewsResp.Size(m)
+}
+func (m *ListReviewsResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_ListReviewsResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ListReviewsResp proto.InternalMessageInfo
+
+func (m *ListReviewsResp) GetReviews() []*Review {
+	if m != nil {
+		return m.Reviews
+	}
+	return nil
+}
+
+type GetReviewReq struct {
+	ReviewId             int64    `protobuf:"varint,1,opt,name=review_id,json=reviewId,proto3" json:"review_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetReviewReq) Reset()         { *m = GetReviewReq{} }
+func (m *GetReviewReq) String() string { return proto.CompactTextString(m) }
+func (*GetReviewReq) ProtoMessage()    {}
+func (*GetReviewReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0abbfcf058acdf89, []int{2}
+}
+
+func (m *GetReviewReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetReviewReq.Unmarshal(m, b)
+}
+func (m *GetReviewReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetReviewReq.Marshal(b, m, deterministic)
+}
+func (m *GetReviewReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetReviewReq.Merge(m, src)
+}
+func (m *GetReviewReq) XXX_Size() int {
+	return xxx_messageInfo_GetReviewReq.Size(m)
+}
+func (m *GetReviewReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetReviewReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetReviewReq proto.InternalMessageInfo
+
+func (m *GetReviewReq) GetReviewId() int64 {
+	if m != nil {
+		return m.ReviewId
+	}
+	return 0
+}
+
 type ListProductsReq struct {
 	ShopIDs              []int64     `protobuf:"varint,1,rep,packed,name=shopIDs,proto3" json:"shopIDs,omitempty"`
 	Pagination           *Pagination `protobuf:"bytes,2,opt,name=pagination,proto3" json:"pagination,omitempty"`
@@ -41,7 +174,7 @@ func (m *ListProductsReq) Reset()         { *m = ListProductsReq{} }
 func (m *ListProductsReq) String() string { return proto.CompactTextString(m) }
 func (*ListProductsReq) ProtoMessage()    {}
 func (*ListProductsReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0abbfcf058acdf89, []int{0}
+	return fileDescriptor_0abbfcf058acdf89, []int{3}
 }
 
 func (m *ListProductsReq) XXX_Unmarshal(b []byte) error {
@@ -122,7 +255,7 @@ func (m *ListProductsResp) Reset()         { *m = ListProductsResp{} }
 func (m *ListProductsResp) String() string { return proto.CompactTextString(m) }
 func (*ListProductsResp) ProtoMessage()    {}
 func (*ListProductsResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0abbfcf058acdf89, []int{1}
+	return fileDescriptor_0abbfcf058acdf89, []int{4}
 }
 
 func (m *ListProductsResp) XXX_Unmarshal(b []byte) error {
@@ -162,7 +295,7 @@ func (m *GetProductReq) Reset()         { *m = GetProductReq{} }
 func (m *GetProductReq) String() string { return proto.CompactTextString(m) }
 func (*GetProductReq) ProtoMessage()    {}
 func (*GetProductReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0abbfcf058acdf89, []int{2}
+	return fileDescriptor_0abbfcf058acdf89, []int{5}
 }
 
 func (m *GetProductReq) XXX_Unmarshal(b []byte) error {
@@ -208,7 +341,7 @@ func (m *PKReq) Reset()         { *m = PKReq{} }
 func (m *PKReq) String() string { return proto.CompactTextString(m) }
 func (*PKReq) ProtoMessage()    {}
 func (*PKReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0abbfcf058acdf89, []int{3}
+	return fileDescriptor_0abbfcf058acdf89, []int{6}
 }
 
 func (m *PKReq) XXX_Unmarshal(b []byte) error {
@@ -237,6 +370,9 @@ func (m *PKReq) GetId() int32 {
 }
 
 func init() {
+	proto.RegisterType((*ListReviewsReq)(nil), "catalogproto.ListReviewsReq")
+	proto.RegisterType((*ListReviewsResp)(nil), "catalogproto.ListReviewsResp")
+	proto.RegisterType((*GetReviewReq)(nil), "catalogproto.GetReviewReq")
 	proto.RegisterType((*ListProductsReq)(nil), "catalogproto.ListProductsReq")
 	proto.RegisterType((*ListProductsResp)(nil), "catalogproto.ListProductsResp")
 	proto.RegisterType((*GetProductReq)(nil), "catalogproto.GetProductReq")
@@ -248,31 +384,41 @@ func init() {
 }
 
 var fileDescriptor_0abbfcf058acdf89 = []byte{
-	// 384 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x91, 0x4b, 0x8f, 0xd3, 0x30,
-	0x14, 0x85, 0x9b, 0xf4, 0x95, 0xde, 0x36, 0x80, 0x2e, 0x02, 0x4c, 0x50, 0x21, 0xca, 0x2a, 0xab,
-	0x4a, 0xb4, 0x1b, 0x76, 0x48, 0x7d, 0x08, 0x55, 0x80, 0xa8, 0x22, 0x58, 0x57, 0x6e, 0x62, 0xa5,
-	0x11, 0x99, 0xda, 0x63, 0xbb, 0x8b, 0xfc, 0xeb, 0x59, 0xcc, 0x0f, 0x18, 0x8d, 0x93, 0x3e, 0x52,
-	0x55, 0xdd, 0xcc, 0xce, 0xc7, 0xdf, 0xd1, 0xf1, 0x3d, 0xd7, 0xe0, 0xc6, 0x54, 0xd3, 0x9c, 0xa7,
-	0x23, 0x21, 0xb9, 0xe6, 0x38, 0xa8, 0xa4, 0x51, 0x9e, 0x2b, 0x24, 0x4f, 0xf6, 0xb1, 0x2e, 0xa1,
-	0x07, 0x1b, 0xaa, 0x58, 0x79, 0x0e, 0x1e, 0x2d, 0x78, 0xfd, 0x2b, 0x53, 0x7a, 0x55, 0x3a, 0x54,
-	0xc4, 0xee, 0x91, 0x40, 0x57, 0x6d, 0xb9, 0x58, 0xce, 0x15, 0xb1, 0xfc, 0x66, 0xd8, 0x8c, 0x0e,
-	0x12, 0xbf, 0x01, 0x08, 0x9a, 0x66, 0x3b, 0xaa, 0x33, 0xbe, 0x23, 0xb6, 0x6f, 0x85, 0xfd, 0x31,
-	0x19, 0x9d, 0xbf, 0x35, 0x5a, 0x1d, 0x79, 0x74, 0xe6, 0xc5, 0xf7, 0xd0, 0x51, 0x8c, 0xca, 0x78,
-	0x4b, 0x9a, 0xbe, 0x15, 0xf6, 0xa2, 0x4a, 0xa1, 0x07, 0x4e, 0x4c, 0x35, 0x4b, 0xb9, 0x2c, 0x48,
-	0xcb, 0x90, 0xa3, 0xc6, 0x8f, 0xe0, 0x70, 0x99, 0x30, 0xb9, 0xde, 0x14, 0xa4, 0x63, 0x58, 0xd7,
-	0xe8, 0x69, 0x81, 0x43, 0x80, 0x12, 0xe9, 0x42, 0x30, 0xd2, 0x35, 0xb0, 0x67, 0x6e, 0xfe, 0x16,
-	0x82, 0xe1, 0x17, 0xe8, 0x57, 0x95, 0xd7, 0x59, 0xa2, 0x88, 0x63, 0x5a, 0x40, 0x75, 0xb5, 0x4c,
-	0x54, 0xb0, 0x80, 0x37, 0xf5, 0xd6, 0x4a, 0xe0, 0x57, 0x70, 0x2a, 0x47, 0xd9, 0xbb, 0x3f, 0x7e,
-	0x77, 0x51, 0xad, 0xa4, 0xd1, 0xd1, 0x16, 0x4c, 0xc0, 0xfd, 0xc1, 0x0e, 0x29, 0xcf, 0xab, 0x7b,
-	0x05, 0x76, 0x96, 0x10, 0xcb, 0xb7, 0xc2, 0x76, 0x64, 0x67, 0x09, 0x22, 0xb4, 0x54, 0xbe, 0x4f,
-	0xcd, 0xaa, 0x7a, 0x91, 0x39, 0x07, 0x1f, 0xa0, 0xbd, 0xfa, 0x79, 0xc5, 0x3c, 0x7e, 0xb0, 0x01,
-	0x7f, 0x53, 0xf9, 0x9f, 0x69, 0x91, 0xd3, 0x98, 0xcd, 0xca, 0xb7, 0xf1, 0x0f, 0x0c, 0xce, 0x67,
-	0xc5, 0x61, 0x7d, 0xaa, 0x8b, 0xdf, 0xf3, 0x3e, 0xdf, 0xc2, 0x4a, 0x04, 0x0d, 0x9c, 0x02, 0x9c,
-	0xa6, 0xc6, 0x4f, 0x75, 0x7f, 0xad, 0x8f, 0x77, 0x7d, 0x03, 0x41, 0x03, 0xbf, 0x83, 0x3b, 0x93,
-	0x8c, 0x6a, 0x76, 0x88, 0xb9, 0xee, 0xbc, 0x19, 0xf0, 0x4f, 0x24, 0x2f, 0x08, 0x98, 0x81, 0x3b,
-	0x67, 0x39, 0x3b, 0x05, 0xdc, 0x2c, 0xf2, 0xb6, 0x0e, 0x17, 0x77, 0x42, 0x17, 0x41, 0x63, 0xd3,
-	0x31, 0x72, 0xf2, 0x14, 0x00, 0x00, 0xff, 0xff, 0x42, 0x74, 0x14, 0x47, 0x3f, 0x03, 0x00, 0x00,
+	// 529 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x54, 0xdd, 0x6e, 0xd3, 0x30,
+	0x18, 0x6d, 0xda, 0xad, 0x6d, 0xbe, 0xa6, 0x03, 0x7d, 0xfc, 0x2c, 0x64, 0x14, 0x2a, 0x5f, 0x55,
+	0x42, 0xaa, 0x44, 0x77, 0xc3, 0x05, 0xd2, 0xb4, 0x75, 0xd3, 0x54, 0x31, 0x44, 0x65, 0xc1, 0xf5,
+	0xe4, 0x26, 0x56, 0x17, 0x51, 0x16, 0x13, 0x7b, 0xa0, 0xdc, 0xf2, 0x60, 0x3c, 0x15, 0x0f, 0x80,
+	0x62, 0xe7, 0xa7, 0xe9, 0xa2, 0x68, 0x82, 0xbb, 0x1c, 0x9f, 0xe3, 0xcf, 0xe7, 0x1c, 0xcb, 0x81,
+	0xa1, 0xcf, 0x14, 0xdb, 0x44, 0xeb, 0xa9, 0x88, 0x23, 0x15, 0xa1, 0x93, 0x41, 0x8d, 0xbc, 0xa1,
+	0x88, 0xa3, 0xe0, 0xce, 0x57, 0x86, 0xf4, 0x60, 0xc5, 0x24, 0xcf, 0xbe, 0x9d, 0x98, 0xff, 0x08,
+	0xf9, 0x4f, 0x83, 0xc8, 0x2f, 0x0b, 0x0e, 0xae, 0x42, 0xa9, 0xa8, 0x5e, 0x94, 0x94, 0x7f, 0xc7,
+	0x11, 0x40, 0xb6, 0xfb, 0x3a, 0x0c, 0x5c, 0x6b, 0x6c, 0x4d, 0x3a, 0xd4, 0xce, 0x56, 0x16, 0x01,
+	0x1e, 0x42, 0x4f, 0xde, 0x44, 0x22, 0xe5, 0xda, 0x9a, 0xeb, 0xa6, 0x70, 0x11, 0xe0, 0x3b, 0x00,
+	0xc1, 0xd6, 0xe1, 0x2d, 0x53, 0x61, 0x74, 0xeb, 0x76, 0xc6, 0xd6, 0x64, 0x30, 0x73, 0xa7, 0xdb,
+	0xb6, 0xa6, 0xcb, 0x82, 0xa7, 0x5b, 0x5a, 0x72, 0x0a, 0x8f, 0x2a, 0x1e, 0xa4, 0xc0, 0x29, 0xf4,
+	0x8c, 0x4f, 0xe9, 0x5a, 0xe3, 0xce, 0x64, 0x30, 0x7b, 0x5a, 0x9d, 0x64, 0xb4, 0x34, 0x17, 0x91,
+	0x37, 0xe0, 0x5c, 0xf2, 0x6c, 0x42, 0x1a, 0xe2, 0x08, 0x6c, 0x43, 0x95, 0x19, 0xfa, 0x66, 0x61,
+	0x11, 0x90, 0x3f, 0x96, 0x39, 0x70, 0x69, 0x42, 0xe9, 0xd4, 0xae, 0x89, 0xb5, 0x38, 0x37, 0x07,
+	0x76, 0x68, 0x0e, 0x77, 0x72, 0xb5, 0x1f, 0x9e, 0x0b, 0x9f, 0x43, 0x57, 0x72, 0x16, 0xfb, 0x37,
+	0xba, 0x0d, 0x9b, 0x66, 0x08, 0x3d, 0xe8, 0xfb, 0x4c, 0xf1, 0x75, 0x14, 0x27, 0xee, 0x9e, 0x66,
+	0x0a, 0x8c, 0x2f, 0xa0, 0x1f, 0xc5, 0x01, 0x8f, 0xaf, 0x57, 0x89, 0xdb, 0xd5, 0x5c, 0x4f, 0xe3,
+	0xb3, 0x24, 0xbd, 0x18, 0x43, 0xa9, 0x44, 0x70, 0xb7, 0xa7, 0x49, 0x5b, 0xaf, 0x7c, 0x4e, 0x04,
+	0xc7, 0xd7, 0x30, 0x28, 0xef, 0x4d, 0xba, 0x7d, 0x9d, 0x02, 0x8a, 0x8b, 0x93, 0xe4, 0x02, 0x1e,
+	0x57, 0x53, 0x4b, 0x81, 0x6f, 0xa1, 0x9f, 0x29, 0xf2, 0xa2, 0x9f, 0xed, 0x44, 0x33, 0x2c, 0x2d,
+	0x64, 0xe4, 0x18, 0x86, 0x97, 0x3c, 0x9f, 0x92, 0x56, 0x77, 0x00, 0xed, 0xac, 0xe4, 0x7d, 0xda,
+	0x0e, 0x03, 0x44, 0xd8, 0x93, 0x9b, 0xbb, 0xb5, 0xae, 0xca, 0xa6, 0xfa, 0x9b, 0x1c, 0xc2, 0xfe,
+	0xf2, 0x43, 0x8d, 0x78, 0xf6, 0x7b, 0x1f, 0xf0, 0x23, 0x8b, 0xbf, 0x72, 0x25, 0x36, 0xcc, 0xe7,
+	0x73, 0x73, 0x36, 0x7e, 0x02, 0x67, 0xdb, 0x2b, 0x8e, 0xaa, 0xae, 0x76, 0x6e, 0xcf, 0x7b, 0xd5,
+	0x44, 0x4b, 0x41, 0x5a, 0x78, 0x06, 0x50, 0xba, 0xc6, 0xa3, 0xaa, 0xbe, 0x92, 0xc7, 0xab, 0x6f,
+	0x80, 0xb4, 0xf0, 0x04, 0x86, 0xf3, 0x98, 0x33, 0xc5, 0xf3, 0x31, 0xf5, 0xca, 0xc6, 0x01, 0x5f,
+	0x44, 0xf0, 0x1f, 0x03, 0xe6, 0x30, 0x3c, 0xe7, 0x1b, 0x5e, 0x0e, 0x68, 0x0c, 0xf2, 0xa4, 0x4a,
+	0x5e, 0x7c, 0x13, 0x2a, 0x21, 0x2d, 0xbc, 0x82, 0xc1, 0xd6, 0x73, 0xc3, 0x97, 0xf7, 0xbb, 0x2b,
+	0xff, 0x06, 0xde, 0xa8, 0x81, 0xd5, 0xc5, 0x9e, 0x80, 0x5d, 0xbc, 0x3c, 0xf4, 0xee, 0xd9, 0x29,
+	0x9e, 0xa4, 0x57, 0xfb, 0x82, 0x49, 0x0b, 0xdf, 0x83, 0x63, 0x5a, 0xcd, 0x66, 0xd4, 0xea, 0x9a,
+	0x76, 0x9b, 0x4a, 0xff, 0x69, 0xf7, 0x29, 0x38, 0xa6, 0xcf, 0x07, 0xf8, 0xaf, 0x6f, 0x73, 0xd5,
+	0xd5, 0xf0, 0xf8, 0x6f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x2c, 0xda, 0xa9, 0xb0, 0x90, 0x05, 0x00,
+	0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -293,6 +439,12 @@ type MarketplaceCatalogClient interface {
 	CreateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
 	UpdateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
 	DeleteProduct(ctx context.Context, in *GetProductReq, opts ...grpc.CallOption) (*Empty, error)
+	// Review
+	ListReviews(ctx context.Context, in *ListReviewsReq, opts ...grpc.CallOption) (*ListReviewsResp, error)
+	GetReview(ctx context.Context, in *GetReviewReq, opts ...grpc.CallOption) (*Review, error)
+	CreateReview(ctx context.Context, in *Review, opts ...grpc.CallOption) (*Review, error)
+	UpdateReview(ctx context.Context, in *Review, opts ...grpc.CallOption) (*Review, error)
+	DeleteReview(ctx context.Context, in *GetReviewReq, opts ...grpc.CallOption) (*Empty, error)
 }
 
 type marketplaceCatalogClient struct {
@@ -348,6 +500,51 @@ func (c *marketplaceCatalogClient) DeleteProduct(ctx context.Context, in *GetPro
 	return out, nil
 }
 
+func (c *marketplaceCatalogClient) ListReviews(ctx context.Context, in *ListReviewsReq, opts ...grpc.CallOption) (*ListReviewsResp, error) {
+	out := new(ListReviewsResp)
+	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/ListReviews", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketplaceCatalogClient) GetReview(ctx context.Context, in *GetReviewReq, opts ...grpc.CallOption) (*Review, error) {
+	out := new(Review)
+	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/GetReview", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketplaceCatalogClient) CreateReview(ctx context.Context, in *Review, opts ...grpc.CallOption) (*Review, error) {
+	out := new(Review)
+	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/CreateReview", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketplaceCatalogClient) UpdateReview(ctx context.Context, in *Review, opts ...grpc.CallOption) (*Review, error) {
+	out := new(Review)
+	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/UpdateReview", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketplaceCatalogClient) DeleteReview(ctx context.Context, in *GetReviewReq, opts ...grpc.CallOption) (*Empty, error) {
+	out := new(Empty)
+	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/DeleteReview", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MarketplaceCatalogServer is the server API for MarketplaceCatalog service.
 type MarketplaceCatalogServer interface {
 	// Product
@@ -356,6 +553,12 @@ type MarketplaceCatalogServer interface {
 	CreateProduct(context.Context, *Product) (*Product, error)
 	UpdateProduct(context.Context, *Product) (*Product, error)
 	DeleteProduct(context.Context, *GetProductReq) (*Empty, error)
+	// Review
+	ListReviews(context.Context, *ListReviewsReq) (*ListReviewsResp, error)
+	GetReview(context.Context, *GetReviewReq) (*Review, error)
+	CreateReview(context.Context, *Review) (*Review, error)
+	UpdateReview(context.Context, *Review) (*Review, error)
+	DeleteReview(context.Context, *GetReviewReq) (*Empty, error)
 }
 
 // UnimplementedMarketplaceCatalogServer can be embedded to have forward compatible implementations.
@@ -376,6 +579,21 @@ func (*UnimplementedMarketplaceCatalogServer) UpdateProduct(ctx context.Context,
 }
 func (*UnimplementedMarketplaceCatalogServer) DeleteProduct(ctx context.Context, req *GetProductReq) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteProduct not implemented")
+}
+func (*UnimplementedMarketplaceCatalogServer) ListReviews(ctx context.Context, req *ListReviewsReq) (*ListReviewsResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListReviews not implemented")
+}
+func (*UnimplementedMarketplaceCatalogServer) GetReview(ctx context.Context, req *GetReviewReq) (*Review, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetReview not implemented")
+}
+func (*UnimplementedMarketplaceCatalogServer) CreateReview(ctx context.Context, req *Review) (*Review, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateReview not implemented")
+}
+func (*UnimplementedMarketplaceCatalogServer) UpdateReview(ctx context.Context, req *Review) (*Review, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateReview not implemented")
+}
+func (*UnimplementedMarketplaceCatalogServer) DeleteReview(ctx context.Context, req *GetReviewReq) (*Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteReview not implemented")
 }
 
 func RegisterMarketplaceCatalogServer(s *grpc.Server, srv MarketplaceCatalogServer) {
@@ -472,6 +690,96 @@ func _MarketplaceCatalog_DeleteProduct_Handler(srv interface{}, ctx context.Cont
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MarketplaceCatalog_ListReviews_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListReviewsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceCatalogServer).ListReviews(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/catalogproto.MarketplaceCatalog/ListReviews",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceCatalogServer).ListReviews(ctx, req.(*ListReviewsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MarketplaceCatalog_GetReview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetReviewReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceCatalogServer).GetReview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/catalogproto.MarketplaceCatalog/GetReview",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceCatalogServer).GetReview(ctx, req.(*GetReviewReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MarketplaceCatalog_CreateReview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Review)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceCatalogServer).CreateReview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/catalogproto.MarketplaceCatalog/CreateReview",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceCatalogServer).CreateReview(ctx, req.(*Review))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MarketplaceCatalog_UpdateReview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Review)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceCatalogServer).UpdateReview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/catalogproto.MarketplaceCatalog/UpdateReview",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceCatalogServer).UpdateReview(ctx, req.(*Review))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MarketplaceCatalog_DeleteReview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetReviewReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceCatalogServer).DeleteReview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/catalogproto.MarketplaceCatalog/DeleteReview",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceCatalogServer).DeleteReview(ctx, req.(*GetReviewReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _MarketplaceCatalog_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "catalogproto.MarketplaceCatalog",
 	HandlerType: (*MarketplaceCatalogServer)(nil),
@@ -495,6 +803,26 @@ var _MarketplaceCatalog_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteProduct",
 			Handler:    _MarketplaceCatalog_DeleteProduct_Handler,
+		},
+		{
+			MethodName: "ListReviews",
+			Handler:    _MarketplaceCatalog_ListReviews_Handler,
+		},
+		{
+			MethodName: "GetReview",
+			Handler:    _MarketplaceCatalog_GetReview_Handler,
+		},
+		{
+			MethodName: "CreateReview",
+			Handler:    _MarketplaceCatalog_CreateReview_Handler,
+		},
+		{
+			MethodName: "UpdateReview",
+			Handler:    _MarketplaceCatalog_UpdateReview_Handler,
+		},
+		{
+			MethodName: "DeleteReview",
+			Handler:    _MarketplaceCatalog_DeleteReview_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

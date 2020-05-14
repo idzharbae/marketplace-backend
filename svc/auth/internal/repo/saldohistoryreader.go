@@ -19,7 +19,7 @@ func NewSaldoHistoryReader(db connection.Gormw) *SaldoHistoryReader {
 
 func (shr *SaldoHistoryReader) ListByUserID(req request.ListSaldoHistory) ([]entity.SaldoHistory, error) {
 	var saldoHistories []model.SaldoHistory
-	db := shr.db.Where("user_id=?", req.UserID)
+	db := shr.db.Where("user_id=?", req.UserID).Order("created_at DESC")
 	if req.Pagination.Limit > 0 {
 		db = db.Limit(req.Pagination.Limit)
 	}

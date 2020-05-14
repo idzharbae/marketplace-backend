@@ -23,3 +23,18 @@ type ProductWriter interface {
 	DeleteByID(productID int32) error
 	DeleteBySlug(productSlug string) error
 }
+
+//go:generate mockgen -destination=repo/repomock/reviewreader_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/catalog/internal ReviewReader
+type ReviewReader interface {
+	ListByProductID(productID int64, pagination requests.Pagination) ([]entity.Review, error)
+	ListByShopID(shopID int64, pagination requests.Pagination) ([]entity.Review, error)
+
+	GetByID(reviewID int64) (entity.Review, error)
+}
+
+//go:generate mockgen -destination=repo/repomock/reviewwriter_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/catalog/internal ReviewWriter
+type ReviewWriter interface {
+	Create(review entity.Review) (entity.Review, error)
+	Update(review entity.Review) (entity.Review, error)
+	Delete(review entity.Review) error
+}

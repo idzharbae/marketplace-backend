@@ -52,6 +52,7 @@ func TestSaldoHistoryReader_ListByUserID(t *testing.T) {
 		req := test.GetListReq()
 
 		test.db.EXPECT().Where("user_id=?", req.UserID).Return(test.db)
+		test.db.EXPECT().Order("created_at DESC").Return(test.db)
 		test.db.EXPECT().Limit(req.Pagination.Limit).Return(test.db)
 		test.db.EXPECT().Offset(0).Return(test.db)
 		test.db.EXPECT().Find(gomock.Any()).Return(test.db)
@@ -67,6 +68,7 @@ func TestSaldoHistoryReader_ListByUserID(t *testing.T) {
 		req := test.GetListReq()
 
 		test.db.EXPECT().Where("user_id=?", req.UserID).Return(test.db)
+		test.db.EXPECT().Order("created_at DESC").Return(test.db)
 		test.db.EXPECT().Limit(req.Pagination.Limit).Return(test.db)
 		test.db.EXPECT().Offset(0).Return(test.db)
 		test.db.EXPECT().Find(gomock.Any()).Return(test.db)
@@ -82,6 +84,7 @@ func TestSaldoHistoryReader_ListByUserID(t *testing.T) {
 		req := test.GetListReq()
 
 		test.db.EXPECT().Where("user_id=?", req.UserID).Return(test.db)
+		test.db.EXPECT().Order("created_at DESC").Return(test.db)
 		test.db.EXPECT().Limit(req.Pagination.Limit).Return(test.db)
 		test.db.EXPECT().Offset(0).Return(test.db)
 		test.db.EXPECT().Find(gomock.Any()).DoAndReturn(func(arg *[]model.SaldoHistory) *gormmock.MockGormw {

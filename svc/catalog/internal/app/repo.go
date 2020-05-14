@@ -10,6 +10,8 @@ import (
 type Repos struct {
 	ProductReader internal.ProductReader
 	ProductWriter internal.ProductWriter
+	ReviewReader  internal.ReviewReader
+	ReviewWriter  internal.ReviewWriter
 }
 
 func NewRepos(cfg config.Config) *Repos {
@@ -23,9 +25,13 @@ func NewRepos(cfg config.Config) *Repos {
 	}
 	productReader := repo.NewProductReader(connSlave)
 	productWriter := repo.NewProductWriter(connMaster)
+	reviewReader := repo.NewReviewReader(connSlave)
+	reviewWriter := repo.NewReviewWriter(connMaster)
 	return &Repos{
 		ProductReader: productReader,
 		ProductWriter: productWriter,
+		ReviewWriter:  reviewWriter,
+		ReviewReader:  reviewReader,
 	}
 }
 
