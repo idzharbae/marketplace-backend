@@ -46,12 +46,8 @@ func (r *Review) Create(review entity.Review) (entity.Review, error) {
 }
 func (r *Review) Update(review entity.Review) (entity.Review, error) {
 	const op = "ReviewUC::Update()"
-	if review.Rating < 0 {
-		return entity.Review{}, errors.NewWithPrefix("rating can't be negative", op)
-	}
-	if review.Rating > constant.MaxRatingValue {
-		return entity.Review{}, errors.NewWithPrefix(
-			"rating can't be more than "+strconv.FormatInt(int64(constant.MaxRatingValue), 10), op)
+	if err := review.ValidateRating(); err != nil {
+		return entity.Review{}, err
 	}
 	res, err := r.reviewWriter.Update(review)
 	if err != nil {
