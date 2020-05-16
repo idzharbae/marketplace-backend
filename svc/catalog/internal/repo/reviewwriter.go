@@ -34,6 +34,9 @@ func (w *ReviewWriter) Update(review entity.Review) (entity.Review, error) {
 		return entity.Review{}, errors.New("user is not authorized to update this review")
 	}
 	savedModel := converter.ReviewEntityToModel(review)
+	if savedModel.PhotoURL == "" {
+		savedModel.PhotoURL = found.PhotoURL
+	}
 	err = w.db.Save(&savedModel).Error()
 	if err != nil {
 		return entity.Review{}, err

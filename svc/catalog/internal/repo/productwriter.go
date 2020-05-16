@@ -41,6 +41,9 @@ func (pw *ProductWriter) Update(req entity.Product) (entity.Product, error) {
 		return entity.Product{}, errors.NewWithPrefix("product does not exist", op)
 	}
 	update := converter.ProductEntityToModel(req)
+	if update.PhotoURL == "" {
+		update.PhotoURL = found.PhotoURL
+	}
 	err := pw.db.Save(&update).Error()
 	if err != nil {
 		return entity.Product{}, errors.WithPrefix(err, op)
