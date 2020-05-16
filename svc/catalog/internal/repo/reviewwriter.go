@@ -5,6 +5,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/repo/connection"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/repo/model"
+	"github.com/idzharbae/marketplace-backend/svc/catalog/util/errors"
 )
 
 type ReviewWriter struct {
@@ -29,6 +30,9 @@ func (w *ReviewWriter) Update(review entity.Review) (entity.Review, error) {
 	if err != nil {
 		return entity.Review{}, err
 	}
+	if found.UserID != review.UserID {
+		return entity.Review{}, errors.New("user is not authorized to update this review")
+	}
 	savedModel := converter.ReviewEntityToModel(review)
 	err = w.db.Save(&savedModel).Error()
 	if err != nil {
@@ -37,5 +41,13 @@ func (w *ReviewWriter) Update(review entity.Review) (entity.Review, error) {
 	return converter.ReviewModelToEntity(savedModel), nil
 }
 func (w *ReviewWriter) Delete(review entity.Review) error {
+	var found model.Review
+	err := w.db.Where("id=?", review.ID).First(&found).Error()
+	if err != nil {
+		return err
+	}
+	if found.UserID != review.UserID {
+		return errors.New("user is not authorized to delete this review")
+	}
 	return w.db.Delete(&model.Review{ID: review.ID}).Error()
 }
