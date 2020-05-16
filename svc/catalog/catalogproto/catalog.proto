@@ -21,7 +21,7 @@ service MarketplaceCatalog {
 
     rpc CreateReview (Review) returns (Review) {}
     rpc UpdateReview(Review) returns (Review) {}
-    rpc DeleteReview (GetReviewReq) returns (Empty) {}
+    rpc DeleteReview (Review) returns (Empty) {}
 }
 
 message ListReviewsReq {

@@ -67,11 +67,11 @@ func (r *ReviewService) UpdateReview(ctx context.Context, in *catalogproto.Revie
 	}
 	return converter.ReviewEntityToProto(res), nil
 }
-func (r *ReviewService) DeleteReview(ctx context.Context, in *catalogproto.GetReviewReq) (*catalogproto.Empty, error) {
+func (r *ReviewService) DeleteReview(ctx context.Context, in *catalogproto.Review) (*catalogproto.Empty, error) {
 	if in == nil {
 		return nil, errors.New("parameter should not be nil")
 	}
-	err := r.ReviewUC.Delete(entity.Review{ID: in.GetReviewId()})
+	err := r.ReviewUC.Delete(entity.Review{ID: in.GetId(), UserID: in.GetUserId()})
 	if err != nil {
 		return nil, err
 	}
