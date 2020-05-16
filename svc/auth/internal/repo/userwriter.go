@@ -57,6 +57,7 @@ func (uw *UserWriter) Update(user entity.User) (entity.User, error) {
 		Description:   user.Description,
 		Password:      res.Password,
 		CreatedAt:     res.CreatedAt,
+		Saldo:         res.Saldo,
 	}
 	if user.NewPassword != "" {
 		res.Password = user.GetNewPasswordHash()
