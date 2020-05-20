@@ -92,6 +92,15 @@ func (p *ProductReader) GetByShopID(shopID int32) ([]entity.Product, error) {
 	return converter.ProductModelsToEntities(product), nil
 }
 
+func (p *ProductReader) GetTotalByShopID(shopID int32) (int32, error) {
+	count := int32(0)
+	err := p.db.Model(&model.Product{}).Where("shop_id=?", shopID).Count(&count).Error()
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
+}
+
 func getOrder(orderBy, orderType string) string {
 	if orderBy != "id" && orderBy != "name" && orderBy != "created_at" && orderBy != "updated_at" &&
 		orderBy != "price_per_kg" && orderBy != "stock_kg" && orderBy != "quantity" {

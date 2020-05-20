@@ -320,3 +320,50 @@ func TestProductReader_GetByShopID(t *testing.T) {
 		assert.NotNil(t, got)
 	})
 }
+
+func TestProductReader_GetTotalByShopID(t *testing.T) {
+	var (
+		db   *gormmock.MockGormw
+		ctrl *gomock.Controller
+		unit *ProductReader
+	)
+	begin := func(t *testing.T) {
+		ctrl = gomock.NewController(t)
+		db = gormmock.NewMockGormw(ctrl)
+		unit = NewProductReader(db)
+	}
+	finish := func() {
+		ctrl.Finish()
+	}
+	t.Run("db returns error, should return error", func(t *testing.T) {
+		begin(t)
+		defer finish()
+		req := int32(1234)
+
+		db.EXPECT().Model(gomock.Any()).Return(db)
+		db.EXPECT().Where("shop_id=?", req).Return(db)
+		db.EXPECT().Count(gomock.Any()).Return(db)
+		db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := unit.GetTotalByShopID(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, int32(0), got)
+	})
+	t.Run("db returns no error, should return product count", func(t *testing.T) {
+		begin(t)
+		defer finish()
+		req := int32(1234)
+
+		db.EXPECT().Model(gomock.Any()).Return(db)
+		db.EXPECT().Where("shop_id=?", req).Return(db)
+		db.EXPECT().Count(gomock.Any()).DoAndReturn(func(arg *int32) *gormmock.MockGormw {
+			*arg = 1337
+			return db
+		})
+		db.EXPECT().Error().Return(nil)
+
+		got, err := unit.GetTotalByShopID(req)
+		assert.Nil(t, err)
+		assert.Equal(t, int32(1337), got)
+	})
+}

@@ -55,3 +55,27 @@ func (r *ReviewReader) GetByID(reviewID int64) (entity.Review, error) {
 	}
 	return converter.ReviewModelToEntity(review), nil
 }
+
+func (r *ReviewReader) GetTotalAndAverageByShopID(shopID int64) (requests.TotalAndAverageReview, error) {
+	var res model.Review
+	// need better way to store these two values
+	err := r.db.Select("COUNT(*) AS shop_id, AVG(rating) AS rating").Where("shop_id=?", shopID).Find(&res).Error()
+	if err != nil {
+		return requests.TotalAndAverageReview{}, err
+	}
+	return requests.TotalAndAverageReview{
+		Total:   int32(res.ShopID),
+		Average: float32(res.Rating),
+	}, nil
+}
+func (r *ReviewReader) GetTotalAndAverageByProductID(productID int64) (requests.TotalAndAverageReview, error) {
+	var res model.Review
+	err := r.db.Select("COUNT(*) AS shop_id, AVG(rating) AS rating").Where("product_id=?", productID).Find(&res).Error()
+	if err != nil {
+		return requests.TotalAndAverageReview{}, err
+	}
+	return requests.TotalAndAverageReview{
+		Total:   int32(res.ShopID),
+		Average: float32(res.Rating),
+	}, nil
+}

@@ -24,6 +24,178 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
 
+type AverageAndTotalReviewResp struct {
+	TotalReview          int32    `protobuf:"varint,1,opt,name=total_review,json=totalReview,proto3" json:"total_review,omitempty"`
+	AverageReview        float32  `protobuf:"fixed32,2,opt,name=average_review,json=averageReview,proto3" json:"average_review,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AverageAndTotalReviewResp) Reset()         { *m = AverageAndTotalReviewResp{} }
+func (m *AverageAndTotalReviewResp) String() string { return proto.CompactTextString(m) }
+func (*AverageAndTotalReviewResp) ProtoMessage()    {}
+func (*AverageAndTotalReviewResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0abbfcf058acdf89, []int{0}
+}
+
+func (m *AverageAndTotalReviewResp) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_AverageAndTotalReviewResp.Unmarshal(m, b)
+}
+func (m *AverageAndTotalReviewResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_AverageAndTotalReviewResp.Marshal(b, m, deterministic)
+}
+func (m *AverageAndTotalReviewResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AverageAndTotalReviewResp.Merge(m, src)
+}
+func (m *AverageAndTotalReviewResp) XXX_Size() int {
+	return xxx_messageInfo_AverageAndTotalReviewResp.Size(m)
+}
+func (m *AverageAndTotalReviewResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_AverageAndTotalReviewResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_AverageAndTotalReviewResp proto.InternalMessageInfo
+
+func (m *AverageAndTotalReviewResp) GetTotalReview() int32 {
+	if m != nil {
+		return m.TotalReview
+	}
+	return 0
+}
+
+func (m *AverageAndTotalReviewResp) GetAverageReview() float32 {
+	if m != nil {
+		return m.AverageReview
+	}
+	return 0
+}
+
+type AverageAndTotalReviewReq struct {
+	ShopId               int64    `protobuf:"varint,1,opt,name=shop_id,json=shopId,proto3" json:"shop_id,omitempty"`
+	ProductId            int64    `protobuf:"varint,2,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *AverageAndTotalReviewReq) Reset()         { *m = AverageAndTotalReviewReq{} }
+func (m *AverageAndTotalReviewReq) String() string { return proto.CompactTextString(m) }
+func (*AverageAndTotalReviewReq) ProtoMessage()    {}
+func (*AverageAndTotalReviewReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0abbfcf058acdf89, []int{1}
+}
+
+func (m *AverageAndTotalReviewReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_AverageAndTotalReviewReq.Unmarshal(m, b)
+}
+func (m *AverageAndTotalReviewReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_AverageAndTotalReviewReq.Marshal(b, m, deterministic)
+}
+func (m *AverageAndTotalReviewReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_AverageAndTotalReviewReq.Merge(m, src)
+}
+func (m *AverageAndTotalReviewReq) XXX_Size() int {
+	return xxx_messageInfo_AverageAndTotalReviewReq.Size(m)
+}
+func (m *AverageAndTotalReviewReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_AverageAndTotalReviewReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_AverageAndTotalReviewReq proto.InternalMessageInfo
+
+func (m *AverageAndTotalReviewReq) GetShopId() int64 {
+	if m != nil {
+		return m.ShopId
+	}
+	return 0
+}
+
+func (m *AverageAndTotalReviewReq) GetProductId() int64 {
+	if m != nil {
+		return m.ProductId
+	}
+	return 0
+}
+
+type TotalProductsReq struct {
+	ShopId               int64    `protobuf:"varint,1,opt,name=shop_id,json=shopId,proto3" json:"shop_id,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *TotalProductsReq) Reset()         { *m = TotalProductsReq{} }
+func (m *TotalProductsReq) String() string { return proto.CompactTextString(m) }
+func (*TotalProductsReq) ProtoMessage()    {}
+func (*TotalProductsReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0abbfcf058acdf89, []int{2}
+}
+
+func (m *TotalProductsReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TotalProductsReq.Unmarshal(m, b)
+}
+func (m *TotalProductsReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TotalProductsReq.Marshal(b, m, deterministic)
+}
+func (m *TotalProductsReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TotalProductsReq.Merge(m, src)
+}
+func (m *TotalProductsReq) XXX_Size() int {
+	return xxx_messageInfo_TotalProductsReq.Size(m)
+}
+func (m *TotalProductsReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_TotalProductsReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TotalProductsReq proto.InternalMessageInfo
+
+func (m *TotalProductsReq) GetShopId() int64 {
+	if m != nil {
+		return m.ShopId
+	}
+	return 0
+}
+
+type TotalProductsResp struct {
+	ProductCount         int32    `protobuf:"varint,1,opt,name=product_count,json=productCount,proto3" json:"product_count,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *TotalProductsResp) Reset()         { *m = TotalProductsResp{} }
+func (m *TotalProductsResp) String() string { return proto.CompactTextString(m) }
+func (*TotalProductsResp) ProtoMessage()    {}
+func (*TotalProductsResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_0abbfcf058acdf89, []int{3}
+}
+
+func (m *TotalProductsResp) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TotalProductsResp.Unmarshal(m, b)
+}
+func (m *TotalProductsResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TotalProductsResp.Marshal(b, m, deterministic)
+}
+func (m *TotalProductsResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TotalProductsResp.Merge(m, src)
+}
+func (m *TotalProductsResp) XXX_Size() int {
+	return xxx_messageInfo_TotalProductsResp.Size(m)
+}
+func (m *TotalProductsResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_TotalProductsResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TotalProductsResp proto.InternalMessageInfo
+
+func (m *TotalProductsResp) GetProductCount() int32 {
+	if m != nil {
+		return m.ProductCount
+	}
+	return 0
+}
+
 type ListReviewsReq struct {
 	ProductId            int64       `protobuf:"varint,1,opt,name=product_id,json=productId,proto3" json:"product_id,omitempty"`
 	ShopId               int64       `protobuf:"varint,2,opt,name=shop_id,json=shopId,proto3" json:"shop_id,omitempty"`
@@ -37,7 +209,7 @@ func (m *ListReviewsReq) Reset()         { *m = ListReviewsReq{} }
 func (m *ListReviewsReq) String() string { return proto.CompactTextString(m) }
 func (*ListReviewsReq) ProtoMessage()    {}
 func (*ListReviewsReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0abbfcf058acdf89, []int{0}
+	return fileDescriptor_0abbfcf058acdf89, []int{4}
 }
 
 func (m *ListReviewsReq) XXX_Unmarshal(b []byte) error {
@@ -90,7 +262,7 @@ func (m *ListReviewsResp) Reset()         { *m = ListReviewsResp{} }
 func (m *ListReviewsResp) String() string { return proto.CompactTextString(m) }
 func (*ListReviewsResp) ProtoMessage()    {}
 func (*ListReviewsResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0abbfcf058acdf89, []int{1}
+	return fileDescriptor_0abbfcf058acdf89, []int{5}
 }
 
 func (m *ListReviewsResp) XXX_Unmarshal(b []byte) error {
@@ -129,7 +301,7 @@ func (m *GetReviewReq) Reset()         { *m = GetReviewReq{} }
 func (m *GetReviewReq) String() string { return proto.CompactTextString(m) }
 func (*GetReviewReq) ProtoMessage()    {}
 func (*GetReviewReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0abbfcf058acdf89, []int{2}
+	return fileDescriptor_0abbfcf058acdf89, []int{6}
 }
 
 func (m *GetReviewReq) XXX_Unmarshal(b []byte) error {
@@ -174,7 +346,7 @@ func (m *ListProductsReq) Reset()         { *m = ListProductsReq{} }
 func (m *ListProductsReq) String() string { return proto.CompactTextString(m) }
 func (*ListProductsReq) ProtoMessage()    {}
 func (*ListProductsReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0abbfcf058acdf89, []int{3}
+	return fileDescriptor_0abbfcf058acdf89, []int{7}
 }
 
 func (m *ListProductsReq) XXX_Unmarshal(b []byte) error {
@@ -255,7 +427,7 @@ func (m *ListProductsResp) Reset()         { *m = ListProductsResp{} }
 func (m *ListProductsResp) String() string { return proto.CompactTextString(m) }
 func (*ListProductsResp) ProtoMessage()    {}
 func (*ListProductsResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0abbfcf058acdf89, []int{4}
+	return fileDescriptor_0abbfcf058acdf89, []int{8}
 }
 
 func (m *ListProductsResp) XXX_Unmarshal(b []byte) error {
@@ -295,7 +467,7 @@ func (m *GetProductReq) Reset()         { *m = GetProductReq{} }
 func (m *GetProductReq) String() string { return proto.CompactTextString(m) }
 func (*GetProductReq) ProtoMessage()    {}
 func (*GetProductReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0abbfcf058acdf89, []int{5}
+	return fileDescriptor_0abbfcf058acdf89, []int{9}
 }
 
 func (m *GetProductReq) XXX_Unmarshal(b []byte) error {
@@ -341,7 +513,7 @@ func (m *PKReq) Reset()         { *m = PKReq{} }
 func (m *PKReq) String() string { return proto.CompactTextString(m) }
 func (*PKReq) ProtoMessage()    {}
 func (*PKReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_0abbfcf058acdf89, []int{6}
+	return fileDescriptor_0abbfcf058acdf89, []int{10}
 }
 
 func (m *PKReq) XXX_Unmarshal(b []byte) error {
@@ -370,6 +542,10 @@ func (m *PKReq) GetId() int32 {
 }
 
 func init() {
+	proto.RegisterType((*AverageAndTotalReviewResp)(nil), "catalogproto.AverageAndTotalReviewResp")
+	proto.RegisterType((*AverageAndTotalReviewReq)(nil), "catalogproto.AverageAndTotalReviewReq")
+	proto.RegisterType((*TotalProductsReq)(nil), "catalogproto.TotalProductsReq")
+	proto.RegisterType((*TotalProductsResp)(nil), "catalogproto.TotalProductsResp")
 	proto.RegisterType((*ListReviewsReq)(nil), "catalogproto.ListReviewsReq")
 	proto.RegisterType((*ListReviewsResp)(nil), "catalogproto.ListReviewsResp")
 	proto.RegisterType((*GetReviewReq)(nil), "catalogproto.GetReviewReq")
@@ -384,41 +560,49 @@ func init() {
 }
 
 var fileDescriptor_0abbfcf058acdf89 = []byte{
-	// 529 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x54, 0x5d, 0x6f, 0xd3, 0x3c,
-	0x18, 0x6d, 0xda, 0xf5, 0x23, 0x4f, 0xd3, 0xbd, 0xaf, 0x1e, 0x3e, 0x16, 0x32, 0x0a, 0x95, 0xaf,
-	0x2a, 0x21, 0x55, 0xa2, 0xbb, 0x41, 0x02, 0x69, 0x62, 0xdd, 0x34, 0x55, 0x0c, 0x51, 0x59, 0x70,
-	0x3d, 0xb9, 0x89, 0xd5, 0x45, 0x94, 0xc5, 0xc4, 0x1e, 0x28, 0xb7, 0xfc, 0x2a, 0x7e, 0x18, 0x3f,
-	0x00, 0xc5, 0xce, 0x47, 0xd3, 0x45, 0x11, 0x82, 0xbb, 0x1c, 0x9f, 0xe3, 0xe3, 0xe7, 0x1c, 0xcb,
-	0x81, 0x91, 0xcf, 0x14, 0xdb, 0x46, 0x9b, 0x99, 0x88, 0x23, 0x15, 0xa1, 0x93, 0x41, 0x8d, 0xbc,
-	0x91, 0x88, 0xa3, 0xe0, 0xce, 0x57, 0x86, 0xf4, 0x60, 0xcd, 0x24, 0xcf, 0xbe, 0x9d, 0x98, 0x7f,
-	0x0b, 0xf9, 0x77, 0x83, 0xc8, 0x0f, 0x0b, 0x0e, 0xaf, 0x42, 0xa9, 0xa8, 0x5e, 0x94, 0x94, 0x7f,
-	0xc5, 0x31, 0x40, 0xb6, 0xfb, 0x3a, 0x0c, 0x5c, 0x6b, 0x62, 0x4d, 0x3b, 0xd4, 0xce, 0x56, 0x96,
-	0x01, 0x1e, 0x41, 0x5f, 0xde, 0x44, 0x22, 0xe5, 0xda, 0x9a, 0xeb, 0xa5, 0x70, 0x19, 0xe0, 0x2b,
-	0x00, 0xc1, 0x36, 0xe1, 0x2d, 0x53, 0x61, 0x74, 0xeb, 0x76, 0x26, 0xd6, 0x74, 0x38, 0x77, 0x67,
-	0xbb, 0x63, 0xcd, 0x56, 0x05, 0x4f, 0x77, 0xb4, 0xe4, 0x2d, 0xfc, 0x57, 0x99, 0x41, 0x0a, 0x9c,
-	0x41, 0xdf, 0xcc, 0x29, 0x5d, 0x6b, 0xd2, 0x99, 0x0e, 0xe7, 0x0f, 0xab, 0x4e, 0x46, 0x4b, 0x73,
-	0x11, 0x79, 0x01, 0xce, 0x25, 0xcf, 0x1c, 0xd2, 0x10, 0xc7, 0x60, 0x1b, 0xaa, 0xcc, 0x30, 0x30,
-	0x0b, 0xcb, 0x80, 0xfc, 0xb2, 0xcc, 0x81, 0x2b, 0x13, 0x4a, 0xa7, 0x76, 0x4d, 0xac, 0xe5, 0xb9,
-	0x39, 0xb0, 0x43, 0x73, 0xb8, 0x97, 0xab, 0xfd, 0xe7, 0xb9, 0xf0, 0x31, 0xf4, 0x24, 0x67, 0xb1,
-	0x7f, 0xa3, 0xdb, 0xb0, 0x69, 0x86, 0xd0, 0x83, 0x81, 0xcf, 0x14, 0xdf, 0x44, 0x71, 0xe2, 0x1e,
-	0x68, 0xa6, 0xc0, 0xf8, 0x04, 0x06, 0x51, 0x1c, 0xf0, 0xf8, 0x7a, 0x9d, 0xb8, 0x3d, 0xcd, 0xf5,
-	0x35, 0x3e, 0x4b, 0xd2, 0x8b, 0x31, 0x94, 0x4a, 0x04, 0x77, 0xfb, 0x9a, 0xb4, 0xf5, 0xca, 0xc7,
-	0x44, 0x70, 0x7c, 0x0e, 0xc3, 0xf2, 0xde, 0xa4, 0x3b, 0xd0, 0x29, 0xa0, 0xb8, 0x38, 0x49, 0x2e,
-	0xe0, 0xff, 0x6a, 0x6a, 0x29, 0xf0, 0x25, 0x0c, 0x32, 0x45, 0x5e, 0xf4, 0xa3, 0xbd, 0x68, 0x86,
-	0xa5, 0x85, 0x8c, 0x9c, 0xc0, 0xe8, 0x92, 0xe7, 0x2e, 0x69, 0x75, 0x87, 0xd0, 0xce, 0x4a, 0xee,
-	0xd2, 0x76, 0x18, 0x20, 0xc2, 0x81, 0xdc, 0xde, 0x6d, 0x74, 0x55, 0x36, 0xd5, 0xdf, 0xe4, 0x08,
-	0xba, 0xab, 0x77, 0x35, 0xe2, 0xf9, 0xcf, 0x2e, 0xe0, 0x7b, 0x16, 0x7f, 0xe6, 0x4a, 0x6c, 0x99,
-	0xcf, 0x17, 0xe6, 0x6c, 0xfc, 0x00, 0xce, 0xee, 0xac, 0x38, 0xae, 0x4e, 0xb5, 0x77, 0x7b, 0xde,
-	0xb3, 0x26, 0x5a, 0x0a, 0xd2, 0xc2, 0x33, 0x80, 0x72, 0x6a, 0x3c, 0xae, 0xea, 0x2b, 0x79, 0xbc,
-	0xfa, 0x06, 0x48, 0x0b, 0x4f, 0x61, 0xb4, 0x88, 0x39, 0x53, 0x3c, 0xb7, 0xa9, 0x57, 0x36, 0x1a,
-	0x7c, 0x12, 0xc1, 0x3f, 0x18, 0x2c, 0x60, 0x74, 0xce, 0xb7, 0xbc, 0x34, 0x68, 0x0c, 0xf2, 0xa0,
-	0x4a, 0x5e, 0x7c, 0x11, 0x2a, 0x21, 0x2d, 0xbc, 0x82, 0xe1, 0xce, 0x73, 0xc3, 0xa7, 0xf7, 0xbb,
-	0x2b, 0xff, 0x06, 0xde, 0xb8, 0x81, 0xd5, 0xc5, 0x9e, 0x82, 0x5d, 0xbc, 0x3c, 0xf4, 0xee, 0x8d,
-	0x53, 0x3c, 0x49, 0xaf, 0xf6, 0x05, 0x93, 0x16, 0xbe, 0x01, 0xc7, 0xb4, 0x9a, 0x79, 0xd4, 0xea,
-	0x9a, 0x76, 0x9b, 0x4a, 0xff, 0x6a, 0xf7, 0x6b, 0x70, 0x4c, 0x9f, 0x8d, 0xbb, 0xeb, 0x7b, 0x5c,
-	0xf7, 0x34, 0x3c, 0xf9, 0x1d, 0x00, 0x00, 0xff, 0xff, 0x24, 0x57, 0x46, 0xe5, 0x8a, 0x05, 0x00,
-	0x00,
+	// 659 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x55, 0x4d, 0x4f, 0xdb, 0x4a,
+	0x14, 0x8d, 0x1d, 0xc8, 0xc7, 0x8d, 0xcd, 0xe3, 0xdd, 0xf7, 0x28, 0xc6, 0x94, 0x92, 0x4e, 0xd5,
+	0x36, 0x12, 0x52, 0xa4, 0xc2, 0x06, 0xa9, 0x95, 0x10, 0x04, 0x84, 0xa2, 0x52, 0x15, 0x8d, 0xe8,
+	0x3a, 0x1a, 0xe2, 0x51, 0x48, 0x9b, 0xc6, 0x53, 0xcf, 0x40, 0x95, 0x6d, 0x7f, 0x73, 0x17, 0x5d,
+	0x56, 0x9e, 0xb1, 0xe3, 0xd8, 0x04, 0x0b, 0xb5, 0xbb, 0xdc, 0x7b, 0xce, 0xfd, 0x38, 0xe7, 0x6a,
+	0x62, 0x70, 0x87, 0x4c, 0xb1, 0x49, 0x38, 0xea, 0x8a, 0x28, 0x54, 0x21, 0x3a, 0x49, 0xa8, 0x23,
+	0xdf, 0x15, 0x51, 0x18, 0xdc, 0x0e, 0x95, 0x01, 0x7d, 0xb8, 0x66, 0x92, 0x27, 0xbf, 0x9d, 0x88,
+	0xdf, 0x8d, 0xf9, 0x77, 0x13, 0x11, 0x0e, 0x5b, 0xc7, 0x77, 0x3c, 0x62, 0x23, 0x7e, 0x3c, 0x0d,
+	0xae, 0x42, 0xc5, 0x26, 0x54, 0xc3, 0x94, 0x4b, 0x81, 0xcf, 0xc1, 0x51, 0x71, 0x6a, 0x60, 0x4a,
+	0x3c, 0xab, 0x6d, 0x75, 0x56, 0x69, 0x4b, 0x65, 0x34, 0x7c, 0x09, 0x6b, 0xcc, 0xd4, 0xa7, 0x24,
+	0xbb, 0x6d, 0x75, 0x6c, 0xea, 0x26, 0x59, 0x43, 0x23, 0x14, 0xbc, 0x07, 0xc6, 0x7c, 0xc3, 0x4d,
+	0xa8, 0xcb, 0x9b, 0x50, 0x0c, 0xc6, 0x81, 0x1e, 0x50, 0xa5, 0xb5, 0x38, 0xec, 0x07, 0xb8, 0x03,
+	0x90, 0xc8, 0x88, 0x31, 0x5b, 0x63, 0xcd, 0x24, 0xd3, 0x0f, 0xc8, 0x1e, 0xac, 0xeb, 0x4e, 0x97,
+	0x26, 0x23, 0xcb, 0x7a, 0x91, 0x43, 0xf8, 0xb7, 0x40, 0x96, 0x02, 0x5f, 0x40, 0xea, 0xd3, 0x60,
+	0x18, 0xde, 0x4e, 0x55, 0x22, 0xd0, 0x49, 0x92, 0xbd, 0x38, 0x47, 0x7e, 0x58, 0xb0, 0x76, 0x31,
+	0x96, 0xca, 0x2c, 0xac, 0xa7, 0xe4, 0x17, 0xb3, 0x0a, 0x8b, 0x2d, 0x2e, 0x61, 0xe7, 0x04, 0x1d,
+	0x02, 0x08, 0x36, 0x1a, 0x4f, 0x99, 0x1a, 0x87, 0x53, 0xaf, 0xda, 0xb6, 0x3a, 0xad, 0x7d, 0xaf,
+	0xbb, 0x78, 0xb8, 0xee, 0xe5, 0x1c, 0xa7, 0x0b, 0x5c, 0x72, 0x0c, 0xff, 0xe4, 0x76, 0x90, 0x02,
+	0xbb, 0x50, 0x37, 0x8e, 0x4b, 0xcf, 0x6a, 0x57, 0x3b, 0xad, 0xfd, 0xff, 0xf3, 0x9d, 0x12, 0x83,
+	0x53, 0x12, 0xd9, 0x03, 0xe7, 0x9c, 0xab, 0xcc, 0xf6, 0x6d, 0x68, 0x1a, 0x28, 0xd3, 0xd0, 0x30,
+	0x89, 0x7e, 0x40, 0x7e, 0x5a, 0x66, 0xe0, 0xa2, 0xb7, 0x9e, 0x91, 0xd5, 0x3f, 0x35, 0x03, 0xab,
+	0x34, 0x0d, 0x0b, 0xba, 0xec, 0xc7, 0xeb, 0xc2, 0x27, 0x50, 0x93, 0x9c, 0x45, 0xc3, 0x1b, 0xed,
+	0x46, 0x93, 0x26, 0x11, 0xfa, 0xd0, 0x18, 0x32, 0xc5, 0x47, 0x61, 0x34, 0xf3, 0x56, 0x34, 0x32,
+	0x8f, 0x71, 0x0b, 0x1a, 0x61, 0x14, 0xf0, 0x68, 0x70, 0x3d, 0xf3, 0x6a, 0x1a, 0xab, 0xeb, 0xf8,
+	0x64, 0x16, 0x1f, 0xc6, 0x40, 0x6a, 0x26, 0xb8, 0x57, 0xd7, 0x60, 0x53, 0x67, 0xae, 0x66, 0x82,
+	0xe3, 0x2e, 0xb4, 0xb2, 0xbb, 0x49, 0xaf, 0xa1, 0x55, 0xc0, 0xfc, 0x70, 0x92, 0x9c, 0xc1, 0x7a,
+	0x5e, 0xb5, 0x14, 0xf8, 0x06, 0x1a, 0x09, 0x23, 0x35, 0x7a, 0xa3, 0x20, 0xcd, 0xa0, 0x74, 0x4e,
+	0x23, 0x07, 0xe0, 0x9e, 0xf3, 0xb4, 0x4b, 0x6c, 0xdd, 0x1a, 0xd8, 0x89, 0xc9, 0xab, 0xd4, 0x1e,
+	0x07, 0x88, 0xb0, 0x22, 0x27, 0xb7, 0x23, 0x6d, 0x55, 0x93, 0xea, 0xdf, 0x64, 0x13, 0x56, 0x2f,
+	0xdf, 0x2f, 0x21, 0xef, 0xff, 0xaa, 0x01, 0x7e, 0x60, 0xd1, 0x17, 0xae, 0xc4, 0x84, 0x0d, 0x79,
+	0xcf, 0xcc, 0xc6, 0x8f, 0xe0, 0x2c, 0xee, 0x8a, 0x3b, 0xf9, 0xad, 0x0a, 0xd7, 0xf3, 0x9f, 0x95,
+	0xc1, 0x52, 0x90, 0x0a, 0x52, 0x70, 0x73, 0x4f, 0x04, 0x0b, 0x25, 0xc5, 0xc7, 0xe6, 0xef, 0x96,
+	0xe2, 0xba, 0xe7, 0x09, 0x40, 0xe6, 0x04, 0x6e, 0xe7, 0x0b, 0x72, 0x1e, 0xf9, 0xcb, 0x5d, 0x25,
+	0x15, 0x3c, 0x02, 0xb7, 0x17, 0x71, 0xa6, 0x78, 0xda, 0x66, 0x39, 0xb3, 0xb4, 0xc1, 0x27, 0x11,
+	0xfc, 0x45, 0x83, 0x1e, 0xb8, 0xa7, 0x7c, 0xc2, 0xb3, 0x06, 0xa5, 0x42, 0xfe, 0xcb, 0x83, 0x67,
+	0x5f, 0x85, 0x9a, 0x91, 0x0a, 0x5e, 0x40, 0x6b, 0xe1, 0x09, 0xe3, 0xd3, 0xfb, 0xf7, 0xc8, 0xfe,
+	0x61, 0xfc, 0x9d, 0x12, 0x54, 0x1b, 0x7b, 0x04, 0xcd, 0xf9, 0x6b, 0x46, 0xff, 0xde, 0x3a, 0xf3,
+	0x67, 0xee, 0x2f, 0xfd, 0x57, 0x20, 0x15, 0x7c, 0x07, 0x8e, 0x71, 0x35, 0xe9, 0xb1, 0x94, 0x57,
+	0x56, 0x6d, 0x2c, 0xfd, 0xa3, 0xea, 0xb7, 0xe0, 0x18, 0x3f, 0x4b, 0xab, 0x1f, 0xf0, 0xf1, 0x33,
+	0x6c, 0x2c, 0xfd, 0x94, 0xe0, 0xab, 0x3c, 0xff, 0xa1, 0xef, 0x8d, 0xff, 0xfa, 0x51, 0xbc, 0xd8,
+	0xe5, 0xeb, 0x9a, 0xa6, 0x1c, 0xfc, 0x0e, 0x00, 0x00, 0xff, 0xff, 0x2a, 0x3c, 0xc1, 0x86, 0x6c,
+	0x07, 0x00, 0x00,
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -435,6 +619,7 @@ const _ = grpc.SupportPackageIsVersion6
 type MarketplaceCatalogClient interface {
 	// Product
 	ListProducts(ctx context.Context, in *ListProductsReq, opts ...grpc.CallOption) (*ListProductsResp, error)
+	TotalProducts(ctx context.Context, in *TotalProductsReq, opts ...grpc.CallOption) (*TotalProductsResp, error)
 	GetProduct(ctx context.Context, in *GetProductReq, opts ...grpc.CallOption) (*Product, error)
 	CreateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
 	UpdateProduct(ctx context.Context, in *Product, opts ...grpc.CallOption) (*Product, error)
@@ -445,6 +630,7 @@ type MarketplaceCatalogClient interface {
 	CreateReview(ctx context.Context, in *Review, opts ...grpc.CallOption) (*Review, error)
 	UpdateReview(ctx context.Context, in *Review, opts ...grpc.CallOption) (*Review, error)
 	DeleteReview(ctx context.Context, in *Review, opts ...grpc.CallOption) (*Empty, error)
+	AverageAndTotalReview(ctx context.Context, in *AverageAndTotalReviewReq, opts ...grpc.CallOption) (*AverageAndTotalReviewResp, error)
 }
 
 type marketplaceCatalogClient struct {
@@ -458,6 +644,15 @@ func NewMarketplaceCatalogClient(cc grpc.ClientConnInterface) MarketplaceCatalog
 func (c *marketplaceCatalogClient) ListProducts(ctx context.Context, in *ListProductsReq, opts ...grpc.CallOption) (*ListProductsResp, error) {
 	out := new(ListProductsResp)
 	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/ListProducts", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *marketplaceCatalogClient) TotalProducts(ctx context.Context, in *TotalProductsReq, opts ...grpc.CallOption) (*TotalProductsResp, error) {
+	out := new(TotalProductsResp)
+	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/TotalProducts", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -545,10 +740,20 @@ func (c *marketplaceCatalogClient) DeleteReview(ctx context.Context, in *Review,
 	return out, nil
 }
 
+func (c *marketplaceCatalogClient) AverageAndTotalReview(ctx context.Context, in *AverageAndTotalReviewReq, opts ...grpc.CallOption) (*AverageAndTotalReviewResp, error) {
+	out := new(AverageAndTotalReviewResp)
+	err := c.cc.Invoke(ctx, "/catalogproto.MarketplaceCatalog/AverageAndTotalReview", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // MarketplaceCatalogServer is the server API for MarketplaceCatalog service.
 type MarketplaceCatalogServer interface {
 	// Product
 	ListProducts(context.Context, *ListProductsReq) (*ListProductsResp, error)
+	TotalProducts(context.Context, *TotalProductsReq) (*TotalProductsResp, error)
 	GetProduct(context.Context, *GetProductReq) (*Product, error)
 	CreateProduct(context.Context, *Product) (*Product, error)
 	UpdateProduct(context.Context, *Product) (*Product, error)
@@ -559,6 +764,7 @@ type MarketplaceCatalogServer interface {
 	CreateReview(context.Context, *Review) (*Review, error)
 	UpdateReview(context.Context, *Review) (*Review, error)
 	DeleteReview(context.Context, *Review) (*Empty, error)
+	AverageAndTotalReview(context.Context, *AverageAndTotalReviewReq) (*AverageAndTotalReviewResp, error)
 }
 
 // UnimplementedMarketplaceCatalogServer can be embedded to have forward compatible implementations.
@@ -567,6 +773,9 @@ type UnimplementedMarketplaceCatalogServer struct {
 
 func (*UnimplementedMarketplaceCatalogServer) ListProducts(ctx context.Context, req *ListProductsReq) (*ListProductsResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ListProducts not implemented")
+}
+func (*UnimplementedMarketplaceCatalogServer) TotalProducts(ctx context.Context, req *TotalProductsReq) (*TotalProductsResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TotalProducts not implemented")
 }
 func (*UnimplementedMarketplaceCatalogServer) GetProduct(ctx context.Context, req *GetProductReq) (*Product, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProduct not implemented")
@@ -595,6 +804,9 @@ func (*UnimplementedMarketplaceCatalogServer) UpdateReview(ctx context.Context, 
 func (*UnimplementedMarketplaceCatalogServer) DeleteReview(ctx context.Context, req *Review) (*Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteReview not implemented")
 }
+func (*UnimplementedMarketplaceCatalogServer) AverageAndTotalReview(ctx context.Context, req *AverageAndTotalReviewReq) (*AverageAndTotalReviewResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AverageAndTotalReview not implemented")
+}
 
 func RegisterMarketplaceCatalogServer(s *grpc.Server, srv MarketplaceCatalogServer) {
 	s.RegisterService(&_MarketplaceCatalog_serviceDesc, srv)
@@ -614,6 +826,24 @@ func _MarketplaceCatalog_ListProducts_Handler(srv interface{}, ctx context.Conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(MarketplaceCatalogServer).ListProducts(ctx, req.(*ListProductsReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _MarketplaceCatalog_TotalProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TotalProductsReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceCatalogServer).TotalProducts(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/catalogproto.MarketplaceCatalog/TotalProducts",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceCatalogServer).TotalProducts(ctx, req.(*TotalProductsReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -780,6 +1010,24 @@ func _MarketplaceCatalog_DeleteReview_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _MarketplaceCatalog_AverageAndTotalReview_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AverageAndTotalReviewReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(MarketplaceCatalogServer).AverageAndTotalReview(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/catalogproto.MarketplaceCatalog/AverageAndTotalReview",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(MarketplaceCatalogServer).AverageAndTotalReview(ctx, req.(*AverageAndTotalReviewReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _MarketplaceCatalog_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "catalogproto.MarketplaceCatalog",
 	HandlerType: (*MarketplaceCatalogServer)(nil),
@@ -787,6 +1035,10 @@ var _MarketplaceCatalog_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListProducts",
 			Handler:    _MarketplaceCatalog_ListProducts_Handler,
+		},
+		{
+			MethodName: "TotalProducts",
+			Handler:    _MarketplaceCatalog_TotalProducts_Handler,
 		},
 		{
 			MethodName: "GetProduct",
@@ -823,6 +1075,10 @@ var _MarketplaceCatalog_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteReview",
 			Handler:    _MarketplaceCatalog_DeleteReview_Handler,
+		},
+		{
+			MethodName: "AverageAndTotalReview",
+			Handler:    _MarketplaceCatalog_AverageAndTotalReview_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

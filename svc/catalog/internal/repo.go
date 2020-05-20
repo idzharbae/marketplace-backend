@@ -14,6 +14,7 @@ type ProductReader interface {
 
 	GetByID(productID int32) (entity.Product, error)
 	GetBySlug(slug string) (entity.Product, error)
+	GetTotalByShopID(shopID int32) (int32, error)
 }
 
 //go:generate mockgen -destination=repo/repomock/productwriter_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/catalog/internal ProductWriter
@@ -30,6 +31,8 @@ type ReviewReader interface {
 	ListByShopID(shopID int64, pagination requests.Pagination) ([]entity.Review, error)
 
 	GetByID(reviewID int64) (entity.Review, error)
+	GetTotalAndAverageByShopID(shopID int64) (requests.TotalAndAverageReview, error)
+	GetTotalAndAverageByProductID(productID int64) (requests.TotalAndAverageReview, error)
 }
 
 //go:generate mockgen -destination=repo/repomock/reviewwriter_mock.go -package=repomock github.com/idzharbae/marketplace-backend/svc/catalog/internal ReviewWriter

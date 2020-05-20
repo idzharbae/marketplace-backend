@@ -23,6 +23,10 @@ func (p *Product) List(req requests.ListProduct) ([]entity.Product, error) {
 	return p.ProductReader.ListAll(req)
 }
 
+func (p *Product) GetTotal(shopID int32) (int32, error) {
+	return p.ProductReader.GetTotalByShopID(shopID)
+}
+
 func (p *Product) Get(product entity.Product) (entity.Product, error) {
 	if product.ID != 0 {
 		got, err := p.ProductReader.GetByID(product.ID)

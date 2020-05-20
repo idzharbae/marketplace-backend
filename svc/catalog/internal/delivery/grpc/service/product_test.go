@@ -301,3 +301,39 @@ func TestProductService_DeleteProduct(t *testing.T) {
 		assert.Nil(t, err)
 	})
 }
+
+func TestProductService_TotalProducts(t *testing.T) {
+	var (
+		productUC *ucmock.MockProductUC
+		ctrl      *gomock.Controller
+		unit      *ProductService
+	)
+	begin := func(t *testing.T) {
+		ctrl = gomock.NewController(t)
+		productUC = ucmock.NewMockProductUC(ctrl)
+		unit = NewProductService(productUC)
+	}
+	finish := func() {
+		ctrl.Finish()
+	}
+	t.Run("uc returns error, should return error", func(t *testing.T) {
+		begin(t)
+		defer finish()
+
+		productUC.EXPECT().GetTotal(int32(123)).Return(int32(0), errors.New("error"))
+
+		got, err := unit.TotalProducts(context.Background(), &catalogproto.TotalProductsReq{ShopId: 123})
+		assert.NotNil(t, err)
+		assert.Nil(t, got)
+	})
+	t.Run("uc returns no error, should return total products", func(t *testing.T) {
+		begin(t)
+		defer finish()
+
+		productUC.EXPECT().GetTotal(int32(123)).Return(int32(123), nil)
+
+		got, err := unit.TotalProducts(context.Background(), &catalogproto.TotalProductsReq{ShopId: 123})
+		assert.Nil(t, err)
+		assert.Equal(t, int32(123), got.GetProductCount())
+	})
+}

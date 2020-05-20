@@ -65,6 +65,21 @@ func (mr *MockProductReaderMockRecorder) GetBySlug(arg0 interface{}) *gomock.Cal
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetBySlug", reflect.TypeOf((*MockProductReader)(nil).GetBySlug), arg0)
 }
 
+// GetTotalByShopID mocks base method.
+func (m *MockProductReader) GetTotalByShopID(arg0 int32) (int32, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetTotalByShopID", arg0)
+	ret0, _ := ret[0].(int32)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetTotalByShopID indicates an expected call of GetTotalByShopID.
+func (mr *MockProductReaderMockRecorder) GetTotalByShopID(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTotalByShopID", reflect.TypeOf((*MockProductReader)(nil).GetTotalByShopID), arg0)
+}
+
 // ListAll mocks base method.
 func (m *MockProductReader) ListAll(arg0 requests.ListProduct) ([]entity.Product, error) {
 	m.ctrl.T.Helper()

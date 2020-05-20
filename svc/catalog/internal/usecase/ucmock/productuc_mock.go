@@ -78,6 +78,21 @@ func (mr *MockProductUCMockRecorder) Get(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockProductUC)(nil).Get), arg0)
 }
 
+// GetTotal mocks base method.
+func (m *MockProductUC) GetTotal(arg0 int32) (int32, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetTotal", arg0)
+	ret0, _ := ret[0].(int32)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetTotal indicates an expected call of GetTotal.
+func (mr *MockProductUCMockRecorder) GetTotal(arg0 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTotal", reflect.TypeOf((*MockProductUC)(nil).GetTotal), arg0)
+}
+
 // List mocks base method.
 func (m *MockProductUC) List(arg0 requests.ListProduct) ([]entity.Product, error) {
 	m.ctrl.T.Helper()

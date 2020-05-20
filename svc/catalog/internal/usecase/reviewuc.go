@@ -61,3 +61,9 @@ func (r *Review) Update(review entity.Review) (entity.Review, error) {
 func (r *Review) Delete(review entity.Review) error {
 	return r.reviewWriter.Delete(review)
 }
+func (r *Review) GetTotalAndAverage(req requests.GetTotalAndAverageReview) (requests.TotalAndAverageReview, error) {
+	if req.ProductID != 0 {
+		return r.reviewReader.GetTotalAndAverageByProductID(req.ProductID)
+	}
+	return r.reviewReader.GetTotalAndAverageByShopID(req.ShopID)
+}

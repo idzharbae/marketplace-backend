@@ -255,10 +255,10 @@ func TestReviewService_DeleteReview(t *testing.T) {
 	t.Run("uc returns error, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		req := &catalogproto.GetReviewReq{
-			ReviewId: 123,
+		req := &catalogproto.Review{
+			Id: 123,
 		}
-		test.uc.EXPECT().Delete(entity.Review{ID: req.GetReviewId()}).Return(errors.New("error"))
+		test.uc.EXPECT().Delete(entity.Review{ID: req.GetId()}).Return(errors.New("error"))
 		got, err := test.unit.DeleteReview(test.ctx, req)
 		assert.Nil(t, got)
 		assert.NotNil(t, err)
@@ -266,12 +266,45 @@ func TestReviewService_DeleteReview(t *testing.T) {
 	t.Run("uc returns no error, should no return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
-		req := &catalogproto.GetReviewReq{
-			ReviewId: 123,
+		req := &catalogproto.Review{
+			Id: 123,
 		}
-		test.uc.EXPECT().Delete(entity.Review{ID: req.GetReviewId()}).Return(nil)
+		test.uc.EXPECT().Delete(entity.Review{ID: req.GetId()}).Return(nil)
 		got, err := test.unit.DeleteReview(test.ctx, req)
 		assert.Nil(t, err)
 		assert.NotNil(t, got)
 	})
+}
+
+func TestReviewService_AverageAndTotalReview(t *testing.T) {
+	test := newReviewTest()
+	t.Run("given nil param, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		got, err := test.unit.AverageAndTotalReview(test.ctx, nil)
+		assert.NotNil(t, err)
+		assert.Nil(t, got)
+	})
+	t.Run("uc returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := &catalogproto.AverageAndTotalReviewReq{ShopId: 213}
+		test.uc.EXPECT().GetTotalAndAverage(requests.GetTotalAndAverageReview{ShopID: req.GetShopId()}).Return(requests.TotalAndAverageReview{}, errors.New("error"))
+		got, err := test.unit.AverageAndTotalReview(test.ctx, req)
+		assert.NotNil(t, err)
+		assert.Nil(t, got)
+	})
+	t.Run("uc returns no error, should return total review and average review", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+
+		req := &catalogproto.AverageAndTotalReviewReq{ShopId: 213}
+		test.uc.EXPECT().GetTotalAndAverage(requests.GetTotalAndAverageReview{ShopID: req.GetShopId()}).Return(requests.TotalAndAverageReview{323, 123.21}, nil)
+		got, err := test.unit.AverageAndTotalReview(test.ctx, req)
+		assert.Nil(t, err)
+		assert.Equal(t, int32(323), got.GetTotalReview())
+		assert.Equal(t, float32(123.21), got.GetAverageReview())
+	})
+
 }
