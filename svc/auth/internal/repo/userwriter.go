@@ -49,7 +49,7 @@ func (uw *UserWriter) Update(user entity.User) (entity.User, error) {
 		Email:         res.Email,
 		Phone:         user.Phone,
 		Type:          res.Type,
-		PhotoURL:      user.PhotoURL,
+		PhotoURL:      res.PhotoURL,
 		Province:      user.Address.Province,
 		City:          user.Address.City,
 		ZipCode:       user.Address.ZipCode,
@@ -61,6 +61,9 @@ func (uw *UserWriter) Update(user entity.User) (entity.User, error) {
 	}
 	if user.NewPassword != "" {
 		res.Password = user.GetNewPasswordHash()
+	}
+	if user.PhotoURL != "" {
+		res.PhotoURL = user.PhotoURL
 	}
 
 	err := uw.db.Save(&res).Error()
