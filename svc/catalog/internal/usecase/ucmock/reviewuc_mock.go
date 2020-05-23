@@ -78,21 +78,6 @@ func (mr *MockReviewUCMockRecorder) Get(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockReviewUC)(nil).Get), arg0)
 }
 
-// GetTotalAndAverage mocks base method.
-func (m *MockReviewUC) GetTotalAndAverage(arg0 requests.GetTotalAndAverageReview) (requests.TotalAndAverageReview, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetTotalAndAverage", arg0)
-	ret0, _ := ret[0].(requests.TotalAndAverageReview)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetTotalAndAverage indicates an expected call of GetTotalAndAverage.
-func (mr *MockReviewUCMockRecorder) GetTotalAndAverage(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTotalAndAverage", reflect.TypeOf((*MockReviewUC)(nil).GetTotalAndAverage), arg0)
-}
-
 // List mocks base method.
 func (m *MockReviewUC) List(arg0 requests.ListReview) ([]entity.Review, error) {
 	m.ctrl.T.Helper()

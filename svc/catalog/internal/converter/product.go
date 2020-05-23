@@ -9,18 +9,20 @@ import (
 
 func ProductModelToEntity(p model.Product) entity.Product {
 	return entity.Product{
-		ID:          p.ID,
-		ShopID:      p.ShopID,
-		Name:        p.Name,
-		Slug:        p.Slug,
-		Quantity:    p.Quantity,
-		PricePerKG:  p.PricePerKG,
-		StockKG:     p.StockKG,
-		CreatedAt:   p.CreatedAt,
-		UpdatedAt:   p.UpdatedAt,
-		PhotoURL:    p.PhotoURL,
-		Description: p.Description,
-		Category:    p.Category,
+		ID:            p.ID,
+		ShopID:        p.ShopID,
+		Name:          p.Name,
+		Slug:          p.Slug,
+		Quantity:      p.Quantity,
+		PricePerKG:    p.PricePerKG,
+		StockKG:       p.StockKG,
+		CreatedAt:     p.CreatedAt,
+		UpdatedAt:     p.UpdatedAt,
+		PhotoURL:      p.PhotoURL,
+		Description:   p.Description,
+		Category:      p.Category,
+		TotalReviews:  p.TotalReviews(),
+		AverageRating: p.AverageRating(),
 	}
 }
 
@@ -57,18 +59,20 @@ func ProductEntityToModel(p entity.Product) model.Product {
 
 func ProductEntityToProto(p entity.Product) *catalogproto.Product {
 	return &catalogproto.Product{
-		Id:          p.ID,
-		ShopId:      p.ShopID,
-		Name:        p.Name,
-		Quantity:    p.Quantity,
-		Slug:        p.Slug,
-		PricePerKg:  p.PricePerKG,
-		StockKg:     p.StockKG,
-		CreatedAt:   p.CreatedAt.Unix(),
-		UpdatedAt:   p.UpdatedAt.Unix(),
-		PhotoUrl:    p.PhotoURL,
-		Description: p.Description,
-		Category:    p.Category,
+		Id:            p.ID,
+		ShopId:        p.ShopID,
+		Name:          p.Name,
+		Quantity:      p.Quantity,
+		Slug:          p.Slug,
+		PricePerKg:    p.PricePerKG,
+		StockKg:       p.StockKG,
+		CreatedAt:     p.CreatedAt.Unix(),
+		UpdatedAt:     p.UpdatedAt.Unix(),
+		PhotoUrl:      p.PhotoURL,
+		Description:   p.Description,
+		Category:      p.Category,
+		TotalReviews:  p.TotalReviews,
+		AverageRating: p.AverageRating,
 	}
 }
 

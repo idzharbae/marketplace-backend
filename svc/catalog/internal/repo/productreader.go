@@ -19,7 +19,7 @@ func NewProductReader(db connection.Gormw) *ProductReader {
 
 func (p *ProductReader) ListAll(req requests.ListProduct) ([]entity.Product, error) {
 	var products []model.Product
-	db := p.db
+	db := p.db.Preload("Reviews")
 
 	if req.Category != "" {
 		db = db.Where("category=?", req.Category)

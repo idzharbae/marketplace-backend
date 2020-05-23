@@ -77,17 +77,3 @@ func (r *ReviewService) DeleteReview(ctx context.Context, in *catalogproto.Revie
 	}
 	return &catalogproto.Empty{}, nil
 }
-
-func (r *ReviewService) AverageAndTotalReview(ctx context.Context, in *catalogproto.AverageAndTotalReviewReq) (*catalogproto.AverageAndTotalReviewResp, error) {
-	if in == nil {
-		return nil, errors.New("parameter should not be nil")
-	}
-	res, err := r.ReviewUC.GetTotalAndAverage(requests.GetTotalAndAverageReview{
-		ShopID:    in.GetShopId(),
-		ProductID: in.GetProductId(),
-	})
-	if err != nil {
-		return nil, err
-	}
-	return &catalogproto.AverageAndTotalReviewResp{AverageReview: res.Average, TotalReview: res.Total}, nil
-}

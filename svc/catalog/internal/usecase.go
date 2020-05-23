@@ -9,7 +9,6 @@ import (
 type ProductUC interface {
 	List(req requests.ListProduct) ([]entity.Product, error)
 	Get(product entity.Product) (entity.Product, error)
-	GetTotal(shopID int32) (int32, error)
 
 	Create(product entity.Product) (entity.Product, error)
 	Update(product entity.Product) (entity.Product, error)
@@ -19,7 +18,6 @@ type ProductUC interface {
 //go:generate mockgen -destination=usecase/ucmock/reviewuc_mock.go -package=ucmock github.com/idzharbae/marketplace-backend/svc/catalog/internal ReviewUC
 type ReviewUC interface {
 	Get(reviewID int64) (entity.Review, error)
-	GetTotalAndAverage(req requests.GetTotalAndAverageReview) (requests.TotalAndAverageReview, error)
 	List(req requests.ListReview) ([]entity.Review, error)
 
 	Create(review entity.Review) (entity.Review, error)

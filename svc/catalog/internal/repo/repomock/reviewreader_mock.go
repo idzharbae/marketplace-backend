@@ -49,36 +49,6 @@ func (mr *MockReviewReaderMockRecorder) GetByID(arg0 interface{}) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByID", reflect.TypeOf((*MockReviewReader)(nil).GetByID), arg0)
 }
 
-// GetTotalAndAverageByProductID mocks base method.
-func (m *MockReviewReader) GetTotalAndAverageByProductID(arg0 int64) (requests.TotalAndAverageReview, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetTotalAndAverageByProductID", arg0)
-	ret0, _ := ret[0].(requests.TotalAndAverageReview)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetTotalAndAverageByProductID indicates an expected call of GetTotalAndAverageByProductID.
-func (mr *MockReviewReaderMockRecorder) GetTotalAndAverageByProductID(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTotalAndAverageByProductID", reflect.TypeOf((*MockReviewReader)(nil).GetTotalAndAverageByProductID), arg0)
-}
-
-// GetTotalAndAverageByShopID mocks base method.
-func (m *MockReviewReader) GetTotalAndAverageByShopID(arg0 int64) (requests.TotalAndAverageReview, error) {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetTotalAndAverageByShopID", arg0)
-	ret0, _ := ret[0].(requests.TotalAndAverageReview)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
-}
-
-// GetTotalAndAverageByShopID indicates an expected call of GetTotalAndAverageByShopID.
-func (mr *MockReviewReaderMockRecorder) GetTotalAndAverageByShopID(arg0 interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetTotalAndAverageByShopID", reflect.TypeOf((*MockReviewReader)(nil).GetTotalAndAverageByShopID), arg0)
-}
-
 // ListByProductID mocks base method.
 func (m *MockReviewReader) ListByProductID(arg0 int64, arg1 requests.Pagination) ([]entity.Review, error) {
 	m.ctrl.T.Helper()

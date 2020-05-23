@@ -80,11 +80,3 @@ func (p *ProductService) DeleteProduct(ctx context.Context, req *catalogproto.Ge
 	}
 	return &catalogproto.Empty{}, p.ProductUC.Delete(product)
 }
-
-func (p *ProductService) TotalProducts(ctx context.Context, req *catalogproto.TotalProductsReq) (*catalogproto.TotalProductsResp, error) {
-	res, err := p.ProductUC.GetTotal(int32(req.GetShopId()))
-	if err != nil {
-		return nil, err
-	}
-	return &catalogproto.TotalProductsResp{ProductCount: res}, nil
-}
