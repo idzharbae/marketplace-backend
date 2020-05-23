@@ -28,6 +28,9 @@ func (p Product) TotalReviews() int32 {
 	return int32(len(p.Reviews))
 }
 func (p Product) AverageRating() float32 {
+	if p.TotalReviews() == 0 {
+		return 0
+	}
 	ratings := float64(0)
 	for _, review := range p.Reviews {
 		ratings += review.Rating
