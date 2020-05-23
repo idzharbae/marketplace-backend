@@ -36,6 +36,7 @@ func TestProductReader_ListAll(t *testing.T) {
 		defer finish()
 		req := requests.ListProduct{}
 
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Order("id desc").Return(db)
 		db.EXPECT().Find(gomock.Any()).Return(db)
 		db.EXPECT().Error().Return(nil)
@@ -47,6 +48,7 @@ func TestProductReader_ListAll(t *testing.T) {
 		defer finish()
 		req := requests.ListProduct{Category: "test"}
 
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Where("category=?", req.Category).Return(db)
 		db.EXPECT().Order("id desc").Return(db)
 		db.EXPECT().Find(gomock.Any()).Return(db)
@@ -59,6 +61,7 @@ func TestProductReader_ListAll(t *testing.T) {
 		defer finish()
 		req := requests.ListProduct{Search: "asdfg"}
 
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Where("name ilike ?", "%"+req.Search+"%").Return(db)
 		db.EXPECT().Order("id desc").Return(db)
 		db.EXPECT().Find(gomock.Any()).Return(db)
@@ -71,6 +74,7 @@ func TestProductReader_ListAll(t *testing.T) {
 		defer finish()
 		req := requests.ListProduct{ShopIDs: []int64{1, 2, 3}}
 
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Where("shop_id=ANY(?)", req.ShopIDs).Return(db)
 		db.EXPECT().Order("id desc").Return(db)
 		db.EXPECT().Find(gomock.Any()).Return(db)
@@ -83,6 +87,7 @@ func TestProductReader_ListAll(t *testing.T) {
 		defer finish()
 		req := requests.ListProduct{OrderBy: "created_at", OrderType: "asc"}
 
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Order(req.OrderBy + " " + req.OrderType).Return(db)
 		db.EXPECT().Find(gomock.Any()).Return(db)
 		db.EXPECT().Error().Return(nil)
@@ -94,6 +99,7 @@ func TestProductReader_ListAll(t *testing.T) {
 		defer finish()
 		req := requests.ListProduct{OrderBy: "(case if 1=1 then created_at else updated_at end)", OrderType: "desc"}
 
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Order("id desc").Return(db)
 		db.EXPECT().Find(gomock.Any()).Return(db)
 		db.EXPECT().Error().Return(nil)
@@ -105,6 +111,7 @@ func TestProductReader_ListAll(t *testing.T) {
 		defer finish()
 		req := requests.ListProduct{Pagination: requests.Pagination{Limit: 10, Page: 0}}
 
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Order("id desc").Return(db)
 		db.EXPECT().Limit(req.Pagination.Limit).Return(db)
 		db.EXPECT().Find(gomock.Any()).Return(db)
@@ -117,6 +124,7 @@ func TestProductReader_ListAll(t *testing.T) {
 		defer finish()
 		req := requests.ListProduct{Pagination: requests.Pagination{Limit: 0, Page: 10}}
 
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Order("id desc").Return(db)
 		db.EXPECT().Offset(req.Pagination.OffsetFromPagination()).Return(db)
 		db.EXPECT().Find(gomock.Any()).Return(db)
@@ -136,6 +144,7 @@ func TestProductReader_ListAll(t *testing.T) {
 			Pagination: requests.Pagination{Limit: 10, Page: 2},
 		}
 
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Where("category=?", req.Category).Return(db)
 		db.EXPECT().Where("name ilike ?", "%"+req.Search+"%").Return(db)
 		db.EXPECT().Where("shop_id=ANY(?)", req.ShopIDs).Return(db)
@@ -167,6 +176,7 @@ func TestProductReader_ListAll(t *testing.T) {
 			Pagination: requests.Pagination{Limit: 10, Page: 2},
 		}
 
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Where("category=?", req.Category).Return(db)
 		db.EXPECT().Where("name ilike ?", "%"+req.Search+"%").Return(db)
 		db.EXPECT().Where("shop_id=ANY(?)", req.ShopIDs).Return(db)
