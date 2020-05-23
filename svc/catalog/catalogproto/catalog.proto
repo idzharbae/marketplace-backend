@@ -9,7 +9,6 @@ package catalogproto;
 service MarketplaceCatalog {
     // Product
     rpc ListProducts (ListProductsReq) returns (ListProductsResp) {}
-    rpc TotalProducts (TotalProductsReq) returns(TotalProductsResp) {}
     rpc GetProduct (GetProductReq) returns (Product) {}
 
 
@@ -24,24 +23,6 @@ service MarketplaceCatalog {
     rpc CreateReview (Review) returns (Review) {}
     rpc UpdateReview(Review) returns (Review) {}
     rpc DeleteReview (Review) returns (Empty) {}
-    rpc AverageAndTotalReview(AverageAndTotalReviewReq) returns (AverageAndTotalReviewResp) {}
-}
-
-message AverageAndTotalReviewResp {
-    int32 total_review = 1;
-    float average_review = 2;
-}
-
-message AverageAndTotalReviewReq {
-    int64 shop_id = 1;
-    int64 product_id = 2;
-}
-
-message TotalProductsReq {
-    int64 shop_id = 1;
-}
-message TotalProductsResp {
-    int32 product_count = 1;
 }
 
 message ListReviewsReq {
