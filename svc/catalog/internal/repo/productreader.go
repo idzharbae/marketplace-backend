@@ -67,7 +67,7 @@ func (p *ProductReader) ListByIDs(productIDs pq.Int64Array) ([]entity.Product, e
 
 func (p *ProductReader) GetByID(productID int32) (entity.Product, error) {
 	var product model.Product
-	err := p.db.Where("id=?", productID).First(&product).Error()
+	err := p.db.Preload("Reviews").Where("id=?", productID).First(&product).Error()
 	if err != nil {
 		return entity.Product{}, err
 	}
@@ -76,7 +76,7 @@ func (p *ProductReader) GetByID(productID int32) (entity.Product, error) {
 
 func (p *ProductReader) GetBySlug(slug string) (entity.Product, error) {
 	var product model.Product
-	err := p.db.Where("slug=?", slug).First(&product).Error()
+	err := p.db.Preload("Reviews").Where("slug=?", slug).First(&product).Error()
 	if err != nil {
 		return entity.Product{}, err
 	}
@@ -85,7 +85,7 @@ func (p *ProductReader) GetBySlug(slug string) (entity.Product, error) {
 
 func (p *ProductReader) GetByShopID(shopID int32) ([]entity.Product, error) {
 	var product []model.Product
-	err := p.db.Where("shop_id=?", shopID).First(&product).Error()
+	err := p.db.Preload("Reviews").Where("shop_id=?", shopID).First(&product).Error()
 	if err != nil {
 		return nil, err
 	}

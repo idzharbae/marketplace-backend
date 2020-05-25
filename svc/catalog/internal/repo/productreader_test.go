@@ -218,6 +218,7 @@ func TestProductReader_GetByID(t *testing.T) {
 		defer finish()
 		id := int32(4)
 
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Where("id=?", id).Return(db)
 		db.EXPECT().First(gomock.Any()).Return(db)
 		db.EXPECT().Error().Return(errors.New("error"))
@@ -230,7 +231,7 @@ func TestProductReader_GetByID(t *testing.T) {
 		begin(t)
 		defer finish()
 		id := int32(4)
-
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Where("id=?", id).Return(db)
 		db.EXPECT().First(gomock.Any()).DoAndReturn(func(out *model.Product, where ...interface{}) *gormmock.MockGormw {
 			*out = model.Product{ID: 4}
@@ -262,7 +263,7 @@ func TestProductReader_GetBySlug(t *testing.T) {
 		begin(t)
 		defer finish()
 		slug := "slug-1"
-
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Where("slug=?", slug).Return(db)
 		db.EXPECT().First(gomock.Any()).Return(db)
 		db.EXPECT().Error().Return(errors.New("error"))
@@ -275,7 +276,7 @@ func TestProductReader_GetBySlug(t *testing.T) {
 		begin(t)
 		defer finish()
 		slug := "slug-13"
-
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Where("slug=?", slug).Return(db)
 		db.EXPECT().First(gomock.Any()).DoAndReturn(func(out *model.Product, where ...interface{}) *gormmock.MockGormw {
 			*out = model.Product{ID: 1, Slug: slug}
@@ -307,7 +308,7 @@ func TestProductReader_GetByShopID(t *testing.T) {
 		begin(t)
 		defer finish()
 		shopID := int32(1337)
-
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Where("shop_id=?", shopID).Return(db)
 		db.EXPECT().First(gomock.Any()).Return(db)
 		db.EXPECT().Error().Return(errors.New("error"))
@@ -320,7 +321,7 @@ func TestProductReader_GetByShopID(t *testing.T) {
 		begin(t)
 		defer finish()
 		shopID := int32(1337)
-
+		db.EXPECT().Preload("Reviews").Return(db)
 		db.EXPECT().Where("shop_id=?", shopID).Return(db)
 		db.EXPECT().First(gomock.Any()).Return(db)
 		db.EXPECT().Error().Return(nil)
