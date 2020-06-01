@@ -113,9 +113,13 @@ func TestReviewService_GetReview(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		req := &catalogproto.GetReviewReq{
-			ReviewId: 123,
+			ReviewId:   123,
+			CustomerId: 321,
 		}
-		test.uc.EXPECT().Get(req.GetReviewId()).Return(entity.Review{}, errors.New("error"))
+		test.uc.EXPECT().Get(requests.GetReview{
+			ReviewID:   req.GetReviewId(),
+			CustomerID: req.GetCustomerId(),
+		}).Return(entity.Review{}, errors.New("error"))
 		got, err := test.unit.GetReview(test.ctx, req)
 		assert.Nil(t, got)
 		assert.NotNil(t, err)
@@ -124,7 +128,8 @@ func TestReviewService_GetReview(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
 		req := &catalogproto.GetReviewReq{
-			ReviewId: 123,
+			ReviewId:   123,
+			CustomerId: 321,
 		}
 
 		resp := entity.Review{
@@ -139,7 +144,10 @@ func TestReviewService_GetReview(t *testing.T) {
 			CreatedAt: time.Now(),
 			UpdatedAt: time.Now(),
 		}
-		test.uc.EXPECT().Get(req.GetReviewId()).Return(resp, nil)
+		test.uc.EXPECT().Get(requests.GetReview{
+			ReviewID:   req.GetReviewId(),
+			CustomerID: req.GetCustomerId(),
+		}).Return(resp, nil)
 
 		got, err := test.unit.GetReview(test.ctx, req)
 		assert.Nil(t, err)

@@ -41,7 +41,11 @@ func (r *ReviewService) GetReview(ctx context.Context, in *catalogproto.GetRevie
 	if in == nil {
 		return nil, errors.New("parameter should not be nil")
 	}
-	res, err := r.ReviewUC.Get(in.GetReviewId())
+	res, err := r.ReviewUC.Get(requests.GetReview{
+		ReviewID:   in.GetReviewId(),
+		CustomerID: in.GetCustomerId(),
+		ProductID:  in.GetProductId(),
+	})
 	if err != nil {
 		return nil, err
 	}

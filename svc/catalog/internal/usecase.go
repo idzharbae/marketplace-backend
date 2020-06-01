@@ -17,7 +17,7 @@ type ProductUC interface {
 
 //go:generate mockgen -destination=usecase/ucmock/reviewuc_mock.go -package=ucmock github.com/idzharbae/marketplace-backend/svc/catalog/internal ReviewUC
 type ReviewUC interface {
-	Get(reviewID int64) (entity.Review, error)
+	Get(req requests.GetReview) (entity.Review, error)
 	List(req requests.ListReview) ([]entity.Review, error)
 
 	Create(review entity.Review) (entity.Review, error)

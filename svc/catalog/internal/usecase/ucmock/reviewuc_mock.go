@@ -64,7 +64,7 @@ func (mr *MockReviewUCMockRecorder) Delete(arg0 interface{}) *gomock.Call {
 }
 
 // Get mocks base method.
-func (m *MockReviewUC) Get(arg0 int64) (entity.Review, error) {
+func (m *MockReviewUC) Get(arg0 requests.GetReview) (entity.Review, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", arg0)
 	ret0, _ := ret[0].(entity.Review)

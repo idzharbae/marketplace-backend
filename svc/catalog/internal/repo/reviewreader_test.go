@@ -77,6 +77,53 @@ func TestReviewReader_GetByID(t *testing.T) {
 	})
 }
 
+func TestReviewReader_GetByIDAndCustomerID(t *testing.T) {
+	test := newReviewReaderTest()
+	t.Run("db returns error, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Review{ProductID: 123, UserID: 321}
+		test.db.EXPECT().Where("user_id=?", req.UserID).Return(test.db)
+		test.db.EXPECT().Where("product_id=?", req.ProductID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).Return(test.db)
+		test.db.EXPECT().Error().Return(errors.New("error"))
+
+		got, err := test.unit.GetByCustomerIDAndProductID(req.UserID, req.ProductID)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Review{}, got)
+	})
+	t.Run("db returns no error, should return review entity", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Review{ProductID: 123, UserID: 321}
+		resp := model.Review{
+			ID:        123,
+			UserID:    4,
+			ProductID: 5,
+			ShopID:    6,
+			Title:     "7",
+			Content:   "8",
+			PhotoURL:  "9",
+			Rating:    4.4,
+			CreatedAt: time.Now(),
+			UpdatedAt: time.Now(),
+		}
+
+		test.db.EXPECT().Where("user_id=?", req.UserID).Return(test.db)
+		test.db.EXPECT().Where("product_id=?", req.ProductID).Return(test.db)
+		test.db.EXPECT().First(gomock.Any()).DoAndReturn(func(arg *model.Review) *gormmock.MockGormw {
+			*arg = resp
+			return test.db
+		})
+		test.db.EXPECT().Error().Return(nil)
+
+		got, err := test.unit.GetByCustomerIDAndProductID(req.UserID, req.ProductID)
+		assert.Nil(t, err)
+		assert.Equal(t, resp.Rating, got.Rating)
+		assert.Equal(t, resp.Content, got.Content)
+	})
+}
+
 func TestReviewReader_ListByProductID(t *testing.T) {
 	test := newReviewReaderTest()
 	t.Run("db returns error, should return error", func(t *testing.T) {

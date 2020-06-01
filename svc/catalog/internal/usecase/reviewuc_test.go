@@ -7,6 +7,7 @@ import (
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/entity"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/repo/repomock"
 	"github.com/idzharbae/marketplace-backend/svc/catalog/internal/requests"
+	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
@@ -70,6 +71,46 @@ func TestReview_Create(t *testing.T) {
 		assert.NotNil(t, err)
 		assert.Equal(t, entity.Review{}, got)
 	})
+	t.Run("user already reviewed the product, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Review{
+			ID:        12,
+			UserID:    12,
+			ProductID: 12,
+			ShopID:    12,
+			Title:     "Asdf",
+			Content:   "asdf",
+			PhotoURL:  "asdf",
+			Rating:    3.0,
+		}
+
+		test.reader.EXPECT().GetByCustomerIDAndProductID(req.UserID, req.ProductID).Return(entity.Review{}, nil)
+
+		got, err := test.unit.Create(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Review{}, got)
+	})
+	t.Run("reader returns error when checking if user already reviewed, should return error", func(t *testing.T) {
+		test.Begin(t)
+		defer test.Finish()
+		req := entity.Review{
+			ID:        12,
+			UserID:    12,
+			ProductID: 12,
+			ShopID:    12,
+			Title:     "Asdf",
+			Content:   "asdf",
+			PhotoURL:  "asdf",
+			Rating:    3.1,
+		}
+
+		test.reader.EXPECT().GetByCustomerIDAndProductID(req.UserID, req.ProductID).Return(entity.Review{}, errors.New("error"))
+
+		got, err := test.unit.Create(req)
+		assert.NotNil(t, err)
+		assert.Equal(t, entity.Review{}, got)
+	})
 	t.Run("reader returns error, should return error", func(t *testing.T) {
 		test.Begin(t)
 		defer test.Finish()
@@ -85,6 +126,8 @@ func TestReview_Create(t *testing.T) {
 			CreatedAt: time.Time{},
 			UpdatedAt: time.Time{},
 		}
+
+		test.reader.EXPECT().GetByCustomerIDAndProductID(req.UserID, req.ProductID).Return(entity.Review{}, gorm.ErrRecordNotFound)
 		test.writer.EXPECT().Create(gomock.Any()).DoAndReturn(func(arg entity.Review) (entity.Review, error) {
 			assert.Equal(t, int64(0), arg.ID)
 			assert.Equal(t, req.UserID, arg.UserID)
@@ -111,6 +154,7 @@ func TestReview_Create(t *testing.T) {
 			CreatedAt: time.Time{},
 			UpdatedAt: time.Time{},
 		}
+		test.reader.EXPECT().GetByCustomerIDAndProductID(req.UserID, req.ProductID).Return(entity.Review{}, gorm.ErrRecordNotFound)
 		test.writer.EXPECT().Create(gomock.Any()).DoAndReturn(func(arg entity.Review) (entity.Review, error) {
 			assert.Equal(t, int64(0), arg.ID)
 			assert.Equal(t, req.UserID, arg.UserID)

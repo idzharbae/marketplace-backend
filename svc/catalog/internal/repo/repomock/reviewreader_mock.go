@@ -34,6 +34,21 @@ func (m *MockReviewReader) EXPECT() *MockReviewReaderMockRecorder {
 	return m.recorder
 }
 
+// GetByCustomerIDAndProductID mocks base method.
+func (m *MockReviewReader) GetByCustomerIDAndProductID(arg0, arg1 int64) (entity.Review, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetByCustomerIDAndProductID", arg0, arg1)
+	ret0, _ := ret[0].(entity.Review)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetByCustomerIDAndProductID indicates an expected call of GetByCustomerIDAndProductID.
+func (mr *MockReviewReaderMockRecorder) GetByCustomerIDAndProductID(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetByCustomerIDAndProductID", reflect.TypeOf((*MockReviewReader)(nil).GetByCustomerIDAndProductID), arg0, arg1)
+}
+
 // GetByID mocks base method.
 func (m *MockReviewReader) GetByID(arg0 int64) (entity.Review, error) {
 	m.ctrl.T.Helper()

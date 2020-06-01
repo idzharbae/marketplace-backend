@@ -56,6 +56,15 @@ func (r *ReviewReader) GetByID(reviewID int64) (entity.Review, error) {
 	return converter.ReviewModelToEntity(review), nil
 }
 
+func (r *ReviewReader) GetByCustomerIDAndProductID(customerID, productID int64) (entity.Review, error) {
+	var review model.Review
+	err := r.db.Where("user_id=?", customerID).Where("product_id=?", productID).First(&review).Error()
+	if err != nil {
+		return entity.Review{}, err
+	}
+	return converter.ReviewModelToEntity(review), nil
+}
+
 func (r *ReviewReader) GetTotalAndAverageByShopID(shopID int64) (requests.TotalAndAverageReview, error) {
 	var res model.Review
 	// need better way to store these two values
