@@ -2,6 +2,7 @@ package config
 
 type Config struct {
 	REST struct {
+		IP   string
 		Port string
 	}
 	Grpc struct {

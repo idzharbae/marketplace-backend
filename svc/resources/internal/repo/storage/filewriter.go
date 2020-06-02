@@ -31,7 +31,7 @@ func (fw *FileWriter) UploadFile(req entity.File) (entity.File, error) {
 		Name:      fileName,
 		Type:      "img",
 		Extension: req.Extension,
-		URL:       "http://127.0.0.1" + fw.cfg.REST.Port + "/img/" + fileName,
+		URL:       "http://" + fw.cfg.REST.IP + fw.cfg.REST.Port + "/img/" + fileName,
 	}, nil
 }
 

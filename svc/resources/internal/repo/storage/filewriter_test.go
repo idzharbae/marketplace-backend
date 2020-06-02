@@ -26,8 +26,10 @@ func (fwt *fileWriterTest) Begin(t *testing.T) {
 	fwt.io = bridgemock.NewMockFileIO(fwt.ctrl)
 	fwt.unit = NewFileWriter(fwt.io, config.Config{
 		REST: struct {
+			IP   string
 			Port string
 		}{
+			IP:   "123.123.123.123",
 			Port: ":1441",
 		},
 	})
@@ -74,7 +76,7 @@ func TestFileWriter_UploadFile(t *testing.T) {
 
 		got, err := test.unit.UploadFile(req)
 		assert.Nil(t, err)
-		assert.Equal(t, "http://127.0.0.1:1441/img/", got.URL[:26])
+		assert.Equal(t, "http://123.123.123.123:1441/img/", got.URL[:32])
 		assert.Equal(t, ".jpg", got.URL[len(got.URL)-4:])
 		assert.Equal(t, "img", got.Type)
 		assert.Equal(t, req.OwnerID, got.OwnerID)
